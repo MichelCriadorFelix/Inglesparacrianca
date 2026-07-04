@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Inglês Divertido 🌟</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #4a2b5f;        /* ameixa escura — texto principal */
+    --ink-soft: #8a7a9b;   /* ameixa clara — texto de apoio */
+    --coral: #ff5d73;      /* melancia */
+    --coral-dk: #d63a55;
+    --grape: #7c5cbf;      /* uva */
+    --grape-dk: #5b3f96;
+    --leaf: #22b573;       /* folha */
+    --leaf-dk: #158a55;
+    --sun: #ffb627;        /* sol */
+    --sun-dk: #d18f0a;
+    --sky: #29b6d8;        /* céu */
+    --sky-dk: #1690ae;
+    --card: #ffffff;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { height:100%; }
+  body {
+    font-family: 'Fredoka', 'Comic Sans MS', 'Comic Neue', 'Chalkboard SE', 'Segoe UI', sans-serif;
+    background: linear-gradient(165deg, #ffeda6 0%, #ffd3b0 55%, #ffc3cf 100%);
+    background-attachment: fixed;
+    min-height:100%;
+    overflow-x:hidden;
+    user-select:none;
+    color: var(--ink);
+  }
+  /* enfeites flutuantes */
+  .deco { position:fixed; font-size:44px; opacity:.5; z-index:0; animation: floaty 9s ease-in-out infinite; pointer-events:none; }
+  @keyframes floaty { 0%,100%{transform:translateY(0) rotate(-6deg)} 50%{transform:translateY(-18px) rotate(6deg)} }
+
+  #app { position:relative; z-index:1; max-width:560px; margin:0 auto; padding:14px 14px 44px; }
+
+  .topbar { display:flex; align-items:center; gap:10px; margin-bottom:14px; min-height:56px; }
+  .btn-home {
+    background:var(--card); border:none; border-radius:20px; font-size:26px; width:56px; height:56px;
+    box-shadow:0 5px 0 rgba(74,43,95,.18); cursor:pointer; flex-shrink:0;
+  }
+  .btn-home:active { transform:translateY(4px); box-shadow:0 1px 0 rgba(74,43,95,.18); }
+  .topbar h2 { color:var(--ink); font-size:24px; flex:1; text-wrap:balance; }
+  .star-count { background:var(--card); border-radius:20px; padding:8px 14px; font-size:18px; font-weight:700; color:var(--sun-dk); box-shadow:0 4px 0 rgba(74,43,95,.12); white-space:nowrap; }
+
+  .hero { text-align:center; padding:16px 4px 8px; }
+  .hero .big-emoji { font-size:66px; display:inline-block; animation: bounce 2s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-12px) rotate(4deg)} }
+  .hero h1 { color:var(--ink); font-size:34px; letter-spacing:.5px; margin:6px 0 2px; }
+  .hero p { color:var(--ink-soft); font-size:17px; font-weight:600; }
+
+  .modules { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:18px; }
+  .module-card {
+    border:none; border-radius:26px; padding:18px 10px 14px; text-align:center; cursor:pointer;
+    box-shadow:0 7px 0 rgba(74,43,95,.22); color:#fff; transition:transform .1s;
+    font-family:inherit;
+  }
+  .module-card:active { transform:translateY(5px); box-shadow:0 2px 0 rgba(74,43,95,.22); }
+  .module-card .m-icon { font-size:52px; display:block; }
+  .module-card .m-name { font-size:21px; font-weight:700; display:block; margin-top:6px; text-shadow:0 2px 3px rgba(0,0,0,.18); }
+  .module-card .m-stars { font-size:14px; display:block; margin-top:4px; opacity:.95; font-weight:600; }
+
+  .mode-list { display:flex; flex-direction:column; gap:16px; margin-top:10px; }
+  .mode-btn {
+    display:flex; align-items:center; gap:16px; background:var(--card); border:none; border-radius:26px;
+    padding:18px 20px; cursor:pointer; box-shadow:0 7px 0 rgba(74,43,95,.16); text-align:left; font-family:inherit;
+  }
+  .mode-btn:active { transform:translateY(5px); box-shadow:0 2px 0 rgba(74,43,95,.16); }
+  .mode-btn .ic { font-size:44px; }
+  .mode-btn .t { font-size:22px; font-weight:700; color:var(--ink); display:block; }
+  .mode-btn .s { font-size:14px; color:var(--ink-soft); display:block; font-weight:600; }
+
+  .card {
+    background:var(--card); border-radius:30px; padding:24px 18px; text-align:center;
+    box-shadow:0 10px 24px rgba(74,43,95,.18);
+  }
+  .word-emoji { font-size:110px; line-height:1.1; display:block; cursor:pointer; transition:transform .15s; border:none; background:none; }
+  .word-emoji:active { transform:scale(1.15); }
+  .swatch { width:110px; height:110px; border-radius:50%; margin:0 auto; border:6px solid #fff; box-shadow:0 0 0 4px rgba(74,43,95,.1), 0 6px 14px rgba(74,43,95,.2); }
+  .word-en { font-size:46px; font-weight:700; color:var(--ink); letter-spacing:3px; margin-top:8px; text-transform:uppercase; cursor:pointer; }
+  .word-say {
+    margin:10px auto 0; display:inline-block; background:#fff6dd; border:3px dashed var(--sun);
+    color:#8a5a00; font-size:22px; font-weight:700; border-radius:18px; padding:8px 18px;
+  }
+  .word-say small { display:block; font-size:12px; font-weight:600; color:#b07c14; letter-spacing:.5px; }
+  .syl { display:inline-block; padding:0 2px; }
+  .syl:nth-child(3n+1){ color:#d63a55; } .syl:nth-child(3n+2){ color:#1690ae; } .syl:nth-child(3n){ color:#158a55; }
+  .word-pt { font-size:19px; color:var(--ink-soft); margin-top:10px; font-weight:600; }
+  .word-pt b { color:var(--ink); }
+  .word-tip { font-size:15px; color:#0e7490; background:#e5fbff; border-radius:14px; padding:8px 12px; margin-top:10px; display:inline-block; font-weight:600; }
+
+  .round-btns { display:flex; justify-content:center; gap:16px; margin-top:18px; flex-wrap:wrap; }
+  .rbtn {
+    border:none; border-radius:22px; font-size:30px; width:76px; height:76px; cursor:pointer;
+    color:#fff; font-family:inherit;
+  }
+  .rbtn small { display:block; font-size:11px; font-weight:700; letter-spacing:1px; }
+  .rbtn:active { transform:translateY(4px); }
+  .rbtn.listen { background:var(--leaf); box-shadow:0 6px 0 var(--leaf-dk); }
+  .rbtn.listen:active { box-shadow:0 2px 0 var(--leaf-dk); }
+  .rbtn.slow { background:var(--sky); box-shadow:0 6px 0 var(--sky-dk); }
+  .rbtn.slow:active { box-shadow:0 2px 0 var(--sky-dk); }
+  .rbtn.mic { background:var(--coral); box-shadow:0 6px 0 var(--coral-dk); }
+  .rbtn.mic:active { box-shadow:0 2px 0 var(--coral-dk); }
+  .rbtn.mic.recording { animation:pulse .8s infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12); box-shadow:0 0 0 12px rgba(255,93,115,.3);} }
+
+  .nav-row { display:flex; justify-content:space-between; align-items:center; margin-top:18px; gap:10px; flex-wrap:wrap; }
+  .nav-btn {
+    border:none; border-radius:20px; background:var(--grape); color:#fff; font-size:20px; font-weight:700;
+    padding:14px 22px; cursor:pointer; box-shadow:0 5px 0 var(--grape-dk); font-family:inherit;
+  }
+  .nav-btn:active { transform:translateY(4px); box-shadow:0 1px 0 var(--grape-dk); }
+  .nav-btn:disabled { opacity:.35; }
+  .nav-btn.go { background:var(--leaf); box-shadow:0 5px 0 var(--leaf-dk); }
+  .nav-btn.warm { background:var(--sun); box-shadow:0 5px 0 var(--sun-dk); }
+  .counter { font-size:17px; font-weight:700; color:var(--ink); }
+
+  .feedback { min-height:86px; margin-top:14px; }
+  .fb-ok { background:#e3f9ec; border:3px solid var(--leaf); color:#0f6b42; border-radius:18px; padding:12px; font-size:20px; font-weight:700; animation:pop .3s; }
+  .fb-try { background:#ffe8ec; border:3px solid var(--coral); color:#a1153a; border-radius:18px; padding:12px; font-size:17px; font-weight:600; animation:pop .3s; }
+  .fb-info { background:#e2f6fb; border:3px solid var(--sky); color:#0b5d73; border-radius:18px; padding:12px; font-size:17px; font-weight:600; animation:pop .3s; }
+  .fb-try b, .fb-info b { font-size:20px; }
+  @keyframes pop { 0%{transform:scale(.7); opacity:0} 100%{transform:scale(1); opacity:1} }
+
+  .quiz-q { font-size:22px; font-weight:700; color:var(--ink); margin-bottom:6px; text-wrap:balance; }
+  .quiz-big { font-size:90px; margin:4px 0; }
+  .quiz-word-big { font-size:42px; font-weight:700; color:var(--ink); letter-spacing:3px; text-transform:uppercase; margin:12px 0 4px; }
+  .quiz-opts { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; }
+  .qopt {
+    border:4px solid #eadcf7; background:#fbf7ff; border-radius:22px; padding:14px 6px; cursor:pointer;
+    font-size:44px; box-shadow:0 5px 0 rgba(74,43,95,.1); transition:transform .1s; font-family:inherit;
+  }
+  .qopt.word-opt { font-size:22px; font-weight:700; color:var(--ink); text-transform:uppercase; letter-spacing:1px; padding:20px 6px; }
+  .qopt:active { transform:translateY(3px); }
+  .qopt.right { background:#e3f9ec; border-color:var(--leaf); animation:pop .3s; }
+  .qopt.wrong { background:#ffe8ec; border-color:var(--coral); animation:shake .4s; }
+  .qopt:disabled { cursor:default; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+  .progressbar { height:16px; background:rgba(255,255,255,.55); border-radius:10px; overflow:hidden; margin-bottom:14px; }
+  .progressbar div { height:100%; background:var(--sun); border-radius:10px; transition:width .4s; }
+
+  .result-stars { font-size:56px; letter-spacing:6px; margin:10px 0; }
+  .result-msg { font-size:24px; font-weight:700; color:var(--ink); text-wrap:balance; }
+  .result-sub { font-size:17px; color:var(--ink-soft); margin-top:6px; font-weight:600; }
+
+  .confetti-piece { position:fixed; top:-20px; z-index:99; font-size:22px; pointer-events:none; animation:fall linear forwards; }
+  @keyframes fall { to { transform:translateY(110vh) rotate(720deg); } }
+
+  .mic-warn { font-size:14px; color:#7c4a12; background:#fff0d9; border-radius:14px; padding:10px; margin-top:12px; font-weight:600; }
+  .center { text-align:center; }
+  .mt { margin-top:16px; }
+
+  button:focus-visible { outline:4px solid var(--sky); outline-offset:2px; }
+  @media (prefers-reduced-motion: reduce) {
+    .deco, .hero .big-emoji, .rbtn.mic.recording { animation:none; }
+    .fb-ok, .fb-try, .fb-info, .qopt.right, .qopt.wrong { animation:none; }
+  }
+</style>
+</head>
+<body>
+<div class="deco" style="top:5%; left:4%;">🍓</div>
+<div class="deco" style="top:12%; right:5%; animation-delay:2s;">🍊</div>
+<div class="deco" style="top:56%; left:2%; animation-delay:4s;">🌈</div>
+<div class="deco" style="bottom:10%; right:4%; animation-delay:1s;">⭐</div>
+<div class="deco" style="bottom:30%; left:6%; animation-delay:3s;">🍉</div>
+
+<div id="app"></div>
+
+<script>
+'use strict';
+
+/* ====================== CONTEÚDO ====================== */
+const MODULES = [
+  {
+    id:'fruits', name:'Frutas', icon:'🍎', bg:'linear-gradient(135deg,#ff5d73,#ff9346)',
+    words:[
+      {en:'apple', pt:'maçã', emoji:'🍎', say:'É-pôu'},
+      {en:'banana', pt:'banana', emoji:'🍌', say:'ba-NÉ-na'},
+      {en:'orange', pt:'laranja', emoji:'🍊', say:'Ó-rindj'},
+      {en:'grape', pt:'uva', emoji:'🍇', say:'GRÊIP', aliases:['grapes','great']},
+      {en:'strawberry', pt:'morango', emoji:'🍓', say:'STRÓ-bé-ri'},
+      {en:'watermelon', pt:'melancia', emoji:'🍉', say:'UÓ-ter-mé-lon'},
+      {en:'pineapple', pt:'abacaxi', emoji:'🍍', say:'PAI-né-pôu'},
+      {en:'lemon', pt:'limão', emoji:'🍋', say:'LÊ-mon'},
+      {en:'pear', pt:'pera', emoji:'🍐', say:'PÉR', aliases:['pair','pare','per']},
+      {en:'peach', pt:'pêssego', emoji:'🍑', say:'PÍTCH'},
+      {en:'mango', pt:'manga', emoji:'🥭', say:'MÉN-gou'},
+      {en:'cherry', pt:'cereja', emoji:'🍒', say:'TCHÉ-ri'}
+    ]
+  },
+  {
+    id:'colors', name:'Cores', icon:'🌈', bg:'linear-gradient(135deg,#a78bfa,#f472b6)',
+    words:[
+      {en:'red', pt:'vermelho', color:'#ef4444', say:'RÉD', aliases:['read']},
+      {en:'blue', pt:'azul', color:'#3b82f6', say:'BLÚ'},
+      {en:'yellow', pt:'amarelo', color:'#facc15', say:'IÉ-lou'},
+      {en:'green', pt:'verde', color:'#22c55e', say:'GRÍN'},
+      {en:'orange', pt:'laranja', color:'#f97316', say:'Ó-rindj'},
+      {en:'purple', pt:'roxo', color:'#8b5cf6', say:'PÂR-pôu'},
+      {en:'pink', pt:'rosa', color:'#ec4899', say:'PINK'},
+      {en:'black', pt:'preto', color:'#1f2937', say:'BLÉK'},
+      {en:'white', pt:'branco', color:'#f9fafb', say:'UÁIT'},
+      {en:'brown', pt:'marrom', color:'#92400e', say:'BRÁUN'}
+    ]
+  },
+  {
+    id:'numbers', name:'Números', icon:'🔢', bg:'linear-gradient(135deg,#29b6d8,#6366f1)',
+    words:[
+      {en:'one', pt:'um (1)', emoji:'1️⃣', say:'UÃN', aliases:['won','1']},
+      {en:'two', pt:'dois (2)', emoji:'2️⃣', say:'TCHÚ', aliases:['to','too','2']},
+      {en:'three', pt:'três (3)', emoji:'3️⃣', say:'THRÍ', tip:'Coloca a pontinha da língua entre os dentes! 😛', aliases:['tree','free','3']},
+      {en:'four', pt:'quatro (4)', emoji:'4️⃣', say:'FÓR', aliases:['for','4']},
+      {en:'five', pt:'cinco (5)', emoji:'5️⃣', say:'FÁIV', aliases:['5']},
+      {en:'six', pt:'seis (6)', emoji:'6️⃣', say:'SIKS', aliases:['6']},
+      {en:'seven', pt:'sete (7)', emoji:'7️⃣', say:'SÉ-ven', aliases:['7']},
+      {en:'eight', pt:'oito (8)', emoji:'8️⃣', say:'ÊIT', aliases:['ate','8']},
+      {en:'nine', pt:'nove (9)', emoji:'9️⃣', say:'NÁIN', aliases:['9']},
+      {en:'ten', pt:'dez (10)', emoji:'🔟', say:'TÉN', aliases:['10']}
+    ]
+  },
+  {
+    id:'clothes', name:'Roupas', icon:'👗', bg:'linear-gradient(135deg,#fb7185,#c084fc)',
+    words:[
+      {en:'shirt', pt:'camisa', emoji:'👕', say:'CHÂRT'},
+      {en:'pants', pt:'calça', emoji:'👖', say:'PÉNTS'},
+      {en:'dress', pt:'vestido', emoji:'👗', say:'DRÉS'},
+      {en:'shoes', pt:'sapatos', emoji:'👟', say:'CHÚZ', aliases:['shoe']},
+      {en:'socks', pt:'meias', emoji:'🧦', say:'SÓKS', aliases:['sock','sox']},
+      {en:'hat', pt:'chapéu', emoji:'👒', say:'RRÉT', tip:'O H tem som de RR: "rrét"! 😉'},
+      {en:'cap', pt:'boné', emoji:'🧢', say:'QUÉP'},
+      {en:'jacket', pt:'casaco', emoji:'🧥', say:'DJÉ-quet'},
+      {en:'shorts', pt:'bermuda', emoji:'🩳', say:'CHÓRTS', aliases:['short']},
+      {en:'boots', pt:'botas', emoji:'🥾', say:'BÚTS', aliases:['boot']}
+    ]
+  },
+  {
+    id:'school', name:'Escola', icon:'✏️', bg:'linear-gradient(135deg,#22b573,#29b6d8)',
+    words:[
+      {en:'book', pt:'livro', emoji:'📖', say:'BÚK'},
+      {en:'pen', pt:'caneta', emoji:'🖊️', say:'PÉN'},
+      {en:'pencil', pt:'lápis', emoji:'✏️', say:'PÊN-sôu'},
+      {en:'backpack', pt:'mochila', emoji:'🎒', say:'BÉK-pék'},
+      {en:'scissors', pt:'tesoura', emoji:'✂️', say:'SÍ-zers'},
+      {en:'ruler', pt:'régua', emoji:'📏', say:'RÚ-ler'},
+      {en:'notebook', pt:'caderno', emoji:'📓', say:'NÔUT-búk'},
+      {en:'crayon', pt:'giz de cera', emoji:'🖍️', say:'CRÊI-on'},
+      {en:'chair', pt:'cadeira', emoji:'🪑', say:'TCHÉR'},
+      {en:'clock', pt:'relógio', emoji:'⏰', say:'CLÓK'}
+    ]
+  },
+  {
+    id:'animals', name:'Animais', icon:'🐶', bg:'linear-gradient(135deg,#ffb627,#ff7846)',
+    words:[
+      {en:'cat', pt:'gato', emoji:'🐱', say:'QUÉT'},
+      {en:'dog', pt:'cachorro', emoji:'🐶', say:'DÓG'},
+      {en:'fish', pt:'peixe', emoji:'🐟', say:'FÍCH'},
+      {en:'bird', pt:'pássaro', emoji:'🐦', say:'BÂRD'},
+      {en:'lion', pt:'leão', emoji:'🦁', say:'LÁI-on'},
+      {en:'monkey', pt:'macaco', emoji:'🐵', say:'MÃN-qui'},
+      {en:'elephant', pt:'elefante', emoji:'🐘', say:'É-le-fent'},
+      {en:'duck', pt:'pato', emoji:'🦆', say:'DÂK'},
+      {en:'horse', pt:'cavalo', emoji:'🐴', say:'RRÓRS', tip:'O H tem som de RR: "rrórs"! 😉'},
+      {en:'rabbit', pt:'coelho', emoji:'🐰', say:'RÉ-bit'}
+    ]
+  }
+];
+
+/* ====================== PROGRESSO ====================== */
+const STORE_KEY = 'ingles-divertido-v1';
+function loadProgress(){ try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e){ return {}; } }
+function saveProgress(p){ try { localStorage.setItem(STORE_KEY, JSON.stringify(p)); } catch(e){} }
+let progress = loadProgress();
+function modStars(id){
+  const p = progress[id] || {};
+  return (p.quizStars||0) + (p.speakStars||0);
+}
+function totalStars(){ return MODULES.reduce((s,m)=>s+modStars(m.id),0); }
+const MAX_STARS_MOD = 6; /* 3 do quiz + 3 do falar */
+
+/* ====================== SOM (Web Audio) ====================== */
+let audioCtx = null;
+function ctx(){ if(!audioCtx){ try{ audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } return audioCtx; }
+function tone(freq, dur, delay, type){
+  const c = ctx(); if(!c) return;
+  const o = c.createOscillator(), g = c.createGain();
+  o.type = type||'sine'; o.frequency.value = freq;
+  const t = c.currentTime + (delay||0);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(0.25, t+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+  o.connect(g); g.connect(c.destination);
+  o.start(t); o.stop(t+dur+0.05);
+}
+function sndTap(){ tone(600,.08,0,'triangle'); }
+function sndOk(){ tone(523,.12); tone(659,.12,.12); tone(784,.22,.24); }
+function sndWin(){ tone(523,.12); tone(659,.12,.1); tone(784,.12,.2); tone(1047,.35,.3); }
+function sndTry(){ tone(330,.18,0,'triangle'); tone(262,.28,.18,'triangle'); }
+
+/* ====================== FALA (síntese de voz) ====================== */
+let voices = [];
+function refreshVoices(){ voices = window.speechSynthesis ? speechSynthesis.getVoices() : []; }
+if (window.speechSynthesis){ refreshVoices(); speechSynthesis.onvoiceschanged = refreshVoices; }
+function pickVoice(){
+  const en = voices.filter(v=>/^en(-|_)/i.test(v.lang));
+  return en.find(v=>/en(-|_)US/i.test(v.lang) && /female|Samantha|Google US/i.test(v.name)) ||
+         en.find(v=>/en(-|_)US/i.test(v.lang)) || en[0] || null;
+}
+function speak(text, rate){
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = rate||0.8; u.pitch = 1.1;
+  const v = pickVoice(); if (v) u.voice = v;
+  speechSynthesis.speak(u);
+}
+
+/* ====================== RECONHECIMENTO DE VOZ ====================== */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+let recognizing = false;
+let micGranted = false;
+/* Pede a autorização do microfone de forma explícita (abre o aviso do navegador). */
+function ensureMic(ok, fail){
+  if (micGranted) { ok(); return; }
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+    navigator.mediaDevices.getUserMedia({ audio:true }).then(stream => {
+      stream.getTracks().forEach(t => t.stop());
+      micGranted = true;
+      ok();
+    }).catch(e => {
+      fail(e && (e.name === 'NotAllowedError' || e.name === 'SecurityError') ? 'not-allowed' : 'mic-error');
+    });
+  } else {
+    ok(); /* navegador antigo: deixa o reconhecimento tentar sozinho */
+  }
+}
+function listen(onResult, onFail){
+  if (!SR) { onFail('unsupported'); return; }
+  if (recognizing) return;
+  const r = new SR();
+  r.lang = 'en-US'; r.interimResults = false; r.maxAlternatives = 6; r.continuous = false;
+  recognizing = true;
+  let got = false, failed = false;
+  const guard = setTimeout(() => { try { r.abort(); } catch(e){} }, 9000);
+  r.onresult = e => {
+    got = true;
+    const alts = [];
+    const res = e.results[0];
+    for (let i=0;i<res.length;i++) alts.push(res[i].transcript);
+    onResult(alts);
+  };
+  r.onerror = e => { failed = true; if (!got) onFail(e.error || 'error'); };
+  r.onend = () => {
+    recognizing = false;
+    clearTimeout(guard);
+    if (!got && !failed) onFail('no-speech'); /* terminou em silêncio: avisa em vez de travar */
+  };
+  try { r.start(); } catch(e){ recognizing=false; clearTimeout(guard); onFail('error'); }
+}
+/* Dentro da página de teste do Claude o microfone é bloqueado pelo site (iframe). */
+function inSandbox(){ try { return window.self !== window.top; } catch(e){ return true; } }
+function norm(s){
+  return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]/g,'').trim();
+}
+function lev(a,b){
+  const m=a.length,n=b.length;
+  if(!m) return n; if(!n) return m;
+  const d=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);
+  for(let j=0;j<=n;j++) d[0][j]=j;
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++)
+    d[i][j]=Math.min(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[m][n];
+}
+function matches(word, alts){
+  const targets = [word.en].concat(word.aliases||[]).map(norm);
+  for (const alt of alts){
+    const heard = norm(alt);
+    if (!heard) continue;
+    const heardWords = heard.split(' ');
+    for (const t of targets){
+      if (heard === t || heardWords.includes(t)) return true;
+      const tol = t.length <= 4 ? 1 : 2;
+      if (lev(heard, t) <= tol) return true;
+      for (const hw of heardWords) if (lev(hw, t) <= tol) return true;
+    }
+  }
+  return false;
+}
+
+/* ====================== CONFETE ====================== */
+const CONF = ['🎉','⭐','🌟','💛','💜','❤️','🎈','✨'];
+function confetti(n){
+  for (let i=0;i<(n||30);i++){
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.textContent = CONF[Math.floor(Math.random()*CONF.length)];
+    el.style.left = Math.random()*100 + 'vw';
+    el.style.animationDuration = (1.6 + Math.random()*1.6) + 's';
+    el.style.animationDelay = (Math.random()*0.4)+'s';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), 4000);
+  }
+}
+
+/* ====================== UTIL ====================== */
+const app = document.getElementById('app');
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function sayHtml(say){
+  return say.split('-').map(p=>'<span class="syl">'+esc(p)+'</span>').join('<span class="syl-sep">-</span>');
+}
+function visual(w, size){
+  const s = size||110;
+  if (w.color){
+    return '<div class="swatch" style="width:'+s+'px;height:'+s+'px;background:'+w.color+';"></div>';
+  }
+  return '<span class="word-emoji" style="font-size:'+s+'px;" onclick="speakCur(0.8)">'+w.emoji+'</span>';
+}
+function topbar(title, backFn){
+  return '<div class="topbar">' +
+    '<button class="btn-home" onclick="'+backFn+'" aria-label="Voltar">⬅️</button>' +
+    '<h2>'+title+'</h2>' +
+    '<span class="star-count">⭐ '+totalStars()+'</span>' +
+  '</div>';
+}
+
+/* ====================== TELAS ====================== */
+let cur = { mod:null, idx:0, attempts:0, speakOk:0, quiz:null };
+
+function goHome(){
+  sndTap();
+  const cards = MODULES.map(m =>
+    '<button class="module-card" style="background:'+m.bg+'" onclick="openModule(\''+m.id+'\')">' +
+      '<span class="m-icon">'+m.icon+'</span>' +
+      '<span class="m-name">'+m.name+'</span>' +
+      '<span class="m-stars">⭐ '+modStars(m.id)+' de '+MAX_STARS_MOD+'</span>' +
+    '</button>').join('');
+  app.innerHTML =
+    '<div class="hero">' +
+      '<span class="big-emoji">🦄</span>' +
+      '<h1>Inglês Divertido!</h1>' +
+      '<p>Escolhe o que você quer aprender hoje 💖</p>' +
+      '<p style="margin-top:8px;"><span class="star-count">⭐ Suas estrelas: '+totalStars()+'</span></p>' +
+    '</div>' +
+    '<div class="modules">'+cards+'</div>';
+  window.scrollTo(0,0);
+}
+
+function openModule(id){
+  sndTap();
+  cur.mod = MODULES.find(m=>m.id===id);
+  app.innerHTML =
+    topbar(cur.mod.icon+' '+esc(cur.mod.name), 'goHome()') +
+    '<div class="mode-list">' +
+      '<button class="mode-btn" onclick="startLearn()">' +
+        '<span class="ic">📖</span><span><span class="t">Aprender</span><span class="s">Veja, ouça e repita as palavras</span></span>' +
+      '</button>' +
+      '<button class="mode-btn" onclick="startSpeak()">' +
+        '<span class="ic">🎤</span><span><span class="t">Falar</span><span class="s">Fale no microfone e ganhe estrelas</span></span>' +
+      '</button>' +
+      '<button class="mode-btn" onclick="startQuiz()">' +
+        '<span class="ic">🎮</span><span><span class="t">Jogar</span><span class="s">Quiz com prêmios! Acerte e ganhe ⭐</span></span>' +
+      '</button>' +
+    '</div>';
+  window.scrollTo(0,0);
+}
+
+/* ---------- MODO APRENDER ---------- */
+function startLearn(){ sndTap(); cur.idx = 0; renderLearn(); }
+function renderLearn(){
+  const w = cur.mod.words[cur.idx];
+  const n = cur.mod.words.length;
+  app.innerHTML =
+    topbar('📖 Aprender', 'openModule(\''+cur.mod.id+'\')') +
+    '<div class="card">' +
+      visual(w) +
+      '<div class="word-en" onclick="speakCur(0.8)">'+esc(w.en)+'</div>' +
+      '<div class="word-say">🗣️ Fala assim: “'+sayHtml(w.say)+'”<small>dica de como falar</small></div>' +
+      '<div class="word-pt">em português: <b>'+esc(w.pt)+'</b></div>' +
+      (w.tip ? '<div class="word-tip">💡 '+esc(w.tip)+'</div>' : '') +
+      '<div class="round-btns">' +
+        '<button class="rbtn listen" onclick="speakCur(0.8)">🔊<small>OUVIR</small></button>' +
+        '<button class="rbtn slow" onclick="speakCur(0.45)">🐢<small>DEVAGAR</small></button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="nav-row">' +
+      '<button class="nav-btn" onclick="learnMove(-1)" '+(cur.idx===0?'disabled':'')+'>⬅ Voltar</button>' +
+      '<span class="counter">'+(cur.idx+1)+' / '+n+'</span>' +
+      (cur.idx < n-1
+        ? '<button class="nav-btn" onclick="learnMove(1)">Próxima ➡</button>'
+        : '<button class="nav-btn go" onclick="learnDone()">Terminei! 🎉</button>') +
+    '</div>';
+  window.scrollTo(0,0);
+  setTimeout(()=>speak(w.en, 0.8), 350);
+}
+function speakCur(rate){ sndTap(); speak(cur.mod.words[cur.idx].en, rate); }
+function learnMove(d){ sndTap(); cur.idx = Math.max(0, Math.min(cur.mod.words.length-1, cur.idx+d)); renderLearn(); }
+function learnDone(){
+  sndWin(); confetti(40);
+  progress[cur.mod.id] = progress[cur.mod.id] || {};
+  progress[cur.mod.id].learned = true;
+  saveProgress(progress);
+  app.innerHTML =
+    topbar('📖 Aprender', 'openModule(\''+cur.mod.id+'\')') +
+    '<div class="card center">' +
+      '<div style="font-size:80px;">🏆</div>' +
+      '<div class="result-msg">Muito bem! Você viu todas as palavras!</div>' +
+      '<div class="result-sub">Agora tenta o modo 🎤 Falar ou o jogo 🎮!</div>' +
+      '<div class="round-btns">' +
+        '<button class="nav-btn" onclick="startSpeak()">🎤 Falar</button>' +
+        '<button class="nav-btn go" onclick="startQuiz()">🎮 Jogar</button>' +
+      '</div>' +
+    '</div>';
+}
+
+/* ---------- MODO FALAR ---------- */
+function startSpeak(){
+  sndTap();
+  cur.idx = 0; cur.attempts = 0; cur.speakOk = 0;
+  renderSpeak();
+}
+function renderSpeak(){
+  const w = cur.mod.words[cur.idx];
+  const n = cur.mod.words.length;
+  const micSupported = !!SR;
+  app.innerHTML =
+    topbar('🎤 Falar', 'openModule(\''+cur.mod.id+'\')') +
+    '<div class="progressbar"><div style="width:'+(cur.idx/n*100)+'%"></div></div>' +
+    '<div class="card">' +
+      visual(w, 90) +
+      '<div class="word-en" style="font-size:40px;" onclick="speakCur(0.8)">'+esc(w.en)+'</div>' +
+      '<div class="word-say">🗣️ Fala assim: “'+sayHtml(w.say)+'”</div>' +
+      (w.tip ? '<div class="word-tip">💡 '+esc(w.tip)+'</div>' : '') +
+      '<div class="round-btns">' +
+        '<button class="rbtn listen" onclick="speakCur(0.8)">🔊<small>OUVIR</small></button>' +
+        '<button class="rbtn slow" onclick="speakCur(0.45)">🐢<small>DEVAGAR</small></button>' +
+        (micSupported ? '<button class="rbtn mic" id="micBtn" onclick="doListen()">🎤<small>FALAR</small></button>' : '') +
+      '</div>' +
+      '<div class="feedback" id="fb"></div>' +
+      (!micSupported ?
+        '<div class="mic-warn">😅 Este navegador não escuta sua voz. Use o <b>Google Chrome</b> para treinar a fala!<br><br>' +
+        'Mesmo assim dá pra treinar: ouça 🔊 e repita bem alto!<br>' +
+        '<div class="round-btns"><button class="nav-btn go" onclick="speakSelfOk()">Falei! 😄</button>' +
+        '<button class="nav-btn" onclick="speakCur(0.45)">Ouvir de novo 🐢</button></div></div>'
+      : '') +
+    '</div>' +
+    '<div class="nav-row">' +
+      '<span class="counter">Palavra '+(cur.idx+1)+' de '+n+' | Acertos: '+cur.speakOk+' 🌟</span>' +
+      '<button class="nav-btn" onclick="speakNext()">Pular ➡</button>' +
+    '</div>';
+  window.scrollTo(0,0);
+  setTimeout(()=>speak(w.en, 0.8), 350);
+}
+function micBlockedMsg(){
+  if (inSandbox()){
+    return '<div class="fb-try">🙈 Aqui na página de teste o site bloqueia o microfone (não é culpa sua!).<br><br>' +
+      'Para treinar a fala 🎤, abra o app <b>fora desta página</b>: pelo arquivo <b>index.html</b> no Chrome ou pelo endereço publicado na internet.</div>';
+  }
+  return '<div class="fb-try">🎙️ O microfone está bloqueado. Toque no <b>cadeado 🔒</b> (ou no ícone ⓘ) ao lado do endereço do site, escolha <b>Permissões → Microfone → Permitir</b> e tente de novo!</div>';
+}
+function doListen(){
+  const w = cur.mod.words[cur.idx];
+  const fb = document.getElementById('fb');
+  const btn = document.getElementById('micBtn');
+  if (window.speechSynthesis) speechSynthesis.cancel();
+  fb.innerHTML = '<div class="fb-info">🎙️ Pedindo o microfone...</div>';
+  ensureMic(() => reallyListen(w, fb, btn), err => {
+    fb.innerHTML = err === 'not-allowed'
+      ? micBlockedMsg()
+      : '<div class="fb-info">😅 Não achei o microfone. Veja se ele está ligado e tenta de novo!</div>';
+  });
+}
+function reallyListen(w, fb, btn){
+  btn.classList.add('recording');
+  fb.innerHTML = '<div class="fb-info">👂 Estou te ouvindo... Fala: <b>'+esc(w.say)+'</b></div>';
+  listen(
+    alts => {
+      btn.classList.remove('recording');
+      if (matches(w, alts)){
+        cur.speakOk++; cur.attempts = 0;
+        sndOk(); confetti(18);
+        fb.innerHTML = '<div class="fb-ok">🎉 PERFEITO! Você falou <b>'+esc(w.en.toUpperCase())+'</b> certinho! ⭐</div>';
+        setTimeout(speakNext, 1600);
+      } else {
+        cur.attempts++;
+        sndTry();
+        const heard = alts[0] ? esc(alts[0]) : '...';
+        let html = '<div class="fb-try">🙈 Quase! Eu ouvi: “'+heard+'”.<br>Tenta falar assim: <b>'+esc(w.say)+'</b>';
+        if (cur.attempts >= 2){
+          html += '<br><br>Vamos ouvir bem devagarinho? 🐢';
+          setTimeout(()=>speak(w.en, 0.45), 600);
+        }
+        html += '</div>';
+        fb.innerHTML = html;
+        if (cur.attempts >= 3){
+          fb.innerHTML += '<div class="fb-info mt">💪 Você está treinando super bem! Pode ir para a próxima quando quiser.</div>';
+        }
+      }
+    },
+    err => {
+      btn.classList.remove('recording');
+      if (err === 'not-allowed' || err === 'service-not-allowed'){
+        fb.innerHTML = micBlockedMsg();
+      } else if (err === 'no-speech'){
+        fb.innerHTML = '<div class="fb-info">🤫 Não ouvi nadinha... Aperta o 🎤 e fala bem pertinho!</div>';
+      } else if (err === 'network'){
+        fb.innerHTML = '<div class="fb-info">📶 O reconhecimento de voz precisa de internet. Confere a conexão e tenta de novo!</div>';
+      } else {
+        fb.innerHTML = '<div class="fb-info">😅 Não consegui ouvir. Tenta de novo apertando o 🎤!</div>';
+      }
+    }
+  );
+}
+function speakSelfOk(){
+  cur.speakOk++;
+  sndOk(); confetti(14);
+  setTimeout(speakNext, 500);
+}
+function speakNext(){
+  cur.attempts = 0;
+  if (cur.idx < cur.mod.words.length - 1){
+    cur.idx++;
+    renderSpeak();
+  } else {
+    speakDone();
+  }
+}
+function speakDone(){
+  const n = cur.mod.words.length;
+  const ratio = cur.speakOk / n;
+  const stars = ratio >= 0.9 ? 3 : ratio >= 0.6 ? 2 : ratio > 0 ? 1 : 0;
+  progress[cur.mod.id] = progress[cur.mod.id] || {};
+  if ((progress[cur.mod.id].speakStars||0) < stars){ progress[cur.mod.id].speakStars = stars; }
+  saveProgress(progress);
+  if (stars >= 2){ sndWin(); confetti(50); } else { sndOk(); }
+  app.innerHTML =
+    topbar('🎤 Falar', 'openModule(\''+cur.mod.id+'\')') +
+    '<div class="card center">' +
+      '<div style="font-size:74px;">'+(stars>=3?'🏆':stars===2?'🥳':'💪')+'</div>' +
+      '<div class="result-stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div>' +
+      '<div class="result-msg">Você acertou '+cur.speakOk+' de '+n+' palavras!</div>' +
+      '<div class="result-sub">'+(stars>=3?'UAU! Pronúncia de campeã! 🌟':stars===2?'Muito bom! Quase perfeito!':'Continue treinando, você consegue!')+'</div>' +
+      '<div class="round-btns">' +
+        '<button class="nav-btn" onclick="startSpeak()">Treinar de novo 🔁</button>' +
+        '<button class="nav-btn go" onclick="startQuiz()">Jogar 🎮</button>' +
+      '</div>' +
+    '</div>';
+}
+
+/* ---------- MODO JOGAR (QUIZ) ---------- */
+const QUIZ_LEN = 8;
+function startQuiz(){
+  sndTap();
+  const words = shuffle(cur.mod.words).slice(0, QUIZ_LEN);
+  cur.quiz = { qs: words.map(w => ({ w, type: pickType() })), i: 0, score: 0 };
+  renderQuiz();
+}
+function pickType(){
+  const types = ['audio2pic','pic2word','word2pic'];
+  return types[Math.floor(Math.random()*types.length)];
+}
+function optVisual(o){
+  if (o.color) return '<div class="swatch" style="width:64px;height:64px;border-width:4px;background:'+o.color+'; margin:0 auto;"></div>';
+  return o.emoji;
+}
+function renderQuiz(){
+  const q = cur.quiz.qs[cur.quiz.i];
+  const w = q.w;
+  const others = shuffle(cur.mod.words.filter(x=>x.en!==w.en)).slice(0,3);
+  const opts = shuffle([w].concat(others));
+  let head = '', optHtml = '';
+  if (q.type === 'audio2pic'){
+    head = '<div class="quiz-q">👂 Ouça e escolha o certo!</div>' +
+           '<button class="rbtn listen" style="margin:6px auto; display:block;" onclick="speakQuizWord()">🔊<small>OUVIR</small></button>';
+    optHtml = opts.map(o=>'<button class="qopt" onclick="answer(this,'+(o.en===w.en)+')">'+optVisual(o)+'</button>').join('');
+  } else if (q.type === 'pic2word'){
+    head = '<div class="quiz-q">👀 Que palavra é essa?</div><div class="quiz-big">'+optVisual(w)+'</div>';
+    optHtml = opts.map(o=>'<button class="qopt word-opt" onclick="answer(this,'+(o.en===w.en)+')">'+esc(o.en)+'</button>').join('');
+  } else {
+    head = '<div class="quiz-q">📖 Leia a palavra e escolha!</div>' +
+           '<div class="quiz-word-big">'+esc(w.en)+'</div>' +
+           '<div class="word-say" style="font-size:16px;">🗣️ “'+sayHtml(w.say)+'”</div>';
+    optHtml = opts.map(o=>'<button class="qopt" onclick="answer(this,'+(o.en===w.en)+')">'+optVisual(o)+'</button>').join('');
+  }
+  app.innerHTML =
+    topbar('🎮 Jogar', 'openModule(\''+cur.mod.id+'\')') +
+    '<div class="progressbar"><div style="width:'+(cur.quiz.i/QUIZ_LEN*100)+'%"></div></div>' +
+    '<div class="card">' + head + '<div class="quiz-opts">'+optHtml+'</div><div class="feedback" id="fb" style="min-height:60px;"></div></div>' +
+    '<div class="nav-row"><span class="counter">Pergunta '+(cur.quiz.i+1)+' de '+QUIZ_LEN+'</span><span class="counter">Pontos: '+cur.quiz.score+' 🌟</span></div>';
+  window.scrollTo(0,0);
+  if (q.type === 'audio2pic') setTimeout(speakQuizWord, 400);
+}
+function speakQuizWord(){ speak(cur.quiz.qs[cur.quiz.i].w.en, 0.8); }
+function answer(btn, right){
+  const w = cur.quiz.qs[cur.quiz.i].w;
+  document.querySelectorAll('.qopt').forEach(b=>b.disabled = true);
+  const fb = document.getElementById('fb');
+  if (right){
+    btn.classList.add('right');
+    cur.quiz.score++;
+    sndOk();
+    fb.innerHTML = '<div class="fb-ok">✅ Isso! <b>'+esc(w.en.toUpperCase())+'</b> = '+esc(w.pt)+' 🎉</div>';
+    speak(w.en, 0.85);
+    setTimeout(nextQuiz, 1400);
+  } else {
+    btn.classList.add('wrong');
+    sndTry();
+    fb.innerHTML = '<div class="fb-try">🙈 Ops! O certo é <b>'+esc(w.en.toUpperCase())+'</b> (“'+esc(w.say)+'”) = '+esc(w.pt)+'</div>';
+    document.querySelectorAll('.qopt').forEach(b=>{
+      if (b.getAttribute('onclick').indexOf('true') !== -1) b.classList.add('right');
+    });
+    speak(w.en, 0.7);
+    setTimeout(nextQuiz, 2300);
+  }
+}
+function nextQuiz(){
+  cur.quiz.i++;
+  if (cur.quiz.i < QUIZ_LEN) renderQuiz(); else quizDone();
+}
+function quizDone(){
+  const score = cur.quiz.score;
+  const stars = score >= 7 ? 3 : score >= 5 ? 2 : score >= 3 ? 1 : 0;
+  progress[cur.mod.id] = progress[cur.mod.id] || {};
+  if ((progress[cur.mod.id].quizStars||0) < stars){ progress[cur.mod.id].quizStars = stars; }
+  saveProgress(progress);
+  if (stars >= 2){ sndWin(); confetti(60); } else if (stars === 1){ sndOk(); confetti(20); } else { sndTry(); }
+  app.innerHTML =
+    topbar('🎮 Jogar', 'openModule(\''+cur.mod.id+'\')') +
+    '<div class="card center">' +
+      '<div style="font-size:80px;">'+(stars>=3?'🏆':stars===2?'🥳':stars===1?'😊':'💪')+'</div>' +
+      '<div class="result-stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div>' +
+      '<div class="result-msg">Você fez '+score+' de '+QUIZ_LEN+' pontos!</div>' +
+      '<div class="result-sub">'+(
+        stars>=3 ? 'INCRÍVEL! Você é uma campeã de inglês! 🌟' :
+        stars===2 ? 'Muito bom! Falta pouquinho para 3 estrelas!' :
+        stars===1 ? 'Legal! Treina mais um pouco no modo Aprender!' :
+        'Vamos treinar no modo 📖 Aprender primeiro? Você vai arrasar!') +'</div>' +
+      '<div class="round-btns">' +
+        '<button class="nav-btn" onclick="startQuiz()">Jogar de novo 🔁</button>' +
+        '<button class="nav-btn warm" onclick="startLearn()">Aprender 📖</button>' +
+      '</div>' +
+    '</div>';
+}
+
+/* expõe funções usadas nos onclick */
+window.goHome = goHome; window.openModule = openModule;
+window.startLearn = startLearn; window.speakCur = speakCur;
+window.learnMove = learnMove; window.learnDone = learnDone;
+window.startSpeak = startSpeak; window.doListen = doListen; window.speakNext = speakNext; window.speakSelfOk = speakSelfOk;
+window.startQuiz = startQuiz; window.answer = answer; window.speakQuizWord = speakQuizWord;
+
+goHome();
+</script>
+</body>
+</html>

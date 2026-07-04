@@ -1,0 +1,40 @@
+# 🦄 Inglês Divertido
+
+Mini aplicativo para ensinar inglês a crianças de 6 anos em fase de alfabetização — feito para revisão de prova de inglês, de um jeito alegre e visual.
+
+## O que tem
+
+**6 módulos:** 🍎 Frutas · 🌈 Cores · 🔢 Números · 👗 Roupas · ✏️ Escola · 🐶 Animais
+
+**3 atividades em cada módulo:**
+
+| Atividade | O que faz |
+|---|---|
+| 📖 **Aprender** | Cartões grandes com figura, a palavra em inglês, a tradução e a dica de pronúncia "fala assim" escrita do jeito que se fala (ex.: APPLE → "É-pôu"). Botão 🔊 para ouvir e 🐢 para ouvir bem devagar. |
+| 🎤 **Falar** | A criança fala no microfone e o app reconhece a voz (em inglês). Se acertou: festa e estrela ⭐. Se errou: mostra o que ela disse, repete a dica de pronúncia e toca a palavra devagarinho para ela tentar de novo. |
+| 🎮 **Jogar** | Quiz com 8 perguntas misturadas (ouvir e escolher a figura, ver a figura e escolher a palavra, ler a palavra e escolher a figura). Ganha até 3 estrelas por jogo, com confete e sons de comemoração. |
+
+O progresso (estrelas) fica salvo no aparelho.
+
+## Como usar
+
+🌟 **App no ar:** https://michelcriadorfelix.github.io/inglesparacrianca/
+
+Toda vez que este repositório recebe uma atualização na branch `main`, o GitHub Pages republica o site automaticamente (veja `.github/workflows/deploy.yml`).
+
+Também dá para usar sem internet: baixe o `index.html` e abra com o **Google Chrome** no computador.
+
+> 🎤 **Importante:** o reconhecimento de voz (modo Falar) funciona no **Google Chrome** (computador e Android). Na primeira vez, toque em "Permitir" quando o navegador pedir o microfone. Os modos Aprender e Jogar funcionam em qualquer navegador.
+
+> 📱 **Dica:** no celular, abra o site no Chrome → menu ⋮ → **"Adicionar à tela de início"** — vira um ícone como um aplicativo de verdade.
+
+## Dicas para os pais
+
+- Comece pelo módulo da prova (Frutas) no modo **Aprender**, depois **Falar**, depois **Jogar**.
+- A dica amarela "fala assim" mostra a pronúncia escrita em português — ajuda quem ainda está aprendendo a ler.
+- O botão 🐢 fala bem devagar — ótimo para treinar palavras difíceis como *strawberry*.
+- Errar faz parte! O app nunca briga: ele mostra o que ouviu e ensina a falar certo.
+
+## Tecnologia
+
+HTML + CSS + JavaScript puro, em um único arquivo. Usa a Web Speech API do navegador (síntese e reconhecimento de voz) — sem servidor, sem cadastro, sem custo.
