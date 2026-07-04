@@ -4,7 +4,7 @@ Mini aplicativo para ensinar inglês a crianças de 6 anos em fase de alfabetiza
 
 ## O que tem
 
-**6 módulos:** 🍎 Frutas · 🌈 Cores · 🔢 Números · 👗 Roupas · ✏️ Escola · 🐶 Animais
+**7 módulos:** 🍎 Frutas · 🌈 Cores · 🔢 Números · 👗 Roupas · ✏️ Escola · ⚽ Futebol · 🐶 Animais
 
 **3 atividades em cada módulo:**
 

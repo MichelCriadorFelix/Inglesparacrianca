@@ -188,9 +188,10 @@ const MODULES = [
       {en:'watermelon', pt:'melancia', emoji:'🍉', say:'UÓ-ter-mé-lon'},
       {en:'pineapple', pt:'abacaxi', emoji:'🍍', say:'PAI-né-pôu'},
       {en:'lemon', pt:'limão', emoji:'🍋', say:'LÊ-mon'},
-      {en:'pear', pt:'pera', emoji:'🍐', say:'PÉR', aliases:['pair','pare','per']},
-      {en:'peach', pt:'pêssego', emoji:'🍑', say:'PÍTCH'},
+      {en:'pear', pt:'pera', emoji:'🍐', say:'PÉR', aliases:['pair','pare','per','bear','pier']},
+      {en:'peach', pt:'pêssego', emoji:'🍑', say:'PÍTCH', aliases:['pitch','beach','bitch','peace','piece']},
       {en:'mango', pt:'manga', emoji:'🥭', say:'MÉN-gou'},
+      {en:'kiwi', pt:'kiwi', emoji:'🥝', say:'QUÍ-ui', aliases:['kewi','key we','qiwi']},
       {en:'cherry', pt:'cereja', emoji:'🍒', say:'TCHÉ-ri'}
     ]
   },
@@ -199,13 +200,13 @@ const MODULES = [
     words:[
       {en:'red', pt:'vermelho', color:'#ef4444', say:'RÉD', aliases:['read']},
       {en:'blue', pt:'azul', color:'#3b82f6', say:'BLÚ'},
-      {en:'yellow', pt:'amarelo', color:'#facc15', say:'IÉ-lou'},
+      {en:'yellow', pt:'amarelo', color:'#facc15', say:'IÉ-lou', aliases:['hello','jello','yellows']},
       {en:'green', pt:'verde', color:'#22c55e', say:'GRÍN'},
       {en:'orange', pt:'laranja', color:'#f97316', say:'Ó-rindj'},
       {en:'purple', pt:'roxo', color:'#8b5cf6', say:'PÂR-pôu'},
       {en:'pink', pt:'rosa', color:'#ec4899', say:'PINK'},
       {en:'black', pt:'preto', color:'#1f2937', say:'BLÉK'},
-      {en:'white', pt:'branco', color:'#f9fafb', say:'UÁIT'},
+      {en:'white', pt:'branco', color:'#f9fafb', say:'UÁIT', aliases:['wide','quite','why']},
       {en:'brown', pt:'marrom', color:'#92400e', say:'BRÁUN'}
     ]
   },
@@ -217,7 +218,7 @@ const MODULES = [
       {en:'three', pt:'três (3)', emoji:'3️⃣', say:'THRÍ', tip:'Coloca a pontinha da língua entre os dentes! 😛', aliases:['tree','free','3']},
       {en:'four', pt:'quatro (4)', emoji:'4️⃣', say:'FÓR', aliases:['for','4']},
       {en:'five', pt:'cinco (5)', emoji:'5️⃣', say:'FÁIV', aliases:['5']},
-      {en:'six', pt:'seis (6)', emoji:'6️⃣', say:'SIKS', aliases:['6']},
+      {en:'six', pt:'seis (6)', emoji:'6️⃣', say:'SIKS', aliases:['6','sex','seeks','sics']},
       {en:'seven', pt:'sete (7)', emoji:'7️⃣', say:'SÉ-ven', aliases:['7']},
       {en:'eight', pt:'oito (8)', emoji:'8️⃣', say:'ÊIT', aliases:['ate','8']},
       {en:'nine', pt:'nove (9)', emoji:'9️⃣', say:'NÁIN', aliases:['9']},
@@ -227,46 +228,61 @@ const MODULES = [
   {
     id:'clothes', name:'Roupas', icon:'👗', bg:'linear-gradient(135deg,#fb7185,#c084fc)',
     words:[
-      {en:'shirt', pt:'camisa', emoji:'👕', say:'CHÂRT'},
-      {en:'pants', pt:'calça', emoji:'👖', say:'PÉNTS'},
-      {en:'dress', pt:'vestido', emoji:'👗', say:'DRÉS'},
-      {en:'shoes', pt:'sapatos', emoji:'👟', say:'CHÚZ', aliases:['shoe']},
-      {en:'socks', pt:'meias', emoji:'🧦', say:'SÓKS', aliases:['sock','sox']},
-      {en:'hat', pt:'chapéu', emoji:'👒', say:'RRÉT', tip:'O H tem som de RR: "rrét"! 😉'},
-      {en:'cap', pt:'boné', emoji:'🧢', say:'QUÉP'},
-      {en:'jacket', pt:'casaco', emoji:'🧥', say:'DJÉ-quet'},
-      {en:'shorts', pt:'bermuda', emoji:'🩳', say:'CHÓRTS', aliases:['short']},
-      {en:'boots', pt:'botas', emoji:'🥾', say:'BÚTS', aliases:['boot']}
+      {en:'shirt', pt:'camisa', emoji:'👕', say:'CHÂRT', aliases:['shit','sheet','short','shirts']},
+      {en:'pants', pt:'calça', emoji:'👖', say:'PÉNTS', aliases:['pence','pants','bands']},
+      {en:'dress', pt:'vestido', emoji:'👗', say:'DRÉS', aliases:['tress','stress','dresses']},
+      {en:'shoes', pt:'sapatos', emoji:'👟', say:'CHÚZ', aliases:['shoe','choose','shows']},
+      {en:'socks', pt:'meias', emoji:'🧦', say:'SÓKS', aliases:['sock','sox','sucks']},
+      {en:'hat', pt:'chapéu', emoji:'👒', say:'RRÉT', tip:'O H tem som de RR: "rrét"! 😉', aliases:['hut','had','hats','rat']},
+      {en:'cap', pt:'boné', emoji:'🧢', say:'QUÉP', aliases:['cup','gap','caps']},
+      {en:'jacket', pt:'casaco', emoji:'🧥', say:'DJÉ-quet', aliases:['jackets','jack it']},
+      {en:'shorts', pt:'bermuda', emoji:'🩳', say:'CHÓRTS', aliases:['short','shots','sorts']},
+      {en:'boots', pt:'botas', emoji:'🥾', say:'BÚTS', aliases:['boot','boats','booth']}
     ]
   },
   {
     id:'school', name:'Escola', icon:'✏️', bg:'linear-gradient(135deg,#22b573,#29b6d8)',
     words:[
-      {en:'book', pt:'livro', emoji:'📖', say:'BÚK'},
-      {en:'pen', pt:'caneta', emoji:'🖊️', say:'PÉN'},
+      {en:'book', pt:'livro', emoji:'📖', say:'BÚK', aliases:['buck','books']},
+      {en:'pen', pt:'caneta', emoji:'🖊️', say:'PÉN', aliases:['pan','ben','pain','pens']},
       {en:'pencil', pt:'lápis', emoji:'✏️', say:'PÊN-sôu'},
       {en:'backpack', pt:'mochila', emoji:'🎒', say:'BÉK-pék'},
-      {en:'scissors', pt:'tesoura', emoji:'✂️', say:'SÍ-zers'},
+      {en:'scissors', pt:'tesoura', emoji:'✂️', say:'SÍ-zers', aliases:['sisters','seasons','scissor']},
       {en:'ruler', pt:'régua', emoji:'📏', say:'RÚ-ler'},
       {en:'notebook', pt:'caderno', emoji:'📓', say:'NÔUT-búk'},
       {en:'crayon', pt:'giz de cera', emoji:'🖍️', say:'CRÊI-on'},
-      {en:'chair', pt:'cadeira', emoji:'🪑', say:'TCHÉR'},
-      {en:'clock', pt:'relógio', emoji:'⏰', say:'CLÓK'}
+      {en:'chair', pt:'cadeira', emoji:'🪑', say:'TCHÉR', aliases:['share','chairs','cher']},
+      {en:'clock', pt:'relógio', emoji:'⏰', say:'CLÓK', aliases:['block','lock','cluck','oclock','clocks']}
+    ]
+  },
+  {
+    id:'soccer', name:'Futebol', icon:'⚽', bg:'linear-gradient(135deg,#16a34a,#facc15)',
+    words:[
+      {en:'ball', pt:'bola', emoji:'⚽', say:'BÓL', aliases:['bald','bowl','balls','bol']},
+      {en:'goal', pt:'gol', emoji:'🥅', say:'GÔUL', aliases:['gold','goals','ghoul','go']},
+      {en:'player', pt:'jogador', emoji:'🏃', say:'PLÊI-er', aliases:['players','prayer','play']},
+      {en:'team', pt:'time', emoji:'👥', say:'TÍM', aliases:['teen','tim','theme','teams']},
+      {en:'jersey', pt:'camisa do time', emoji:'🎽', say:'DJÂR-zi', aliases:['jerseys','jessie','jazzy']},
+      {en:'stadium', pt:'estádio', emoji:'🏟️', say:'STÊI-di-um', aliases:['stadion','stadiums']},
+      {en:'trophy', pt:'troféu', emoji:'🏆', say:'TRÔU-fi', aliases:['trophies','trofi']},
+      {en:'flag', pt:'bandeira', emoji:'🚩', say:'FLÉG', aliases:['flags','flat','flack']}
     ]
   },
   {
     id:'animals', name:'Animais', icon:'🐶', bg:'linear-gradient(135deg,#ffb627,#ff7846)',
     words:[
-      {en:'cat', pt:'gato', emoji:'🐱', say:'QUÉT'},
-      {en:'dog', pt:'cachorro', emoji:'🐶', say:'DÓG'},
+      {en:'cat', pt:'gato', emoji:'🐱', say:'QUÉT', aliases:['cut','kat','cats']},
+      {en:'dog', pt:'cachorro', emoji:'🐶', say:'DÓG', aliases:['doug','dogs','talk']},
+      {en:'cow', pt:'vaca', emoji:'🐮', say:'CÁU', aliases:['cows','how','kau']},
+      {en:'sheep', pt:'ovelha', emoji:'🐑', say:'CHÍP', aliases:['ship','cheap','sheeps','chip']},
+      {en:'horse', pt:'cavalo', emoji:'🐴', say:'RRÓRS', tip:'O H tem som de RR: "rrórs"! 😉', aliases:['house','hers','horses']},
+      {en:'bird', pt:'pássaro', emoji:'🐦', say:'BÂRD', aliases:['bert','board','birds']},
+      {en:'lion', pt:'leão', emoji:'🦁', say:'LÁI-on', aliases:['line','lying','lions']},
       {en:'fish', pt:'peixe', emoji:'🐟', say:'FÍCH'},
-      {en:'bird', pt:'pássaro', emoji:'🐦', say:'BÂRD'},
-      {en:'lion', pt:'leão', emoji:'🦁', say:'LÁI-on'},
-      {en:'monkey', pt:'macaco', emoji:'🐵', say:'MÃN-qui'},
+      {en:'monkey', pt:'macaco', emoji:'🐵', say:'MÃN-qui', aliases:['money','monk','monkeys']},
       {en:'elephant', pt:'elefante', emoji:'🐘', say:'É-le-fent'},
-      {en:'duck', pt:'pato', emoji:'🦆', say:'DÂK'},
-      {en:'horse', pt:'cavalo', emoji:'🐴', say:'RRÓRS', tip:'O H tem som de RR: "rrórs"! 😉'},
-      {en:'rabbit', pt:'coelho', emoji:'🐰', say:'RÉ-bit'}
+      {en:'duck', pt:'pato', emoji:'🦆', say:'DÂK', aliases:['dock','tuck','ducks']},
+      {en:'rabbit', pt:'coelho', emoji:'🐰', say:'RÉ-bit', aliases:['habit','rabbits']}
     ]
   }
 ];
@@ -376,17 +392,39 @@ function lev(a,b){
     d[i][j]=Math.min(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
   return d[m][n];
 }
+/* O Google censura palavrões com asteriscos (ex.: "peach" mal pronunciado vira "b****").
+   Destapamos o palavrão só para comparar com a palavra-alvo — nunca para mostrar. */
+const CENSORED = { b:'bitch', s:'shit', f:'fuck', a:'ass', d:'dick', c:'cock', p:'piss', h:'hell' };
+function expandCensored(alts){
+  const out = alts.slice();
+  for (const a of alts){
+    if (a.indexOf('*') !== -1){
+      const m = a.toLowerCase().match(/([a-z])h?\*+/);
+      if (m && CENSORED[m[1]]) out.push(a.toLowerCase().replace(/[a-z]h?\*+/, CENSORED[m[1]]));
+    }
+  }
+  return out;
+}
+/* Sotaque brasileiro: P/B, T/D, K/G, F/V, S/Z no início da palavra se confundem. */
+const VOICE_SWAP = { b:'p', p:'b', d:'t', t:'d', g:'k', k:'g', v:'f', f:'v', z:'s', s:'z' };
+function closeEnough(heard, target){
+  if (heard === target) return true;
+  const tol = target.length <= 4 ? 1 : 2;
+  if (lev(heard, target) <= tol) return true;
+  const sw = VOICE_SWAP[heard[0]];
+  if (sw && lev(sw + heard.slice(1), target) <= tol) return true;
+  return false;
+}
 function matches(word, alts){
   const targets = [word.en].concat(word.aliases||[]).map(norm);
-  for (const alt of alts){
+  for (const alt of expandCensored(alts)){
     const heard = norm(alt);
     if (!heard) continue;
     const heardWords = heard.split(' ');
     for (const t of targets){
-      if (heard === t || heardWords.includes(t)) return true;
-      const tol = t.length <= 4 ? 1 : 2;
-      if (lev(heard, t) <= tol) return true;
-      for (const hw of heardWords) if (lev(hw, t) <= tol) return true;
+      if (heardWords.includes(t)) return true;
+      if (closeEnough(heard, t)) return true;
+      for (const hw of heardWords) if (closeEnough(hw, t)) return true;
     }
   }
   return false;
@@ -589,8 +627,8 @@ function reallyListen(w, fb, btn){
       } else {
         cur.attempts++;
         sndTry();
-        const heard = alts[0] ? esc(alts[0]) : '...';
-        let html = '<div class="fb-try">🙈 Quase! Eu ouvi: “'+heard+'”.<br>Tenta falar assim: <b>'+esc(w.say)+'</b>';
+        const heard = (alts[0] && alts[0].indexOf('*') === -1) ? esc(alts[0]) : '';
+        let html = '<div class="fb-try">🙈 Quase!' + (heard ? ' Eu ouvi: “'+heard+'”.' : '') + '<br>Tenta falar assim: <b>'+esc(w.say)+'</b>';
         if (cur.attempts >= 2){
           html += '<br><br>Vamos ouvir bem devagarinho? 🐢';
           setTimeout(()=>speak(w.en, 0.45), 600);
