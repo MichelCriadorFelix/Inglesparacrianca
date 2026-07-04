@@ -6,12 +6,13 @@ Mini aplicativo para ensinar inglês a crianças de 6 anos em fase de alfabetiza
 
 **7 módulos:** 🍎 Frutas · 🌈 Cores · 🔢 Números · 👗 Roupas · ✏️ Escola · ⚽ Futebol · 🐶 Animais
 
-**3 atividades em cada módulo:**
+**4 atividades em cada módulo:**
 
 | Atividade | O que faz |
 |---|---|
 | 📖 **Aprender** | Cartões grandes com figura, a palavra em inglês, a tradução e a dica de pronúncia "fala assim" escrita do jeito que se fala (ex.: APPLE → "É-pôu"). Botão 🔊 para ouvir e 🐢 para ouvir bem devagar. |
 | 🎤 **Falar** | A criança fala no microfone e o app reconhece a voz (em inglês). Se acertou: festa e estrela ⭐. Se errou: mostra o que ela disse, repete a dica de pronúncia e toca a palavra devagarinho para ela tentar de novo. |
+| ✍️ **Montar** | A criança monta a palavra tocando nas letras embaralhadas, na ordem certa — igual ao exercício de escrever da prova. Errou 2 vezes? A letra certa pisca em amarelo para ajudar. |
 | 🎮 **Jogar** | Quiz com 8 perguntas misturadas (ouvir e escolher a figura, ver a figura e escolher a palavra, ler a palavra e escolher a figura). Ganha até 3 estrelas por jogo, com confete e sons de comemoração. |
 
 O progresso (estrelas) fica salvo no aparelho.

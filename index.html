@@ -145,6 +145,23 @@
   .progressbar { height:16px; background:rgba(255,255,255,.55); border-radius:10px; overflow:hidden; margin-bottom:14px; }
   .progressbar div { height:100%; background:var(--sun); border-radius:10px; transition:width .4s; }
 
+  .slots { display:flex; flex-wrap:wrap; justify-content:center; gap:6px; margin-top:16px; }
+  .slot {
+    width:42px; height:50px; border:3px dashed #c4b5fd; border-radius:12px; background:#fbf7ff;
+    font-size:26px; font-weight:700; color:var(--ink); display:flex; align-items:center; justify-content:center;
+  }
+  .slot.small { width:32px; height:42px; font-size:20px; border-width:2px; }
+  .slot.filled { border-style:solid; border-color:var(--leaf); background:#e3f9ec; animation:pop .25s; }
+  .tiles { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:16px; }
+  .tile {
+    width:50px; height:56px; font-size:26px; font-weight:700; border:none; border-radius:14px;
+    background:var(--grape); color:#fff; box-shadow:0 5px 0 var(--grape-dk); cursor:pointer; font-family:inherit;
+  }
+  .tile:active { transform:translateY(3px); box-shadow:0 2px 0 var(--grape-dk); }
+  .tile:disabled { opacity:.2; box-shadow:none; cursor:default; }
+  .tile.hint { background:var(--sun); box-shadow:0 5px 0 var(--sun-dk); animation:pulse .8s infinite; }
+  .tile.wrong { background:var(--coral); box-shadow:0 5px 0 var(--coral-dk); animation:shake .4s; }
+
   .result-stars { font-size:56px; letter-spacing:6px; margin:10px 0; }
   .result-msg { font-size:24px; font-weight:700; color:var(--ink); text-wrap:balance; }
   .result-sub { font-size:17px; color:var(--ink-soft); margin-top:6px; font-weight:600; }
@@ -294,10 +311,10 @@ function saveProgress(p){ try { localStorage.setItem(STORE_KEY, JSON.stringify(p
 let progress = loadProgress();
 function modStars(id){
   const p = progress[id] || {};
-  return (p.quizStars||0) + (p.speakStars||0);
+  return (p.quizStars||0) + (p.speakStars||0) + (p.spellStars||0);
 }
 function totalStars(){ return MODULES.reduce((s,m)=>s+modStars(m.id),0); }
-const MAX_STARS_MOD = 6; /* 3 do quiz + 3 do falar */
+const MAX_STARS_MOD = 9; /* 3 do quiz + 3 do falar + 3 do montar */
 
 /* ====================== SOM (Web Audio) ====================== */
 let audioCtx = null;
@@ -455,7 +472,7 @@ function sayHtml(say){
 function visual(w, size){
   const s = size||110;
   if (w.color){
-    return '<div class="swatch" style="width:'+s+'px;height:'+s+'px;background:'+w.color+';"></div>';
+    return '<div class="swatch" style="width:'+s+'px;height:'+s+'px;background:'+w.color+'; cursor:pointer;" onclick="speakCur(0.8)"></div>';
   }
   return '<span class="word-emoji" style="font-size:'+s+'px;" onclick="speakCur(0.8)">'+w.emoji+'</span>';
 }
@@ -500,6 +517,9 @@ function openModule(id){
       '</button>' +
       '<button class="mode-btn" onclick="startSpeak()">' +
         '<span class="ic">🎤</span><span><span class="t">Falar</span><span class="s">Fale no microfone e ganhe estrelas</span></span>' +
+      '</button>' +
+      '<button class="mode-btn" onclick="startSpell()">' +
+        '<span class="ic">✍️</span><span><span class="t">Montar</span><span class="s">Monte a palavra letra por letra, como na prova</span></span>' +
       '</button>' +
       '<button class="mode-btn" onclick="startQuiz()">' +
         '<span class="ic">🎮</span><span><span class="t">Jogar</span><span class="s">Quiz com prêmios! Acerte e ganhe ⭐</span></span>' +
@@ -690,6 +710,108 @@ function speakDone(){
     '</div>';
 }
 
+/* ---------- MODO MONTAR (escrever letra por letra, como na prova) ---------- */
+function startSpell(){
+  sndTap();
+  cur.idx = 0; cur.spellGood = 0;
+  spellSetup();
+  renderSpell();
+  setTimeout(()=>speak(cur.mod.words[cur.idx].en, 0.8), 350);
+}
+function spellSetup(){
+  cur.spellWord = cur.mod.words[cur.idx].en.toUpperCase();
+  cur.spellPos = 0; cur.spellErr = 0;
+  cur.spellTiles = shuffle(cur.spellWord.split('')).map(ch => ({ ch: ch, used: false }));
+}
+function renderSpell(wrongIdx){
+  const w = cur.mod.words[cur.idx];
+  const n = cur.mod.words.length;
+  const small = cur.spellWord.length > 7;
+  const slots = cur.spellWord.split('').map((ch,i) =>
+    '<span class="slot'+(i<cur.spellPos?' filled':'')+(small?' small':'')+'">'+(i<cur.spellPos?ch:'')+'</span>').join('');
+  const showHint = cur.spellErr >= 2 && cur.spellPos < cur.spellWord.length;
+  let hintGiven = false;
+  const tiles = cur.spellTiles.map((t,i) => {
+    let cls = 'tile';
+    if (!t.used && showHint && !hintGiven && t.ch === cur.spellWord[cur.spellPos]){ cls += ' hint'; hintGiven = true; }
+    if (i === wrongIdx) cls += ' wrong';
+    return '<button class="'+cls+'" '+(t.used?'disabled':'')+' onclick="spellTap('+i+')">'+t.ch+'</button>';
+  }).join('');
+  app.innerHTML =
+    topbar('✍️ Montar', 'openModule(\''+cur.mod.id+'\')') +
+    '<div class="progressbar"><div style="width:'+(cur.idx/n*100)+'%"></div></div>' +
+    '<div class="card">' +
+      visual(w, 80) +
+      '<div class="word-pt" style="margin-top:6px;">Monte <b>'+esc(w.pt)+'</b> em inglês:</div>' +
+      '<div class="slots">'+slots+'</div>' +
+      '<div class="tiles">'+tiles+'</div>' +
+      '<div class="round-btns">' +
+        '<button class="rbtn listen" onclick="speakCur(0.8)">🔊<small>OUVIR</small></button>' +
+        '<button class="rbtn slow" onclick="speakCur(0.45)">🐢<small>DEVAGAR</small></button>' +
+      '</div>' +
+      '<div class="feedback" id="fb" style="min-height:50px;">' +
+        (showHint ? '<div class="fb-info">💡 Toca na letra amarela que está piscando!</div>' : '') +
+      '</div>' +
+    '</div>' +
+    '<div class="nav-row">' +
+      '<span class="counter">Palavra '+(cur.idx+1)+' de '+n+'</span>' +
+      '<button class="nav-btn" onclick="spellNext()">Pular ➡</button>' +
+    '</div>';
+  window.scrollTo(0,0);
+}
+function spellTap(i){
+  const t = cur.spellTiles[i];
+  if (!t || t.used || cur.spellPos >= cur.spellWord.length) return;
+  if (t.ch === cur.spellWord[cur.spellPos]){
+    t.used = true; cur.spellPos++;
+    tone(500 + cur.spellPos*60, .09);
+    renderSpell();
+    if (cur.spellPos >= cur.spellWord.length){
+      if (cur.spellErr <= 2) cur.spellGood++;
+      sndOk(); confetti(16);
+      speak(cur.mod.words[cur.idx].en, 0.85);
+      document.getElementById('fb').innerHTML =
+        '<div class="fb-ok">🎉 '+esc(cur.spellWord)+'! Você escreveu certinho!</div>';
+      setTimeout(spellNext, 1800);
+    }
+  } else {
+    cur.spellErr++;
+    sndTry();
+    renderSpell(i);
+  }
+}
+function spellNext(){
+  if (cur.idx < cur.mod.words.length - 1){
+    cur.idx++;
+    spellSetup();
+    renderSpell();
+    setTimeout(()=>speak(cur.mod.words[cur.idx].en, 0.8), 350);
+  } else {
+    spellDone();
+  }
+}
+function spellDone(){
+  const n = cur.mod.words.length;
+  const ratio = cur.spellGood / n;
+  const stars = ratio >= 0.9 ? 3 : ratio >= 0.6 ? 2 : ratio > 0 ? 1 : 0;
+  progress[cur.mod.id] = progress[cur.mod.id] || {};
+  if ((progress[cur.mod.id].spellStars||0) < stars){ progress[cur.mod.id].spellStars = stars; }
+  saveProgress(progress);
+  if (stars >= 2){ sndWin(); confetti(50); } else { sndOk(); }
+  app.innerHTML =
+    topbar('✍️ Montar', 'openModule(\''+cur.mod.id+'\')') +
+    '<div class="card center">' +
+      '<div style="font-size:74px;">'+(stars>=3?'🏆':stars===2?'🥳':'💪')+'</div>' +
+      '<div class="result-stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div>' +
+      '<div class="result-msg">Você montou '+cur.spellGood+' de '+n+' palavras quase sem errar!</div>' +
+      '<div class="result-sub">'+(stars>=3?'UAU! Escrevendo igual gente grande! 🌟':stars===2?'Muito bom! Falta pouquinho!':'Continue treinando, cada letra conta!')+'</div>' +
+      '<div class="round-btns">' +
+        '<button class="nav-btn" onclick="startSpell()">Montar de novo 🔁</button>' +
+        '<button class="nav-btn go" onclick="startQuiz()">Jogar 🎮</button>' +
+      '</div>' +
+    '</div>';
+}
+
 /* ---------- MODO JOGAR (QUIZ) ---------- */
 const QUIZ_LEN = 8;
 function startQuiz(){
@@ -717,11 +839,12 @@ function renderQuiz(){
            '<button class="rbtn listen" style="margin:6px auto; display:block;" onclick="speakQuizWord()">🔊<small>OUVIR</small></button>';
     optHtml = opts.map(o=>'<button class="qopt" onclick="answer(this,'+(o.en===w.en)+')">'+optVisual(o)+'</button>').join('');
   } else if (q.type === 'pic2word'){
-    head = '<div class="quiz-q">👀 Que palavra é essa?</div><div class="quiz-big">'+optVisual(w)+'</div>';
+    head = '<div class="quiz-q">👀 Que palavra é essa? (toque na figura para ouvir!)</div>' +
+           '<div class="quiz-big" style="cursor:pointer;" onclick="speakQuizWord()">'+optVisual(w)+'</div>';
     optHtml = opts.map(o=>'<button class="qopt word-opt" onclick="answer(this,'+(o.en===w.en)+')">'+esc(o.en)+'</button>').join('');
   } else {
     head = '<div class="quiz-q">📖 Leia a palavra e escolha!</div>' +
-           '<div class="quiz-word-big">'+esc(w.en)+'</div>' +
+           '<div class="quiz-word-big" style="cursor:pointer;" onclick="speakQuizWord()">'+esc(w.en)+'</div>' +
            '<div class="word-say" style="font-size:16px;">🗣️ “'+sayHtml(w.say)+'”</div>';
     optHtml = opts.map(o=>'<button class="qopt" onclick="answer(this,'+(o.en===w.en)+')">'+optVisual(o)+'</button>').join('');
   }
@@ -791,6 +914,7 @@ window.startLearn = startLearn; window.speakCur = speakCur;
 window.learnMove = learnMove; window.learnDone = learnDone;
 window.startSpeak = startSpeak; window.doListen = doListen; window.speakNext = speakNext; window.speakSelfOk = speakSelfOk;
 window.startQuiz = startQuiz; window.answer = answer; window.speakQuizWord = speakQuizWord;
+window.startSpell = startSpell; window.spellTap = spellTap; window.spellNext = spellNext;
 
 goHome();
 </script>
