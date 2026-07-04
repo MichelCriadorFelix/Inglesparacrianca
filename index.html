@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Inglês Divertido 🌟</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffb627">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Inglês">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -478,7 +486,7 @@ function visual(w, size){
 }
 function topbar(title, backFn){
   return '<div class="topbar">' +
-    '<button class="btn-home" onclick="'+backFn+'" aria-label="Voltar">⬅️</button>' +
+    '<button class="btn-home" onclick="goBack()" aria-label="Voltar">⬅️</button>' +
     '<h2>'+title+'</h2>' +
     '<span class="star-count">⭐ '+totalStars()+'</span>' +
   '</div>';
@@ -487,8 +495,70 @@ function topbar(title, backFn){
 /* ====================== TELAS ====================== */
 let cur = { mod:null, idx:0, attempts:0, speakOk:0, quiz:null };
 
+/* ===== Botão voltar do celular: navega DENTRO do app, como app nativo ===== */
+let navLevel = 0, navigating = false;
+function pushNav(level, state){
+  if (navigating) return;
+  try {
+    if (level > navLevel) history.pushState(state, '');
+    else history.replaceState(state, '');
+  } catch(e){}
+  navLevel = level;
+}
+window.addEventListener('popstate', e => {
+  navigating = true;
+  const s = e.state || { screen: 'home' };
+  if (s.screen === 'module' || s.screen === 'activity'){
+    navLevel = 1;
+    openModule(s.mod);
+  } else {
+    navLevel = 0;
+    goHome();
+  }
+  navigating = false;
+});
+function goBack(){ sndTap(); try { history.back(); } catch(e){ goHome(); } }
+
+/* ===== Botão de instalar (Android/Windows: instala direto; iPhone: mostra o passo a passo) ===== */
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  updateInstallBtn();
+});
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  confetti(30);
+  updateInstallBtn();
+});
+function isStandalone(){
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+function updateInstallBtn(){
+  const b = document.getElementById('installBtn');
+  if (!b) return;
+  b.style.display = (isStandalone() || inSandbox()) ? 'none' : 'inline-block';
+}
+function doInstall(){
+  sndTap();
+  if (deferredPrompt){
+    const p = deferredPrompt;
+    deferredPrompt = null;
+    p.prompt();
+    p.userChoice.then(() => updateInstallBtn());
+    return;
+  }
+  const help = document.getElementById('installHelp');
+  if (!help) return;
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  help.innerHTML = ios
+    ? '<div class="fb-info" style="margin-top:10px; text-align:left;">🍏 No iPhone/iPad (Safari):<br>1. Toque no botão <b>Compartilhar</b> (quadrado com seta para cima ⬆️)<br>2. Escolha <b>“Adicionar à Tela de Início”</b><br>3. Toque em <b>Adicionar</b> — pronto, vira um app! 🎉</div>'
+    : '<div class="fb-info" style="margin-top:10px; text-align:left;">📲 Toque no menu <b>⋮</b> do navegador e escolha <b>“Instalar aplicativo”</b> (ou <b>“Adicionar à tela inicial”</b>).</div>';
+}
+
 function goHome(){
   sndTap();
+  pushNav(0, { screen: 'home' });
   const cards = MODULES.map(m =>
     '<button class="module-card" style="background:'+m.bg+'" onclick="openModule(\''+m.id+'\')">' +
       '<span class="m-icon">'+m.icon+'</span>' +
@@ -501,13 +571,17 @@ function goHome(){
       '<h1>Inglês Divertido!</h1>' +
       '<p>Escolhe o que você quer aprender hoje 💖</p>' +
       '<p style="margin-top:8px;"><span class="star-count">⭐ Suas estrelas: '+totalStars()+'</span></p>' +
+      '<p class="mt"><button class="nav-btn go" id="installBtn" style="display:none;" onclick="doInstall()">📲 Instalar o aplicativo</button></p>' +
+      '<div id="installHelp"></div>' +
     '</div>' +
     '<div class="modules">'+cards+'</div>';
   window.scrollTo(0,0);
+  updateInstallBtn();
 }
 
 function openModule(id){
   sndTap();
+  pushNav(1, { screen: 'module', mod: id });
   cur.mod = MODULES.find(m=>m.id===id);
   app.innerHTML =
     topbar(cur.mod.icon+' '+esc(cur.mod.name), 'goHome()') +
@@ -529,7 +603,7 @@ function openModule(id){
 }
 
 /* ---------- MODO APRENDER ---------- */
-function startLearn(){ sndTap(); cur.idx = 0; renderLearn(); }
+function startLearn(){ sndTap(); pushNav(2, { screen:'activity', mod:cur.mod.id }); cur.idx = 0; renderLearn(); }
 function renderLearn(){
   const w = cur.mod.words[cur.idx];
   const n = cur.mod.words.length;
@@ -579,6 +653,7 @@ function learnDone(){
 /* ---------- MODO FALAR ---------- */
 function startSpeak(){
   sndTap();
+  pushNav(2, { screen:'activity', mod:cur.mod.id });
   cur.idx = 0; cur.attempts = 0; cur.speakOk = 0;
   renderSpeak();
 }
@@ -713,6 +788,7 @@ function speakDone(){
 /* ---------- MODO MONTAR (escrever letra por letra, como na prova) ---------- */
 function startSpell(){
   sndTap();
+  pushNav(2, { screen:'activity', mod:cur.mod.id });
   cur.idx = 0; cur.spellGood = 0;
   spellSetup();
   renderSpell();
@@ -816,6 +892,7 @@ function spellDone(){
 const QUIZ_LEN = 8;
 function startQuiz(){
   sndTap();
+  pushNav(2, { screen:'activity', mod:cur.mod.id });
   const words = shuffle(cur.mod.words).slice(0, QUIZ_LEN);
   cur.quiz = { qs: words.map(w => ({ w, type: pickType() })), i: 0, score: 0 };
   renderQuiz();
@@ -915,8 +992,14 @@ window.learnMove = learnMove; window.learnDone = learnDone;
 window.startSpeak = startSpeak; window.doListen = doListen; window.speakNext = speakNext; window.speakSelfOk = speakSelfOk;
 window.startQuiz = startQuiz; window.answer = answer; window.speakQuizWord = speakQuizWord;
 window.startSpell = startSpell; window.spellTap = spellTap; window.spellNext = spellNext;
+window.goBack = goBack; window.doInstall = doInstall;
 
 goHome();
+
+/* registra o robô de bastidores (offline + instalação) — fora da página de teste */
+if ('serviceWorker' in navigator && !inSandbox()){
+  try { navigator.serviceWorker.register('./sw.js').catch(function(){}); } catch(e){}
+}
 </script>
 </body>
 </html>
