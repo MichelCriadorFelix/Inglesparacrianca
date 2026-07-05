@@ -170,6 +170,27 @@
   .tile.hint { background:var(--sun); box-shadow:0 5px 0 var(--sun-dk); animation:pulse .8s infinite; }
   .tile.wrong { background:var(--coral); box-shadow:0 5px 0 var(--coral-dk); animation:shake .4s; }
 
+  .pair-cols { display:grid; grid-template-columns:1fr 1.35fr; gap:10px; margin-top:14px; }
+  .pcol { display:flex; flex-direction:column; gap:10px; }
+  .pterm, .pfn {
+    border:4px solid #eadcf7; background:#fbf7ff; border-radius:16px; padding:10px 8px; cursor:pointer;
+    font-size:16px; font-weight:700; color:var(--ink); font-family:inherit; min-height:58px;
+  }
+  .pfn { font-weight:600; font-size:14px; text-align:left; padding-left:12px; }
+  .pterm.sel { border-color:var(--sun); background:#fff6dd; animation:pop .2s; }
+  .pterm.done, .pfn.done { border-color:var(--leaf); background:#e3f9ec; opacity:.55; cursor:default; }
+  .pfn.wrong { border-color:var(--coral); background:#ffe8ec; animation:shake .4s; }
+  .buckets { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+  .bucket {
+    border:none; border-radius:20px; color:#fff; font-size:17px; font-weight:700; padding:16px 8px;
+    cursor:pointer; font-family:inherit;
+  }
+  .bucket.a { background:var(--sky); box-shadow:0 5px 0 var(--sky-dk); }
+  .bucket.b { background:var(--grape); box-shadow:0 5px 0 var(--grape-dk); }
+  .bucket:active { transform:translateY(4px); box-shadow:none; }
+  .sort-item { font-size:64px; }
+  .sort-word { font-size:26px; font-weight:700; color:var(--ink); margin-top:4px; }
+
   .result-stars { font-size:56px; letter-spacing:6px; margin:10px 0; }
   .result-msg { font-size:24px; font-weight:700; color:var(--ink); text-wrap:balance; }
   .result-sub { font-size:17px; color:var(--ink-soft); margin-top:6px; font-weight:600; }
@@ -317,89 +338,169 @@ const SCIENCE_MODULES = [
   {
     id:'c-terra', name:'Terra e Céu', icon:'🌍', bg:'linear-gradient(135deg,#3b82f6,#8b5cf6)',
     words:[
-      {en:'rotação', pt:'a Terra gira em torno de si mesma, como um pião! Dura 24 horas (1 dia)', emoji:'🔄', say:'RO-TA-ÇÃO', aliases:['rotacao']},
-      {en:'translação', pt:'a Terra dá a volta ao redor do Sol. Dura 1 ano (365 dias)', emoji:'🌍', say:'TRANS-LA-ÇÃO', aliases:['translacao']},
-      {en:'dia', pt:'acontece quando o nosso lado da Terra está virado para o Sol', emoji:'🌞', say:'DI-A'},
-      {en:'noite', pt:'acontece quando o nosso lado da Terra fica longe do Sol', emoji:'🌙', say:'NOI-TE'},
-      {en:'sol', pt:'a estrela que ilumina e aquece a Terra', emoji:'☀️', say:'SOL'},
-      {en:'terra', pt:'o planeta onde nós moramos', emoji:'🌎', say:'TER-RA'},
-      {en:'órbita', pt:'o caminho que a Terra faz ao redor do Sol', emoji:'🪐', say:'ÓR-BI-TA', aliases:['orbita']},
-      {en:'pião', pt:'a Terra gira como um pião — isso é a rotação!', emoji:'🪀', say:'PI-ÃO', aliases:['piao']}
+      {en:'rotação', pt:'a Terra gira em torno de si mesma, como um pião! Dura 24 horas (1 dia)', fn:'a Terra gira em torno de si mesma', emoji:'🔄', say:'RO-TA-ÇÃO'},
+      {en:'translação', pt:'a Terra dá a volta ao redor do Sol. Dura 1 ano (365 dias)', fn:'a Terra dá a volta ao redor do Sol', emoji:'🌍', say:'TRANS-LA-ÇÃO'},
+      {en:'dia', pt:'acontece quando o nosso lado da Terra está virado para o Sol', fn:'o lado da Terra virado para o Sol', emoji:'🌞', say:'DI-A'},
+      {en:'noite', pt:'acontece quando o nosso lado da Terra fica longe do Sol', fn:'o lado da Terra longe do Sol', emoji:'🌙', say:'NOI-TE'},
+      {en:'sol', pt:'a estrela que ilumina e aquece a Terra', fn:'ilumina e aquece a Terra', emoji:'☀️', say:'SOL'},
+      {en:'terra', pt:'o planeta onde nós moramos', fn:'o planeta onde moramos', emoji:'🌎', say:'TER-RA'},
+      {en:'órbita', pt:'o caminho que a Terra faz ao redor do Sol', fn:'o caminho da Terra ao redor do Sol', emoji:'🪐', say:'ÓR-BI-TA'},
+      {en:'pião', pt:'a Terra gira como um pião — isso é a rotação!', fn:'brinquedo que gira como a Terra', emoji:'🪀', say:'PI-ÃO'}
+    ],
+    sort:{ cats:['ROTAÇÃO 🔄','TRANSLAÇÃO 🌍'], items:[
+      {t:'Gira em torno de si mesma', e:'🔄', c:0},
+      {t:'Dá a volta ao redor do Sol', e:'🌍', c:1},
+      {t:'Dura 24 horas (1 dia)', e:'⏰', c:0},
+      {t:'Dura 1 ano (365 dias)', e:'🗓️', c:1},
+      {t:'Faz o dia e a noite', e:'🌗', c:0},
+      {t:'Faz as estações do ano', e:'🌸', c:1}
+    ]},
+    questions:[
+      {q:'A rotação da Terra é o movimento em que ela:', opts:['Gira em torno de si mesma','Gira ao redor do Sol'], a:0, why:'Rotação = girar em si mesma, como um pião! 🪀'},
+      {q:'A translação da Terra é o movimento em que ela:', opts:['Gira ao redor do Sol','Gira em torno de si mesma'], a:0, why:'Translação = dar a volta ao redor do Sol! ☀️'},
+      {q:'Quanto tempo dura a ROTAÇÃO?', opts:['24 horas (1 dia)','365 dias (1 ano)'], a:0, why:'Uma rotação completa = 1 dia!'},
+      {q:'Quanto tempo dura a TRANSLAÇÃO?', opts:['1 ano (365 dias)','24 horas'], a:0, why:'Uma volta ao redor do Sol = 1 ano!'},
+      {q:'Por causa da ROTAÇÃO temos:', opts:['O dia e a noite','As estações do ano'], a:0, why:'A Terra gira e o Sol ilumina um lado de cada vez!'},
+      {q:'Por causa da TRANSLAÇÃO temos:', opts:['As estações do ano','O dia e a noite'], a:0, why:'A volta ao redor do Sol traz primavera, verão, outono e inverno!'},
+      {q:'O caminho que a Terra faz ao redor do Sol chama-se:', opts:['Órbita','Estrada'], a:0, why:'Órbita é o caminho da Terra no espaço!'},
+      {q:'A Terra realiza os dois movimentos:', opts:['Ao mesmo tempo','Um de cada vez'], a:0, why:'Rotação e translação acontecem juntos, o tempo todo!'}
     ]
   },
   {
     id:'c-estacoes', name:'Estações do Ano', icon:'🌸', bg:'linear-gradient(135deg,#f472b6,#fb923c)',
     words:[
-      {en:'primavera', pt:'a estação das flores', emoji:'🌸', say:'PRI-MA-VE-RA'},
-      {en:'verão', pt:'a estação mais quente do ano — praia e sorvete!', emoji:'🏖️', say:'VE-RÃO', aliases:['verao']},
-      {en:'outono', pt:'as folhas caem das árvores e esfria um pouquinho', emoji:'🍂', say:'OU-TO-NO'},
-      {en:'inverno', pt:'a estação mais fria do ano — em alguns lugares neva!', emoji:'⛄', say:'IN-VER-NO'},
-      {en:'ano', pt:'365 dias — o tempo de uma volta completa ao redor do Sol', emoji:'🗓️', say:'A-NO'},
-      {en:'neve', pt:'floquinhos de gelo que caem em lugares muito frios', emoji:'❄️', say:'NE-VE'},
-      {en:'calor', pt:'o verão é a estação do...', emoji:'🥵', say:'CA-LOR'},
-      {en:'frio', pt:'o inverno é a estação do...', emoji:'🥶', say:'FRI-O'}
+      {en:'primavera', pt:'a estação das flores', fn:'a estação das flores', emoji:'🌸', say:'PRI-MA-VE-RA'},
+      {en:'verão', pt:'a estação mais quente do ano — praia e sorvete!', fn:'a estação mais quente do ano', emoji:'🏖️', say:'VE-RÃO'},
+      {en:'outono', pt:'as folhas caem das árvores e esfria um pouquinho', fn:'as folhas caem das árvores', emoji:'🍂', say:'OU-TO-NO'},
+      {en:'inverno', pt:'a estação mais fria do ano — em alguns lugares neva!', fn:'a estação mais fria do ano', emoji:'⛄', say:'IN-VER-NO'},
+      {en:'ano', pt:'365 dias — o tempo de uma volta completa ao redor do Sol', fn:'tem 365 dias', emoji:'🗓️', say:'A-NO'},
+      {en:'neve', pt:'floquinhos de gelo que caem em lugares muito frios', fn:'pode cair no inverno', emoji:'❄️', say:'NE-VE'},
+      {en:'calor', pt:'no verão faz muito calor', fn:'faz muito no verão', emoji:'🥵', say:'CA-LOR'},
+      {en:'frio', pt:'no inverno faz muito frio', fn:'faz muito no inverno', emoji:'🥶', say:'FRI-O'}
+    ],
+    sort:{ cats:['VERÃO ☀️','INVERNO ❄️'], items:[
+      {t:'Calor', e:'🥵', c:0},
+      {t:'Praia', e:'🏖️', c:0},
+      {t:'Sorvete', e:'🍦', c:0},
+      {t:'Frio', e:'🥶', c:1},
+      {t:'Neve', e:'❄️', c:1},
+      {t:'Casaco', e:'🧥', c:1}
+    ]},
+    questions:[
+      {q:'Qual é a estação mais QUENTE do ano?', opts:['Verão','Inverno','Outono'], a:0, why:'No verão faz muito calor e o clima é divertido!'},
+      {q:'Qual é a estação mais FRIA do ano?', opts:['Inverno','Primavera'], a:0, why:'No inverno faz frio e em alguns lugares pode nevar!'},
+      {q:'Em qual estação as folhas caem das árvores?', opts:['Outono','Verão'], a:0, why:'No outono as folhas caem e as temperaturas ficam mais frias.'},
+      {q:'Qual é a estação das flores?', opts:['Primavera','Inverno'], a:0, why:'Na primavera as flores se abrem! 🌸'},
+      {q:'Quantas estações tem o ano?', opts:['4','2','10'], a:0, why:'Primavera, verão, outono e inverno!'},
+      {q:'As estações do ano acontecem por causa da:', opts:['Translação','Rotação'], a:0, why:'A volta da Terra ao redor do Sol muda as estações!'},
+      {q:'Em alguns lugares, no inverno pode:', opts:['Nevar','Fazer muito calor'], a:0, why:'Neve é gelinho caindo do céu nos lugares bem frios!'}
     ]
   },
   {
     id:'c-seres', name:'Seres Vivos', icon:'🌱', bg:'linear-gradient(135deg,#22b573,#84cc16)',
     words:[
-      {en:'planta', pt:'SER VIVO: nasce, cresce e precisa de água e sol', emoji:'🌱', say:'PLAN-TA'},
-      {en:'animal', pt:'SER VIVO: nasce, cresce e se alimenta (como o panda!)', emoji:'🐼', say:'A-NI-MAL'},
-      {en:'pessoa', pt:'SER VIVO: nós também somos seres vivos!', emoji:'🧒', say:'PES-SO-A'},
-      {en:'flor', pt:'SER VIVO: o girassol é uma flor', emoji:'🌻', say:'FLOR'},
-      {en:'árvore', pt:'SER VIVO: nasce de uma semente e cresce', emoji:'🌳', say:'ÁR-VO-RE', aliases:['arvore']},
-      {en:'pedra', pt:'NÃO VIVO: não nasce, não cresce, não se alimenta', emoji:'🪨', say:'PE-DRA'},
-      {en:'carro', pt:'NÃO VIVO: é uma máquina feita pelas pessoas', emoji:'🚗', say:'CAR-RO'},
-      {en:'vento', pt:'NÃO VIVO: é o ar se movendo', emoji:'🌬️', say:'VEN-TO'},
-      {en:'caderno', pt:'NÃO VIVO: objeto que usamos na escola', emoji:'📓', say:'CA-DER-NO'},
-      {en:'nuvem', pt:'NÃO VIVO: é feita de gotinhas de água no céu', emoji:'☁️', say:'NU-VEM'}
+      {en:'planta', pt:'SER VIVO: nasce, cresce e precisa de água e sol', fn:'nasce, cresce e precisa de água e sol', emoji:'🌱', say:'PLAN-TA', cat:0},
+      {en:'animal', pt:'SER VIVO: nasce, cresce e se alimenta (como o panda!)', fn:'nasce, cresce e se alimenta', emoji:'🐼', say:'A-NI-MAL', cat:0},
+      {en:'pessoa', pt:'SER VIVO: nós também somos seres vivos!', fn:'nós também somos seres vivos', emoji:'🧒', say:'PES-SO-A', cat:0},
+      {en:'flor', pt:'SER VIVO: o girassol é uma flor', fn:'o girassol é uma', emoji:'🌻', say:'FLOR', cat:0},
+      {en:'árvore', pt:'SER VIVO: nasce de uma semente e cresce', fn:'nasce de uma semente e cresce', emoji:'🌳', say:'ÁR-VO-RE', cat:0},
+      {en:'pedra', pt:'NÃO VIVO: não nasce, não cresce, não se alimenta', fn:'não nasce e não cresce', emoji:'🪨', say:'PE-DRA', cat:1},
+      {en:'carro', pt:'NÃO VIVO: é uma máquina feita pelas pessoas', fn:'máquina feita pelas pessoas', emoji:'🚗', say:'CAR-RO', cat:1},
+      {en:'vento', pt:'NÃO VIVO: é o ar se movendo', fn:'é o ar se movendo', emoji:'🌬️', say:'VEN-TO', cat:1},
+      {en:'caderno', pt:'NÃO VIVO: objeto que usamos na escola', fn:'objeto que usamos na escola', emoji:'📓', say:'CA-DER-NO', cat:1},
+      {en:'nuvem', pt:'NÃO VIVO: é feita de gotinhas de água no céu', fn:'gotinhas de água no céu', emoji:'☁️', say:'NU-VEM', cat:1}
+    ],
+    sort:{ cats:['Ser VIVO 🌱','NÃO vivo 🪨'], fromWords:true },
+    questions:[
+      {q:'As plantas, os animais e as pessoas são seres:', opts:['Vivos','Não vivos'], a:0, why:'Eles nascem, crescem e se alimentam!'},
+      {q:'A água, o sol e as pedras são elementos:', opts:['Não vivos','Vivos'], a:0, why:'Eles não nascem, não crescem e não se alimentam.'},
+      {q:'O que todo SER VIVO faz?', opts:['Nasce, cresce e se alimenta','Fica parado para sempre'], a:0, why:'Essa é a marca dos seres vivos!'},
+      {q:'O girassol é um ser vivo?', opts:['Sim, é uma planta!','Não'], a:0, why:'O girassol nasce, cresce e precisa de sol e água!'},
+      {q:'O panda é um ser:', opts:['Vivo','Não vivo'], a:0, why:'O panda é um animal: nasce, cresce e come bambu! 🐼'},
+      {q:'Os seres vivos e não vivos são todos ______ para a vida no planeta:', opts:['Importantes','Desnecessários'], a:0, why:'Todos são importantes para a vida no nosso planeta! 🌎'}
     ]
   },
   {
     id:'c-recursos', name:'Recursos Naturais', icon:'💧', bg:'linear-gradient(135deg,#29b6d8,#22b573)',
     words:[
-      {en:'água', pt:'usamos para beber, lavar, cozinhar e regar as plantas', emoji:'💧', say:'Á-GUA', aliases:['agua']},
-      {en:'sol', pt:'fornece luz e calor para a Terra', emoji:'☀️', say:'SOL'},
-      {en:'solo', pt:'a terrinha onde as plantas crescem — usamos para plantar', emoji:'🪴', say:'SO-LO'},
-      {en:'luz', pt:'o sol fornece luz e calor', emoji:'💡', say:'LUZ'},
-      {en:'chuva', pt:'traz água da natureza para as plantas e os rios', emoji:'🌧️', say:'CHU-VA'},
-      {en:'natureza', pt:'devemos cuidar dela para viver com saúde', emoji:'🌳', say:'NA-TU-RE-ZA'},
-      {en:'torneira', pt:'feche bem para não desperdiçar água!', emoji:'🚰', say:'TOR-NEI-RA'},
-      {en:'vida', pt:'os recursos naturais são importantes para a vida no planeta', emoji:'💚', say:'VI-DA'}
+      {en:'água', pt:'usamos para beber, lavar, cozinhar e regar as plantas', fn:'usamos para beber, lavar e cozinhar', emoji:'💧', say:'Á-GUA'},
+      {en:'sol', pt:'fornece luz e calor para a Terra', fn:'fornece luz e calor para a Terra', emoji:'☀️', say:'SOL'},
+      {en:'solo', pt:'a terrinha onde as plantas crescem — usamos para plantar', fn:'onde as plantas crescem', emoji:'🪴', say:'SO-LO'},
+      {en:'luz', pt:'o sol fornece luz e calor', fn:'o sol fornece, junto com o calor', emoji:'💡', say:'LUZ'},
+      {en:'chuva', pt:'traz água da natureza para as plantas e os rios', fn:'traz água para as plantas e os rios', emoji:'🌧️', say:'CHU-VA'},
+      {en:'natureza', pt:'devemos cuidar dela para viver com saúde', fn:'devemos cuidar dela', emoji:'🌳', say:'NA-TU-RE-ZA'},
+      {en:'torneira', pt:'feche bem para não desperdiçar água!', fn:'feche bem para economizar água', emoji:'🚰', say:'TOR-NEI-RA'},
+      {en:'vida', pt:'os recursos naturais são importantes para a vida no planeta', fn:'os recursos naturais garantem a', emoji:'💚', say:'VI-DA'}
+    ],
+    sort:{ cats:['CUIDA da água 💧','DESPERDIÇA 🚱'], items:[
+      {t:'Fechar a torneira', e:'🚰', c:0},
+      {t:'Banho rapidinho', e:'🚿', c:0},
+      {t:'Reaproveitar a água da chuva', e:'🌧️', c:0},
+      {t:'Torneira aberta à toa', e:'💦', c:1},
+      {t:'Banho bem demorado', e:'🛁', c:1},
+      {t:'Brincar com a mangueira', e:'💦', c:1}
+    ]},
+    questions:[
+      {q:'O que o SOL fornece para a Terra?', opts:['Luz e calor','Chuva'], a:0, why:'O sol ilumina e aquece a Terra!'},
+      {q:'Onde as plantas crescem?', opts:['No solo','Nas nuvens'], a:0, why:'O solo é a terrinha onde plantamos!'},
+      {q:'Para que usamos a ÁGUA?', opts:['Beber, lavar, cozinhar e regar','Só para brincar'], a:0, why:'A água é preciosa para a nossa vida!'},
+      {q:'Por que devemos cuidar dos recursos naturais?', opts:['Para viver com saúde e qualidade de vida','Não precisa cuidar'], a:0, why:'Cuidando deles, cuidamos da nossa vida!'},
+      {q:'Como você pode cuidar da água?', opts:['Não deixar a torneira aberta','Deixar a torneira aberta'], a:0, why:'Fechar a torneira economiza água! 🚰'},
+      {q:'Quem são os SERES VIVOS?', opts:['Todos os que têm vida: plantas, animais e pessoas','Pedras e carros'], a:0, why:'Seres vivos são todos os que têm vida!'}
     ]
   },
   {
     id:'c-uteis', name:'Úteis e Nocivos', icon:'🐝', bg:'linear-gradient(135deg,#ffb627,#ef4444)',
     words:[
-      {en:'vaca', pt:'ÚTIL: nos dá leite e carne', emoji:'🐮', say:'VA-CA'},
-      {en:'galinha', pt:'ÚTIL: nos dá ovos e carne', emoji:'🐔', say:'GA-LI-NHA'},
-      {en:'abelha', pt:'ÚTIL: produz mel e ajuda na polinização das plantas', emoji:'🐝', say:'A-BE-LHA'},
-      {en:'rato', pt:'NOCIVO: estraga alimentos e pode transmitir doenças', emoji:'🐀', say:'RA-TO'},
-      {en:'mosquito', pt:'NOCIVO: transmite dengue, zika e chikungunya', emoji:'🦟', say:'MOS-QUI-TO'},
-      {en:'barata', pt:'NOCIVO: contamina os alimentos', emoji:'🪳', say:'BA-RA-TA'},
-      {en:'útil', pt:'animal que ajuda as pessoas de alguma forma', emoji:'👍', say:'Ú-TIL', aliases:['util']},
-      {en:'nocivo', pt:'animal que causa prejuízo ou transmite doenças', emoji:'👎', say:'NO-CI-VO'}
+      {en:'vaca', pt:'ÚTIL: nos dá leite e carne', fn:'dá leite e carne', emoji:'🐮', say:'VA-CA', cat:0},
+      {en:'galinha', pt:'ÚTIL: nos dá ovos e carne', fn:'dá ovos e carne', emoji:'🐔', say:'GA-LI-NHA', cat:0},
+      {en:'abelha', pt:'ÚTIL: produz mel e ajuda na polinização das plantas', fn:'produz mel e ajuda na polinização', emoji:'🐝', say:'A-BE-LHA', cat:0},
+      {en:'rato', pt:'NOCIVO: estraga alimentos e pode transmitir doenças', fn:'pode estragar alimentos', emoji:'🐀', say:'RA-TO', cat:1},
+      {en:'mosquito', pt:'NOCIVO: transmite dengue, zika e chikungunya', fn:'transmite doenças como a dengue', emoji:'🦟', say:'MOS-QUI-TO', cat:1},
+      {en:'barata', pt:'NOCIVO: contamina os alimentos', fn:'pode contaminar os alimentos', emoji:'🪳', say:'BA-RA-TA', cat:1},
+      {en:'útil', pt:'animal que ajuda as pessoas de alguma forma', fn:'animal que ajuda as pessoas', emoji:'👍', say:'Ú-TIL'},
+      {en:'nocivo', pt:'animal que causa prejuízo ou transmite doenças', fn:'animal que causa prejuízo', emoji:'👎', say:'NO-CI-VO'}
+    ],
+    sort:{ cats:['ÚTIL 👍','NOCIVO 👎'], fromWords:true },
+    questions:[
+      {q:'A VACA é um animal útil porque:', opts:['Nos dá leite e carne','Transmite doenças'], a:0, why:'A vaca nos dá leite e carne!'},
+      {q:'A GALINHA nos dá:', opts:['Ovos e carne','Mel'], a:0, why:'A galinha bota ovos e nos dá carne!'},
+      {q:'A ABELHA produz:', opts:['Mel, e ajuda na polinização','Leite'], a:0, why:'A abelha faz mel e ajuda as flores a virarem frutos!'},
+      {q:'O MOSQUITO é nocivo porque:', opts:['Transmite dengue, zika e chikungunya','Dá ovos para comermos'], a:0, why:'Por isso não deixamos água parada!'},
+      {q:'O RATO pode:', opts:['Estragar os alimentos e transmitir doenças','Produzir mel'], a:0, why:'O rato é um animal nocivo.'},
+      {q:'A BARATA pode:', opts:['Contaminar os alimentos','Dar leite'], a:0, why:'A barata é nociva: contamina a comida.'},
+      {q:'Animal ÚTIL é aquele que:', opts:['Ajuda as pessoas de alguma forma','Causa prejuízo'], a:0, why:'Úteis ajudam; nocivos prejudicam!'}
     ]
   },
   {
     id:'c-domesticos', name:'Domésticos e Selvagens', icon:'🦁', bg:'linear-gradient(135deg,#fb923c,#16a34a)',
     words:[
-      {en:'cachorro', pt:'DOMÉSTICO: vive perto das pessoas e é cuidado por elas', emoji:'🐶', say:'CA-CHOR-RO'},
-      {en:'gato', pt:'DOMÉSTICO: vive na casa das pessoas', emoji:'🐱', say:'GA-TO'},
-      {en:'vaca', pt:'DOMÉSTICO: vive na fazenda, cuidada pelas pessoas', emoji:'🐮', say:'VA-CA'},
-      {en:'galinha', pt:'DOMÉSTICO: vive no galinheiro', emoji:'🐔', say:'GA-LI-NHA'},
-      {en:'leão', pt:'SELVAGEM: vive na natureza, sem depender das pessoas', emoji:'🦁', say:'LE-ÃO', aliases:['leao']},
-      {en:'macaco', pt:'SELVAGEM: vive pulando nas árvores', emoji:'🐵', say:'MA-CA-CO'},
-      {en:'elefante', pt:'SELVAGEM: o maior animal da terra firme', emoji:'🐘', say:'E-LE-FAN-TE'},
-      {en:'arara', pt:'SELVAGEM: ave colorida que vive nas florestas do Brasil', emoji:'🦜', say:'A-RA-RA'}
+      {en:'cachorro', pt:'DOMÉSTICO: vive perto das pessoas e é cuidado por elas', fn:'vive perto das pessoas', emoji:'🐶', say:'CA-CHOR-RO', cat:0},
+      {en:'gato', pt:'DOMÉSTICO: vive na casa das pessoas', fn:'vive na casa das pessoas', emoji:'🐱', say:'GA-TO', cat:0},
+      {en:'vaca', pt:'DOMÉSTICO: vive na fazenda, cuidada pelas pessoas', fn:'vive na fazenda', emoji:'🐮', say:'VA-CA', cat:0},
+      {en:'galinha', pt:'DOMÉSTICO: vive no galinheiro', fn:'vive no galinheiro', emoji:'🐔', say:'GA-LI-NHA', cat:0},
+      {en:'leão', pt:'SELVAGEM: vive na natureza, sem depender das pessoas', fn:'vive na natureza, é o rei da selva', emoji:'🦁', say:'LE-ÃO', cat:1},
+      {en:'macaco', pt:'SELVAGEM: vive pulando nas árvores', fn:'vive pulando nas árvores', emoji:'🐵', say:'MA-CA-CO', cat:1},
+      {en:'elefante', pt:'SELVAGEM: o maior animal da terra firme', fn:'o maior animal da terra firme', emoji:'🐘', say:'E-LE-FAN-TE', cat:1},
+      {en:'arara', pt:'SELVAGEM: ave colorida que vive nas florestas do Brasil', fn:'ave colorida das florestas do Brasil', emoji:'🦜', say:'A-RA-RA', cat:1}
+    ],
+    sort:{ cats:['DOMÉSTICO 🏠','SELVAGEM 🌳'], fromWords:true },
+    questions:[
+      {q:'Animais DOMÉSTICOS são os que:', opts:['Vivem perto das pessoas e são cuidados por elas','Vivem na natureza sozinhos'], a:0, why:'Domésticos vivem pertinho da gente!'},
+      {q:'Animais SELVAGENS são os que:', opts:['Vivem na natureza, sem depender das pessoas','Vivem dentro de casa'], a:0, why:'Selvagens se viram sozinhos na natureza!'},
+      {q:'O LEÃO é um animal:', opts:['Selvagem','Doméstico'], a:0, why:'O leão vive na natureza!'},
+      {q:'O CACHORRO é um animal:', opts:['Doméstico','Selvagem'], a:0, why:'O cachorro vive com as pessoas!'},
+      {q:'Qual destes é SELVAGEM?', opts:['Elefante','Gato'], a:0, why:'O elefante vive na natureza; o gato vive com a gente.'},
+      {q:'Qual destes é DOMÉSTICO?', opts:['Galinha','Arara'], a:0, why:'A galinha vive no galinheiro, cuidada pelas pessoas.'},
+      {q:'A ARARA é uma ave:', opts:['Selvagem, das florestas do Brasil','Doméstica'], a:0, why:'A arara vive livre nas florestas! 🦜'}
     ]
   }
 ];
 
 /* ====================== MATÉRIAS ====================== */
 const SUBJECTS = [
-  { id:'ingles', name:'Inglês', icon:'🇬🇧', bg:'linear-gradient(135deg,#7c5cbf,#ff5d73)', lang:'en-US', modules:ENGLISH_MODULES },
-  { id:'ciencias', name:'Ciências', icon:'🔬', bg:'linear-gradient(135deg,#22b573,#29b6d8)', lang:'pt-BR', modules:SCIENCE_MODULES }
+  { id:'ingles', name:'Inglês', icon:'🇬🇧', bg:'linear-gradient(135deg,#7c5cbf,#ff5d73)', lang:'en-US', modules:ENGLISH_MODULES, maxStars:9 },
+  { id:'ciencias', name:'Ciências', icon:'🔬', bg:'linear-gradient(135deg,#22b573,#29b6d8)', lang:'pt-BR', modules:SCIENCE_MODULES, maxStars:12 }
 ];
 
 /* ====================== PROGRESSO ====================== */
@@ -409,7 +510,7 @@ function saveProgress(p){ try { localStorage.setItem(STORE_KEY, JSON.stringify(p
 let progress = loadProgress();
 function modStars(id){
   const p = progress[id] || {};
-  return (p.quizStars||0) + (p.speakStars||0) + (p.spellStars||0);
+  return (p.quizStars||0) + (p.speakStars||0) + (p.spellStars||0) + (p.linkStars||0) + (p.sortStars||0);
 }
 function subjStars(subj){ return subj.modules.reduce((s,m)=>s+modStars(m.id),0); }
 function totalStars(){ return SUBJECTS.reduce((s,x)=>s+subjStars(x),0); }
@@ -680,7 +781,7 @@ function goHome(){
     '<button class="module-card" style="background:'+s.bg+'" onclick="openSubject(\''+s.id+'\')">' +
       '<span class="m-icon">'+s.icon+'</span>' +
       '<span class="m-name">'+s.name+'</span>' +
-      '<span class="m-stars">⭐ '+subjStars(s)+' de '+(s.modules.length*MAX_STARS_MOD)+'</span>' +
+      '<span class="m-stars">⭐ '+subjStars(s)+' de '+(s.modules.length*s.maxStars)+'</span>' +
     '</button>').join('');
   app.innerHTML =
     '<div class="hero">' +
@@ -704,7 +805,7 @@ function openSubject(id){
     '<button class="module-card" style="background:'+m.bg+'" onclick="openModule(\''+m.id+'\')">' +
       '<span class="m-icon">'+m.icon+'</span>' +
       '<span class="m-name">'+m.name+'</span>' +
-      '<span class="m-stars">⭐ '+modStars(m.id)+' de '+MAX_STARS_MOD+'</span>' +
+      '<span class="m-stars">⭐ '+modStars(m.id)+' de '+cur.subj.maxStars+'</span>' +
     '</button>').join('');
   app.innerHTML =
     topbar(cur.subj.icon+' '+esc(cur.subj.name)) +
@@ -716,22 +817,24 @@ function openModule(id){
   sndTap();
   pushNav(2, { screen: 'module', subj: cur.subj.id, mod: id });
   cur.mod = cur.subj.modules.find(m=>m.id===id);
-  app.innerHTML =
-    topbar(cur.mod.icon+' '+esc(cur.mod.name), 'goHome()') +
-    '<div class="mode-list">' +
-      '<button class="mode-btn" onclick="startLearn()">' +
-        '<span class="ic">📖</span><span><span class="t">Aprender</span><span class="s">Veja, ouça e repita as palavras</span></span>' +
-      '</button>' +
-      '<button class="mode-btn" onclick="startSpeak()">' +
-        '<span class="ic">🎤</span><span><span class="t">Falar</span><span class="s">Fale no microfone e ganhe estrelas</span></span>' +
-      '</button>' +
-      '<button class="mode-btn" onclick="startSpell()">' +
-        '<span class="ic">✍️</span><span><span class="t">Montar</span><span class="s">Monte a palavra letra por letra, como na prova</span></span>' +
-      '</button>' +
-      '<button class="mode-btn" onclick="startQuiz()">' +
-        '<span class="ic">🎮</span><span><span class="t">Jogar</span><span class="s">Quiz com prêmios! Acerte e ganhe ⭐</span></span>' +
-      '</button>' +
-    '</div>';
+  const btn = (fn, ic, t, s) =>
+    '<button class="mode-btn" onclick="'+fn+'()">' +
+      '<span class="ic">'+ic+'</span><span><span class="t">'+t+'</span><span class="s">'+s+'</span></span>' +
+    '</button>';
+  let list;
+  if (isEnglish()){
+    list = btn('startLearn','📖','Aprender','Veja, ouça e repita as palavras') +
+      btn('startSpeak','🎤','Falar','Fale no microfone e ganhe estrelas') +
+      btn('startSpell','✍️','Montar','Monte a palavra letra por letra, como na prova') +
+      btn('startQuiz','🎮','Jogar','Quiz com prêmios! Acerte e ganhe ⭐');
+  } else {
+    list = btn('startLearn','📖','Revisar','Leia e ouça o conteúdo que cai na prova') +
+      btn('startLink','🔗','Ligar','Ligue cada coisa à sua função, como no dever') +
+      (cur.mod.sort ? btn('startSort','🧺','Separar','Coloque cada item na caixinha certa') : '') +
+      (cur.mod.questions ? btn('startProva','🧠','Prova','Perguntas de marcar a certa, igual à avaliação') : '') +
+      btn('startSpell','✍️','Montar','Escreva a palavra letra por letra');
+  }
+  app.innerHTML = topbar(cur.mod.icon+' '+esc(cur.mod.name)) + '<div class="mode-list">' + list + '</div>';
   window.scrollTo(0,0);
 }
 
@@ -1021,6 +1124,221 @@ function spellDone(){
     '</div>';
 }
 
+/* ---------- MODO LIGAR (ligue à função, como no dever) ---------- */
+function startLink(){
+  sndTap();
+  pushNav(3, { screen:'activity', subj:cur.subj.id, mod:cur.mod.id });
+  const pool = shuffle(cur.mod.words.filter(w=>w.fn)).slice(0, 5);
+  cur.link = { pairs: pool, right: shuffle(pool.slice()), sel: -1, done: {}, err: 0, hits: 0 };
+  renderLink();
+}
+function renderLink(wrongIdx){
+  const L = cur.link;
+  const left = L.pairs.map((w,i) =>
+    '<button class="pterm'+(L.done[w.en]?' done':'')+(L.sel===i?' sel':'')+'" onclick="linkPick('+i+')">'+w.emoji+' '+esc(w.en)+'</button>').join('');
+  const right = L.right.map((w,i) =>
+    '<button class="pfn'+(L.done[w.en]?' done':'')+(i===wrongIdx?' wrong':'')+'" onclick="linkTry('+i+')">'+esc(w.fn)+'</button>').join('');
+  app.innerHTML =
+    topbar('🔗 Ligar') +
+    '<div class="card">' +
+      '<div class="quiz-q">Toque na palavra e depois na função dela!</div>' +
+      '<div class="pair-cols"><div class="pcol">'+left+'</div><div class="pcol">'+right+'</div></div>' +
+      '<div class="feedback" id="fb" style="min-height:50px;"></div>' +
+    '</div>' +
+    '<div class="nav-row"><span class="counter">Ligadas: '+L.hits+' de '+L.pairs.length+'</span></div>';
+  window.scrollTo(0,0);
+}
+function linkPick(i){
+  const L = cur.link;
+  if (L.done[L.pairs[i].en]) return;
+  L.sel = i;
+  sndTap();
+  speak(L.pairs[i].en, 0.9);
+  renderLink();
+}
+function linkTry(i){
+  const L = cur.link;
+  const fnW = L.right[i];
+  if (L.done[fnW.en]) return;
+  const fb = () => document.getElementById('fb');
+  if (L.sel < 0){
+    renderLink();
+    fb().innerHTML = '<div class="fb-info">👈 Primeiro toca numa palavra do lado esquerdo!</div>';
+    return;
+  }
+  const term = L.pairs[L.sel];
+  if (term.en === fnW.en){
+    L.done[term.en] = true; L.hits++; L.sel = -1;
+    sndOk();
+    if (L.hits >= L.pairs.length){
+      const stars = L.err <= 1 ? 3 : L.err <= 3 ? 2 : 1;
+      progress[cur.mod.id] = progress[cur.mod.id] || {};
+      if ((progress[cur.mod.id].linkStars||0) < stars) progress[cur.mod.id].linkStars = stars;
+      saveProgress(progress);
+      sndWin(); confetti(40);
+      app.innerHTML =
+        topbar('🔗 Ligar') +
+        '<div class="card center">' +
+          '<div style="font-size:74px;">'+(stars>=3?'🏆':stars===2?'🥳':'💪')+'</div>' +
+          '<div class="result-stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div>' +
+          '<div class="result-msg">Você ligou tudo certinho!</div>' +
+          '<div class="round-btns">' +
+            '<button class="nav-btn" onclick="startLink()">Ligar de novo 🔁</button>' +
+            (cur.mod.questions ? '<button class="nav-btn go" onclick="startProva()">Prova 🧠</button>' : '') +
+          '</div>' +
+        '</div>';
+    } else {
+      renderLink();
+      document.getElementById('fb').innerHTML = '<div class="fb-ok">✅ Isso! '+term.emoji+' '+esc(term.en)+' → '+esc(term.fn)+'</div>';
+    }
+  } else {
+    L.err++;
+    sndTry();
+    renderLink(i);
+    document.getElementById('fb').innerHTML = '<div class="fb-try">🙈 Quase! Essa função é de outra palavra. Tenta de novo!</div>';
+  }
+}
+
+/* ---------- MODO SEPARAR (classificar nas caixinhas, como no dever) ---------- */
+function startSort(){
+  sndTap();
+  pushNav(3, { screen:'activity', subj:cur.subj.id, mod:cur.mod.id });
+  const cfg = cur.mod.sort;
+  const items = cfg.fromWords
+    ? cur.mod.words.filter(w=>w.cat!==undefined).map(w=>({ t:w.en, e:w.emoji, c:w.cat, why:w.pt }))
+    : cfg.items;
+  cur.sortGame = { cats: cfg.cats, items: shuffle(items), i: 0, err: 0 };
+  renderSort();
+  setTimeout(()=>speak(cur.sortGame.items[0].t, 0.9), 350);
+}
+function renderSort(){
+  const G = cur.sortGame;
+  const it = G.items[G.i];
+  app.innerHTML =
+    topbar('🧺 Separar') +
+    '<div class="progressbar"><div style="width:'+(G.i/G.items.length*100)+'%"></div></div>' +
+    '<div class="card">' +
+      '<div class="quiz-q">Em qual caixinha isso entra?</div>' +
+      '<div class="sort-item" style="cursor:pointer;" onclick="speak(cur.sortGame.items[cur.sortGame.i].t, 0.9)">'+it.e+'</div>' +
+      '<div class="sort-word">'+esc(it.t)+'</div>' +
+      '<div class="buckets">' +
+        '<button class="bucket a" onclick="sortPick(0)">'+esc(G.cats[0])+'</button>' +
+        '<button class="bucket b" onclick="sortPick(1)">'+esc(G.cats[1])+'</button>' +
+      '</div>' +
+      '<div class="feedback" id="fb" style="min-height:56px;"></div>' +
+    '</div>' +
+    '<div class="nav-row"><span class="counter">Item '+(G.i+1)+' de '+G.items.length+'</span></div>';
+  window.scrollTo(0,0);
+}
+function sortPick(c){
+  const G = cur.sortGame;
+  const it = G.items[G.i];
+  if (c === it.c){
+    sndOk(); confetti(8);
+    if (G.i < G.items.length - 1){
+      G.i++;
+      renderSort();
+      document.getElementById('fb').innerHTML = '<div class="fb-ok">✅ Isso mesmo!</div>';
+      setTimeout(()=>speak(G.items[G.i].t, 0.9), 300);
+    } else {
+      const stars = G.err <= 1 ? 3 : G.err <= 3 ? 2 : 1;
+      progress[cur.mod.id] = progress[cur.mod.id] || {};
+      if ((progress[cur.mod.id].sortStars||0) < stars) progress[cur.mod.id].sortStars = stars;
+      saveProgress(progress);
+      sndWin(); confetti(40);
+      app.innerHTML =
+        topbar('🧺 Separar') +
+        '<div class="card center">' +
+          '<div style="font-size:74px;">'+(stars>=3?'🏆':stars===2?'🥳':'💪')+'</div>' +
+          '<div class="result-stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div>' +
+          '<div class="result-msg">Você separou tudo nas caixinhas certas!</div>' +
+          '<div class="round-btns">' +
+            '<button class="nav-btn" onclick="startSort()">Separar de novo 🔁</button>' +
+            (cur.mod.questions ? '<button class="nav-btn go" onclick="startProva()">Prova 🧠</button>' : '') +
+          '</div>' +
+        '</div>';
+    }
+  } else {
+    G.err++;
+    sndTry();
+    document.getElementById('fb').innerHTML =
+      '<div class="fb-try">🙈 Hmm, olha de novo! '+(it.why ? 'Lembra: '+esc(it.why) : 'Pensa com calma e tenta a outra caixinha!')+'</div>';
+  }
+}
+
+/* ---------- MODO PROVA (marque a alternativa correta) ---------- */
+function startProva(){
+  sndTap();
+  pushNav(3, { screen:'activity', subj:cur.subj.id, mod:cur.mod.id });
+  cur.prova = { qs: shuffle(cur.mod.questions.slice()), i: 0, score: 0 };
+  renderProva();
+}
+function renderProva(){
+  const P = cur.prova;
+  const q = P.qs[P.i];
+  const correct = q.opts[q.a];
+  const opts = shuffle(q.opts.slice());
+  const optHtml = opts.map(o =>
+    '<button class="qopt word-opt" style="font-size:16px; text-transform:none; letter-spacing:0; padding:14px 10px;" onclick="provaAnswer(this,'+(o===correct)+')">'+esc(o)+'</button>').join('');
+  app.innerHTML =
+    topbar('🧠 Prova') +
+    '<div class="progressbar"><div style="width:'+(P.i/P.qs.length*100)+'%"></div></div>' +
+    '<div class="card">' +
+      '<div class="quiz-q" style="cursor:pointer;" onclick="speak(cur.prova.qs[cur.prova.i].q, 0.95)">🧠 '+esc(q.q)+' <small style="font-weight:600; color:var(--ink-soft);">(toque para ouvir)</small></div>' +
+      '<div class="quiz-opts" style="grid-template-columns:1fr;">'+optHtml+'</div>' +
+      '<div class="feedback" id="fb" style="min-height:60px;"></div>' +
+    '</div>' +
+    '<div class="nav-row"><span class="counter">Pergunta '+(P.i+1)+' de '+P.qs.length+'</span><span class="counter">Pontos: '+P.score+' 🌟</span></div>';
+  window.scrollTo(0,0);
+  setTimeout(()=>speak(q.q, 0.95), 350);
+}
+function provaAnswer(btn, right){
+  const P = cur.prova;
+  const q = P.qs[P.i];
+  document.querySelectorAll('.qopt').forEach(b=>b.disabled = true);
+  const fb = document.getElementById('fb');
+  if (right){
+    btn.classList.add('right');
+    P.score++;
+    sndOk();
+    fb.innerHTML = '<div class="fb-ok">✅ Certinho! '+esc(q.why||'')+'</div>';
+    setTimeout(provaNext, 1900);
+  } else {
+    btn.classList.add('wrong');
+    sndTry();
+    document.querySelectorAll('.qopt').forEach(b=>{
+      if (b.textContent === q.opts[q.a]) b.classList.add('right');
+    });
+    fb.innerHTML = '<div class="fb-try">🙈 A certa é: <b>'+esc(q.opts[q.a])+'</b><br>'+esc(q.why||'')+'</div>';
+    setTimeout(provaNext, 2800);
+  }
+}
+function provaNext(){
+  cur.prova.i++;
+  if (cur.prova.i < cur.prova.qs.length) renderProva();
+  else {
+    const P = cur.prova;
+    const ratio = P.score / P.qs.length;
+    const stars = ratio >= 0.85 ? 3 : ratio >= 0.6 ? 2 : ratio >= 0.35 ? 1 : 0;
+    progress[cur.mod.id] = progress[cur.mod.id] || {};
+    if ((progress[cur.mod.id].quizStars||0) < stars) progress[cur.mod.id].quizStars = stars;
+    saveProgress(progress);
+    if (stars >= 2){ sndWin(); confetti(60); } else { sndOk(); }
+    app.innerHTML =
+      topbar('🧠 Prova') +
+      '<div class="card center">' +
+        '<div style="font-size:80px;">'+(stars>=3?'🏆':stars===2?'🥳':stars===1?'😊':'💪')+'</div>' +
+        '<div class="result-stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div>' +
+        '<div class="result-msg">Você acertou '+P.score+' de '+P.qs.length+' perguntas!</div>' +
+        '<div class="result-sub">'+(stars>=3?'NOTA 10! Pronta para a prova de verdade! 🌟':stars===2?'Muito bom! Revisa mais uma vez e refaz!':'Vamos revisar no modo 📖 e tentar de novo?')+'</div>' +
+        '<div class="round-btns">' +
+          '<button class="nav-btn" onclick="startProva()">Refazer a prova 🔁</button>' +
+          '<button class="nav-btn warm" onclick="startLearn()">Revisar 📖</button>' +
+        '</div>' +
+      '</div>';
+  }
+}
+
 /* ---------- MODO JOGAR (QUIZ) ---------- */
 const QUIZ_LEN = 8;
 function startQuiz(){
@@ -1126,6 +1444,9 @@ window.learnMove = learnMove; window.learnDone = learnDone;
 window.startSpeak = startSpeak; window.doListen = doListen; window.speakNext = speakNext; window.speakSelfOk = speakSelfOk;
 window.startQuiz = startQuiz; window.answer = answer; window.speakQuizWord = speakQuizWord;
 window.startSpell = startSpell; window.spellTap = spellTap; window.spellNext = spellNext;
+window.startLink = startLink; window.linkPick = linkPick; window.linkTry = linkTry;
+window.startSort = startSort; window.sortPick = sortPick;
+window.startProva = startProva; window.provaAnswer = provaAnswer; window.speak = speak;
 window.goBack = goBack; window.doInstall = doInstall;
 
 goHome();
