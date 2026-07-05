@@ -1,12 +1,14 @@
 # 🦄 Escola Divertida
 
-Mini aplicativo para crianças de 6 anos em fase de alfabetização revisarem as provas da escola brincando. Matérias: 🇬🇧 Inglês e 🔬 Ciências (e crescendo!). No painel inicial escolhe-se a matéria; dentro dela, os módulos com o conteúdo de cada prova.
+Mini aplicativo para crianças de 6 anos em fase de alfabetização revisarem as provas da escola brincando. Matérias: 🇬🇧 Inglês, 🔬 Ciências e 🗺️ Geografia (e crescendo!). No painel inicial escolhe-se a matéria; dentro dela, os módulos com o conteúdo de cada prova.
 
 ## O que tem
 
 **Inglês (7 módulos):** 🍎 Frutas · 🌈 Cores · 🔢 Números · 👗 Roupas · ✏️ Escola · ⚽ Futebol · 🐶 Animais
 
 **Ciências (6 módulos):** 🌍 Terra e Céu · 🌸 Estações do Ano · 🌱 Seres Vivos · 💧 Recursos Naturais · 🐝 Úteis e Nocivos · 🦁 Domésticos e Selvagens
+
+**Geografia (6 módulos):** 🏫 Lugares da Escola · 🧑‍🏫 Profissionais da Escola · 👷 Construção de uma Casa · 💛 Cuidando da Escola · ✏️ Material Escolar · 🇧🇷 Brasil e a Bandeira
 
 **4 atividades em cada módulo:**
 

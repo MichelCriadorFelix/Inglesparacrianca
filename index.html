@@ -505,10 +505,186 @@ const SCIENCE_MODULES = [
   }
 ];
 
+/* Desenhos de material escolar sem emoji correspondente */
+const SVG_BORRACHA = '<svg viewBox="0 0 100 100"><rect x="12" y="34" width="76" height="34" rx="9" fill="#f472b6" transform="rotate(-8 50 50)"/><rect x="12" y="34" width="28" height="34" rx="9" fill="#60a5fa" transform="rotate(-8 50 50)"/></svg>';
+const SVG_APONTADOR = '<svg viewBox="0 0 100 100"><rect x="18" y="30" width="52" height="44" rx="8" fill="#29b6d8"/><circle cx="34" cy="52" r="7" fill="#1e293b"/><path d="M70 30 l16 22 -16 22z" fill="#94a3b8"/><path d="M70 38 l8 14 -8 14z" fill="#e2e8f0"/></svg>';
+
+const GEO_MODULES = [
+  {
+    id:'g-lugares', name:'Lugares da Escola', icon:'🏫', bg:'linear-gradient(135deg,#29b6d8,#7c5cbf)',
+    words:[
+      {en:'escola', pt:'lugar especial para aprender, fazer amigos e crescer juntos!', fn:'lugar de aprender e fazer amigos', emoji:'🏫', say:'ES-CO-LA'},
+      {en:'sala de aula', pt:'lugar onde aprendemos com os professores e fazemos atividades', fn:'onde aprendemos com os professores', emoji:'🧑‍🏫', say:'SA-LA DE AU-LA'},
+      {en:'biblioteca', pt:'lugar para estudar, ler livros e fazer pesquisas', fn:'onde lemos livros e pesquisamos', emoji:'📚', say:'BI-BLI-O-TE-CA'},
+      {en:'refeitório', pt:'lugar para fazer as refeições e ter uma alimentação saudável', fn:'onde fazemos as refeições', emoji:'🍽️', say:'RE-FEI-TÓ-RIO'},
+      {en:'parquinho', pt:'lugar para brincar, correr e se divertir', fn:'onde brincamos e corremos', emoji:'🛝', say:'PAR-QUI-NHO'}
+    ],
+    sort:{ cats:['SALA DE AULA 🧑‍🏫','PARQUINHO 🛝'], items:[
+      {t:'Aprender com os professores', e:'📖', c:0},
+      {t:'Fazer os deveres', e:'📓', c:0},
+      {t:'Ouvir a professora', e:'👂', c:0},
+      {t:'Correr e brincar', e:'🏃', c:1},
+      {t:'Escorregar no escorregador', e:'🛝', c:1},
+      {t:'Se divertir com os amigos', e:'😄', c:1}
+    ]},
+    questions:[
+      {q:'Onde aprendemos com os professores e fazemos atividades?', opts:['Na sala de aula','No parquinho'], a:0, why:'A sala de aula é o lugar de aprender!'},
+      {q:'Onde lemos livros e fazemos pesquisas?', opts:['Na biblioteca','No refeitório'], a:0, why:'A biblioteca é a casa dos livros! 📚'},
+      {q:'Onde fazemos as refeições?', opts:['No refeitório','Na biblioteca'], a:0, why:'No refeitório comemos e temos alimentação saudável!'},
+      {q:'Onde brincamos, corremos e nos divertimos?', opts:['No parquinho','Na sala de aula'], a:0, why:'O parquinho é o lugar da diversão! 🛝'},
+      {q:'A escola é um lugar especial para:', opts:['Aprender, fazer amigos e crescer juntos','Ficar de castigo'], a:0, why:'Nossa escola é um lugar especial! 💛'}
+    ]
+  },
+  {
+    id:'g-profissionais', name:'Profissionais da Escola', icon:'🧑‍🏫', bg:'linear-gradient(135deg,#7c5cbf,#f472b6)',
+    words:[
+      {en:'professora', pt:'ensina, orienta e ajuda no nosso aprendizado todos os dias', fn:'ensina e orienta os alunos', emoji:'🧑‍🏫', say:'PRO-FES-SO-RA'},
+      {en:'auxiliar', pt:'apoia o professor e cuida dos alunos com atenção e carinho', fn:'apoia o professor e cuida dos alunos', emoji:'🤝', say:'AU-XI-LI-AR'},
+      {en:'diretora', pt:'coordena a escola, toma decisões e cuida para que tudo funcione bem', fn:'coordena a escola e toma decisões', emoji:'🧑‍💼', say:'DI-RE-TO-RA'},
+      {en:'secretária', pt:'atende, organiza e ajuda na comunicação entre a escola, alunos e famílias', fn:'atende e organiza a comunicação', emoji:'💻', say:'SE-CRE-TÁ-RIA'},
+      {en:'zelador', pt:'mantém a escola limpa, organizada e cuidada para que todos fiquem bem', fn:'mantém a escola limpa e organizada', emoji:'🧹', say:'ZE-LA-DOR'}
+    ],
+    sort:{ cats:['PROFESSORA 🧑‍🏫','ZELADOR 🧹'], items:[
+      {t:'Ensina os alunos', e:'📖', c:0},
+      {t:'Orienta os deveres', e:'✏️', c:0},
+      {t:'Ajuda no aprendizado', e:'🫶', c:0},
+      {t:'Limpa a escola', e:'🧹', c:1},
+      {t:'Organiza os espaços', e:'🪣', c:1},
+      {t:'Cuida do jardim', e:'🌳', c:1}
+    ]},
+    questions:[
+      {q:'Quem ensina e orienta os alunos?', opts:['A professora','O zelador'], a:0, why:'A professora ensina com muito carinho!'},
+      {q:'Quem apoia o professor e cuida dos alunos?', opts:['O auxiliar (assistente)','A diretora'], a:0, why:'O auxiliar cuida dos alunos com atenção e carinho!'},
+      {q:'Quem coordena a escola e toma decisões?', opts:['A diretora','A secretária'], a:0, why:'A diretora cuida para que tudo funcione bem!'},
+      {q:'Quem atende e ajuda na comunicação da escola com as famílias?', opts:['A secretária','A professora'], a:0, why:'A secretária atende e organiza tudo!'},
+      {q:'Quem mantém a escola limpa e organizada?', opts:['O zelador','O auxiliar'], a:0, why:'O zelador cuida da escola para todos ficarem bem!'},
+      {q:'Na escola, muitas pessoas trabalham todos os dias com muito:', opts:['Carinho e dedicação','Mau humor'], a:0, why:'Todo mundo trabalha para aprendermos com alegria e segurança!'}
+    ]
+  },
+  {
+    id:'g-casa', name:'Construção de uma Casa', icon:'👷', bg:'linear-gradient(135deg,#f59e0b,#ef4444)',
+    words:[
+      {en:'pedreiro', pt:'o trabalhador que constrói as paredes da casa', fn:'constrói as paredes', emoji:'👷', say:'PE-DREI-RO'},
+      {en:'pintor', pt:'o trabalhador que pinta a casa', fn:'pinta a casa', emoji:'🖌️', say:'PIN-TOR'},
+      {en:'eletricista', pt:'o trabalhador que cuida da luz', fn:'cuida da luz', emoji:'💡', say:'E-LE-TRI-CIS-TA'},
+      {en:'encanador', pt:'o trabalhador que cuida da encanação de água', fn:'cuida da encanação de água', emoji:'🔧', say:'EN-CA-NA-DOR'},
+      {en:'tijolo', pt:'material usado para construir as paredes', fn:'material das paredes', emoji:'🧱', say:'TI-JO-LO'},
+      {en:'cimento', pt:'material que gruda os tijolos', fn:'material que gruda os tijolos', emoji:'🏗️', say:'CI-MEN-TO'},
+      {en:'areia', pt:'material misturado ao cimento na construção', fn:'material misturado ao cimento', emoji:'🪣', say:'A-REI-A'},
+      {en:'madeira', pt:'material de construção que vem das árvores', fn:'material que vem das árvores', emoji:'🪵', say:'MA-DEI-RA'}
+    ],
+    sort:{ cats:['É MATERIAL de construção 🧱','NÃO é! 🙅'], items:[
+      {t:'Tijolo', e:'🧱', c:0},
+      {t:'Cimento', e:'🏗️', c:0},
+      {t:'Areia', e:'🪣', c:0},
+      {t:'Madeira', e:'🪵', c:0},
+      {t:'Pedra', e:'🪨', c:0},
+      {t:'Leite', e:'🥛', c:1},
+      {t:'Bola', e:'⚽', c:1},
+      {t:'Biscoito', e:'🍪', c:1}
+    ]},
+    questions:[
+      {q:'Quem constrói as paredes da casa?', opts:['O pedreiro','O pintor'], a:0, why:'O pedreiro levanta as paredes com tijolo e cimento!'},
+      {q:'Quem pinta a casa?', opts:['O pintor','O eletricista'], a:0, why:'O pintor deixa a casa colorida e bonita!'},
+      {q:'Quem cuida da luz?', opts:['O eletricista','O encanador'], a:0, why:'O eletricista cuida da parte elétrica!'},
+      {q:'Quem cuida da encanação de água?', opts:['O encanador','O pedreiro'], a:0, why:'O encanador cuida dos canos de água!'},
+      {q:'Quais destes são materiais de construção?', opts:['Tijolo, cimento e areia','Leite, bola e biscoito'], a:0, why:'Para construir usamos tijolo, cimento, areia, pedra e madeira!'},
+      {q:'Na construção, cada trabalhador tem uma função:', opts:['Importante','Sem importância'], a:0, why:'Cada um tem uma função importante!'}
+    ]
+  },
+  {
+    id:'g-cuidados', name:'Cuidando da Escola', icon:'💛', bg:'linear-gradient(135deg,#22b573,#f59e0b)',
+    words:[
+      {en:'lixeira', pt:'onde jogamos o lixo para manter tudo limpo', fn:'onde jogamos o lixo', emoji:'🗑️', say:'LI-XEI-RA'},
+      {en:'limpeza', pt:'manter a sala limpa e organizada ajuda todos a aprender melhor', fn:'manter tudo limpo e organizado', emoji:'🧹', say:'LIM-PE-ZA'},
+      {en:'respeito', pt:'ser gentil e respeitar todos os colegas', fn:'ser gentil com todos', emoji:'💛', say:'RES-PEI-TO'},
+      {en:'livro', pt:'devemos cuidar dos livros e materiais com carinho', fn:'devemos cuidar com carinho', emoji:'📚', say:'LI-VRO'},
+      {en:'organização', pt:'guardar os livros e materiais no lugar certo', fn:'guardar tudo no lugar certo', emoji:'🧺', say:'OR-GA-NI-ZA-ÇÃO'},
+      {en:'gentileza', pt:'pequenas atitudes fazem a diferença para todos!', fn:'pequenas atitudes que ajudam todos', emoji:'🤗', say:'GEN-TI-LE-ZA'}
+    ],
+    sort:{ cats:['ATITUDE BOA ✅','NÃO PODE! ❌'], items:[
+      {t:'Jogar o lixo na lixeira', e:'🗑️', c:0},
+      {t:'Cuidar dos livros', e:'📚', c:0},
+      {t:'Guardar o material no lugar', e:'🧺', c:0},
+      {t:'Ser gentil com todos', e:'💛', c:0},
+      {t:'Riscar as mesas', e:'✏️', c:1},
+      {t:'Deixar lixo no chão', e:'🚮', c:1},
+      {t:'Deixar a mochila espalhada', e:'🎒', c:1}
+    ]},
+    questions:[
+      {q:'Onde jogamos o lixo?', opts:['Na lixeira','No chão'], a:0, why:'Lixo na lixeira deixa a escola limpa e bonita!'},
+      {q:'Como cuidamos dos livros e materiais?', opts:['Com cuidado e carinho','Rasgando e riscando'], a:0, why:'Cuidar dos materiais é cuidar do aprendizado!'},
+      {q:'Por que é importante manter a sala de aula organizada?', opts:['Para ter um ambiente agradável e aprender melhor','Não é importante'], a:0, why:'Sala organizada ajuda todos a se concentrar!'},
+      {q:'Pode riscar as mesas e paredes?', opts:['Não! Devemos cuidar dos espaços da escola','Sim, pode'], a:0, why:'Cuidar da escola é cuidar do nosso espaço!'},
+      {q:'Ser gentil e respeitar todos é uma forma de:', opts:['Cuidar da escola','Bagunçar'], a:0, why:'Gentileza e respeito fazem a diferença! 💛'}
+    ]
+  },
+  {
+    id:'g-material', name:'Material Escolar', icon:'✏️', bg:'linear-gradient(135deg,#3b82f6,#f472b6)',
+    words:[
+      {en:'lápis', pt:'usamos para escrever', fn:'usamos para escrever', emoji:'✏️', say:'LÁ-PIS'},
+      {en:'borracha', pt:'apaga o que escrevemos errado', fn:'apaga o que escrevemos', emoji:'▫️', svg:SVG_BORRACHA, say:'BOR-RA-CHA'},
+      {en:'apontador', pt:'faz a ponta do lápis', fn:'faz a ponta do lápis', emoji:'🔷', svg:SVG_APONTADOR, say:'A-PON-TA-DOR'},
+      {en:'cola', pt:'gruda os trabalhinhos de papel', fn:'gruda os papéis', emoji:'🧴', say:'CO-LA'},
+      {en:'tesoura', pt:'recorta papéis — sempre com cuidado!', fn:'recorta papéis', emoji:'✂️', say:'TE-SOU-RA'},
+      {en:'caderno', pt:'onde fazemos os deveres', fn:'onde fazemos os deveres', emoji:'📓', say:'CA-DER-NO'},
+      {en:'estojo', pt:'guarda os lápis e canetas', fn:'guarda lápis e canetas', emoji:'👝', say:'ES-TO-JO'},
+      {en:'régua', pt:'mede e faz linhas retas', fn:'mede e faz linhas retas', emoji:'📏', say:'RÉ-GUA'},
+      {en:'lápis de cor', pt:'usamos para pintar os desenhos', fn:'usamos para pintar', emoji:'🖍️', say:'LÁ-PIS DE COR'},
+      {en:'mochila', pt:'carrega todo o material escolar', fn:'carrega todo o material', emoji:'🎒', say:'MO-CHI-LA'}
+    ],
+    sort:{ cats:['CUIDA do material ✅','ESTRAGA! ❌'], items:[
+      {t:'Guardar no lugar certo após o uso', e:'🧺', c:0},
+      {t:'Usar com cuidado', e:'🫶', c:0},
+      {t:'Manter o estojo organizado', e:'👝', c:0},
+      {t:'Compartilhar com respeito', e:'🤝', c:0},
+      {t:'Emprestar e não devolver', e:'🙅', c:1},
+      {t:'Rabiscar e danificar', e:'💥', c:1}
+    ]},
+    questions:[
+      {q:'O que a borracha faz?', opts:['Apaga o que escrevemos','Faz a ponta do lápis'], a:0, why:'Errou? A borracha apaga e a gente tenta de novo!'},
+      {q:'O que o apontador faz?', opts:['Faz a ponta do lápis','Cola os papéis'], a:0, why:'O apontador deixa o lápis pronto para escrever!'},
+      {q:'Para que usamos a régua?', opts:['Para medir e fazer linhas retas','Para pintar'], a:0, why:'A régua faz linhas retinhas!'},
+      {q:'Onde guardamos os lápis e canetas?', opts:['No estojo','Na lixeira'], a:0, why:'O estojo guarda tudo organizadinho!'},
+      {q:'Cuidar do material escolar é cuidar do seu:', opts:['Aprendizado','Almoço'], a:0, why:'Use, guarde e conserve com capricho!'},
+      {q:'Qual é a atitude certa com o material?', opts:['Guardar no lugar certo após o uso','Rabiscar e danificar'], a:0, why:'Material bem cuidado dura o ano todo!'}
+    ]
+  },
+  {
+    id:'g-brasil', name:'Brasil e a Bandeira', icon:'🇧🇷', bg:'linear-gradient(135deg,#16a34a,#facc15)',
+    words:[
+      {en:'brasil', pt:'o nosso país! Fica no continente América', fn:'o nosso país', emoji:'🇧🇷', say:'BRA-SIL'},
+      {en:'bandeira', pt:'o símbolo do Brasil: verde, amarela, azul e branca', fn:'o símbolo do nosso país', emoji:'🚩', say:'BAN-DEI-RA'},
+      {en:'américa', pt:'o continente onde o Brasil está localizado', fn:'o continente do Brasil', emoji:'🌎', say:'A-MÉ-RI-CA'},
+      {en:'verde', pt:'a cor do fundo da bandeira (um retângulo)', fn:'a cor do fundo da bandeira', color:'#16a34a', say:'VER-DE'},
+      {en:'amarelo', pt:'a cor do losango da bandeira', fn:'a cor do losango', color:'#facc15', say:'A-MA-RE-LO'},
+      {en:'azul', pt:'a cor do círculo com as estrelas', fn:'a cor do círculo com estrelas', color:'#1e40af', say:'A-ZUL'},
+      {en:'branco', pt:'a cor da faixa escrita Ordem e Progresso', fn:'a cor da faixa da bandeira', color:'#f9fafb', say:'BRAN-CO'}
+    ],
+    sort:{ cats:['TEM na bandeira ✅','NÃO tem! ❌'], items:[
+      {t:'Verde', e:'🟢', c:0},
+      {t:'Amarelo', e:'🟡', c:0},
+      {t:'Azul', e:'🔵', c:0},
+      {t:'Branco', e:'⚪', c:0},
+      {t:'Vermelho', e:'🔴', c:1},
+      {t:'Rosa', e:'🌸', c:1}
+    ]},
+    questions:[
+      {q:'Em que continente o Brasil está localizado?', opts:['América','Europa','Ásia','África'], a:0, why:'O Brasil fica na América! 🌎'},
+      {q:'Quais são as cores da bandeira do Brasil?', opts:['Verde, amarelo, azul e branco','Vermelho, preto e roxo'], a:0, why:'Verde, amarelo, azul e branco! 🇧🇷'},
+      {q:'O que está escrito na faixa branca da bandeira?', opts:['Ordem e Progresso','Bom dia, Brasil'], a:0, why:'A faixa diz: Ordem e Progresso!'},
+      {q:'O losango da bandeira é de qual cor?', opts:['Amarelo','Azul'], a:0, why:'O losango amarelo fica no meio do verde!'},
+      {q:'O círculo com as estrelas é de qual cor?', opts:['Azul','Verde'], a:0, why:'O círculo azul tem as estrelinhas!'},
+      {q:'A bandeira é o ______ do Brasil:', opts:['Símbolo','Brinquedo'], a:0, why:'A bandeira representa o nosso país!'}
+    ]
+  }
+];
+
 /* ====================== MATÉRIAS ====================== */
 const SUBJECTS = [
   { id:'ingles', name:'Inglês', icon:'🇬🇧', bg:'linear-gradient(135deg,#7c5cbf,#ff5d73)', lang:'en-US', modules:ENGLISH_MODULES, maxStars:9 },
-  { id:'ciencias', name:'Ciências', icon:'🔬', bg:'linear-gradient(135deg,#22b573,#29b6d8)', lang:'pt-BR', modules:SCIENCE_MODULES, maxStars:12 }
+  { id:'ciencias', name:'Ciências', icon:'🔬', bg:'linear-gradient(135deg,#22b573,#29b6d8)', lang:'pt-BR', modules:SCIENCE_MODULES, maxStars:12 },
+  { id:'geografia', name:'Geografia', icon:'🗺️', bg:'linear-gradient(135deg,#f59e0b,#16a34a)', lang:'pt-BR', modules:GEO_MODULES, maxStars:12 }
 ];
 
 /* ====================== PROGRESSO ====================== */
