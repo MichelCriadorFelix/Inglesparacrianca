@@ -87,6 +87,8 @@
     background:var(--card); border-radius:30px; padding:24px 18px; text-align:center;
     box-shadow:0 10px 24px rgba(74,43,95,.18);
   }
+  .svgpic { display:inline-block; cursor:pointer; margin:0 auto; }
+  .svgpic svg { width:100%; height:100%; display:block; }
   .word-emoji { font-size:110px; line-height:1.1; display:block; cursor:pointer; transition:transform .15s; border:none; background:none; }
   .word-emoji:active { transform:scale(1.15); }
   .swatch { width:110px; height:110px; border-radius:50%; margin:0 auto; border:6px solid #fff; box-shadow:0 0 0 4px rgba(74,43,95,.1), 0 6px 14px rgba(74,43,95,.2); }
@@ -334,18 +336,24 @@ const ENGLISH_MODULES = [
 ];
 
 /* Ciências (1º ano): en = a palavra para montar/falar; pt = a explicação; say = leitura em pedacinhos */
+/* Desenhos dos conceitos de Ciências, no estilo do material da escola */
+const SVG_ROTACAO = '<svg viewBox="0 0 100 100"><line x1="50" y1="6" x2="50" y2="94" stroke="#94a3b8" stroke-width="3" stroke-dasharray="5 4" transform="rotate(18 50 50)"/><circle cx="50" cy="50" r="26" fill="#3b82f6"/><path d="M36 38 q10 -10 22 -5 q-5 8 3 11 q9 2 5 11 q-11 8 -21 2 q-8 -6 -9 -19z" fill="#22b573"/><path d="M13 52 a38 38 0 0 1 19 -33" fill="none" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/><polygon points="33,11 40,22 27,24" fill="#ef4444"/><path d="M87 48 a38 38 0 0 1 -19 33" fill="none" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/><polygon points="67,89 60,78 73,76" fill="#ef4444"/></svg>';
+const SVG_TRANSLACAO = '<svg viewBox="0 0 100 100"><ellipse cx="50" cy="54" rx="42" ry="25" fill="none" stroke="#8a7a9b" stroke-width="2.5" stroke-dasharray="6 5"/><circle cx="50" cy="54" r="12" fill="#ffb627"/><g stroke="#ffb627" stroke-width="3" stroke-linecap="round"><line x1="50" y1="36" x2="50" y2="30"/><line x1="50" y1="72" x2="50" y2="78"/><line x1="32" y1="54" x2="26" y2="54"/><line x1="68" y1="54" x2="74" y2="54"/><line x1="38" y1="42" x2="34" y2="38"/><line x1="62" y1="66" x2="66" y2="70"/><line x1="62" y1="42" x2="66" y2="38"/><line x1="38" y1="66" x2="34" y2="70"/></g><circle cx="9" cy="50" r="8" fill="#3b82f6"/><path d="M4 47 q4 -3 9 -1 q-2 5 -7 4z" fill="#22b573"/><polygon points="72,27 63,30 69,36" fill="#ef4444"/></svg>';
+const SVG_PIAO = '<svg viewBox="0 0 100 100"><rect x="46" y="8" width="8" height="13" rx="4" fill="#7a4a22"/><path d="M28 24 h44 l-5 20 h-34z" fill="#ef4444"/><path d="M33 44 h34 l-17 42z" fill="#ffb627"/><circle cx="50" cy="33" r="4" fill="#ffdd88"/><path d="M12 34 a42 28 0 0 1 11 -14" fill="none" stroke="#8a7a9b" stroke-width="4" stroke-linecap="round"/><path d="M88 62 a42 28 0 0 1 -11 14" fill="none" stroke="#8a7a9b" stroke-width="4" stroke-linecap="round"/></svg>';
+const SVG_ORBITA = '<svg viewBox="0 0 100 100"><ellipse cx="50" cy="55" rx="43" ry="26" fill="none" stroke="#7c5cbf" stroke-width="4.5" stroke-dasharray="9 7" stroke-linecap="round"/><circle cx="50" cy="55" r="11" fill="#ffb627"/><g stroke="#ffb627" stroke-width="2.5" stroke-linecap="round"><line x1="50" y1="40" x2="50" y2="35"/><line x1="50" y1="70" x2="50" y2="75"/><line x1="35" y1="55" x2="30" y2="55"/><line x1="65" y1="55" x2="70" y2="55"/></g><circle cx="50" cy="29" r="7" fill="#3b82f6"/><path d="M46 26 q4 -3 8 -1 q-2 5 -7 4z" fill="#22b573"/><polygon points="80,36 71,38 76,45" fill="#7c5cbf"/></svg>';
+
 const SCIENCE_MODULES = [
   {
     id:'c-terra', name:'Terra e Céu', icon:'🌍', bg:'linear-gradient(135deg,#3b82f6,#8b5cf6)',
     words:[
-      {en:'rotação', pt:'a Terra gira em torno de si mesma, como um pião! Dura 24 horas (1 dia)', fn:'a Terra gira em torno de si mesma', emoji:'🔄', say:'RO-TA-ÇÃO'},
-      {en:'translação', pt:'a Terra dá a volta ao redor do Sol. Dura 1 ano (365 dias)', fn:'a Terra dá a volta ao redor do Sol', emoji:'🌍', say:'TRANS-LA-ÇÃO'},
+      {en:'rotação', pt:'a Terra gira em torno de si mesma, como um pião! Dura 24 horas (1 dia)', fn:'a Terra gira em torno de si mesma', emoji:'🔄', svg:SVG_ROTACAO, say:'RO-TA-ÇÃO'},
+      {en:'translação', pt:'a Terra dá a volta ao redor do Sol. Dura 1 ano (365 dias)', fn:'a Terra dá a volta ao redor do Sol', emoji:'🌍', svg:SVG_TRANSLACAO, say:'TRANS-LA-ÇÃO'},
       {en:'dia', pt:'acontece quando o nosso lado da Terra está virado para o Sol', fn:'o lado da Terra virado para o Sol', emoji:'🌞', say:'DI-A'},
       {en:'noite', pt:'acontece quando o nosso lado da Terra fica longe do Sol', fn:'o lado da Terra longe do Sol', emoji:'🌙', say:'NOI-TE'},
       {en:'sol', pt:'a estrela que ilumina e aquece a Terra', fn:'ilumina e aquece a Terra', emoji:'☀️', say:'SOL'},
       {en:'terra', pt:'o planeta onde nós moramos', fn:'o planeta onde moramos', emoji:'🌎', say:'TER-RA'},
-      {en:'órbita', pt:'o caminho que a Terra faz ao redor do Sol', fn:'o caminho da Terra ao redor do Sol', emoji:'🪐', say:'ÓR-BI-TA'},
-      {en:'pião', pt:'a Terra gira como um pião — isso é a rotação!', fn:'brinquedo que gira como a Terra', emoji:'🪀', say:'PI-ÃO'}
+      {en:'órbita', pt:'o caminho que a Terra faz ao redor do Sol', fn:'o caminho da Terra ao redor do Sol', emoji:'🛤️', svg:SVG_ORBITA, say:'ÓR-BI-TA'},
+      {en:'pião', pt:'a Terra gira como um pião — isso é a rotação!', fn:'brinquedo que gira como a Terra', emoji:'🌀', svg:SVG_PIAO, say:'PI-ÃO'}
     ],
     sort:{ cats:['ROTAÇÃO 🔄','TRANSLAÇÃO 🌍'], items:[
       {t:'Gira em torno de si mesma', e:'🔄', c:0},
@@ -675,10 +683,16 @@ function sayHtml(say){
 }
 function visual(w, size){
   const s = size||110;
+  if (w.svg){
+    return '<span class="word-emoji svgpic" style="width:'+s+'px;height:'+s+'px;" onclick="speakCur(0.8)">'+w.svg+'</span>';
+  }
   if (w.color){
     return '<div class="swatch" style="width:'+s+'px;height:'+s+'px;background:'+w.color+'; cursor:pointer;" onclick="speakCur(0.8)"></div>';
   }
   return '<span class="word-emoji" style="font-size:'+s+'px;" onclick="speakCur(0.8)">'+w.emoji+'</span>';
+}
+function miniIcon(w){
+  return w.svg ? '<span class="svgpic" style="width:22px;height:22px;vertical-align:-4px;">'+w.svg+'</span>' : (w.emoji||'');
 }
 function topbar(title, backFn){
   return '<div class="topbar">' +
@@ -1135,7 +1149,7 @@ function startLink(){
 function renderLink(wrongIdx){
   const L = cur.link;
   const left = L.pairs.map((w,i) =>
-    '<button class="pterm'+(L.done[w.en]?' done':'')+(L.sel===i?' sel':'')+'" onclick="linkPick('+i+')">'+w.emoji+' '+esc(w.en)+'</button>').join('');
+    '<button class="pterm'+(L.done[w.en]?' done':'')+(L.sel===i?' sel':'')+'" onclick="linkPick('+i+')">'+miniIcon(w)+' '+esc(w.en)+'</button>').join('');
   const right = L.right.map((w,i) =>
     '<button class="pfn'+(L.done[w.en]?' done':'')+(i===wrongIdx?' wrong':'')+'" onclick="linkTry('+i+')">'+esc(w.fn)+'</button>').join('');
   app.innerHTML =
@@ -1189,7 +1203,7 @@ function linkTry(i){
         '</div>';
     } else {
       renderLink();
-      document.getElementById('fb').innerHTML = '<div class="fb-ok">✅ Isso! '+term.emoji+' '+esc(term.en)+' → '+esc(term.fn)+'</div>';
+      document.getElementById('fb').innerHTML = '<div class="fb-ok">✅ Isso! '+miniIcon(term)+' '+esc(term.en)+' → '+esc(term.fn)+'</div>';
     }
   } else {
     L.err++;
@@ -1353,6 +1367,7 @@ function pickType(){
   return types[Math.floor(Math.random()*types.length)];
 }
 function optVisual(o){
+  if (o.svg) return '<span class="svgpic" style="width:64px;height:64px;">'+o.svg+'</span>';
   if (o.color) return '<div class="swatch" style="width:64px;height:64px;border-width:4px;background:'+o.color+'; margin:0 auto;"></div>';
   return o.emoji;
 }
