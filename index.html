@@ -509,12 +509,16 @@ const SCIENCE_MODULES = [
 const SVG_BORRACHA = '<svg viewBox="0 0 100 100"><rect x="12" y="34" width="76" height="34" rx="9" fill="#f472b6" transform="rotate(-8 50 50)"/><rect x="12" y="34" width="28" height="34" rx="9" fill="#60a5fa" transform="rotate(-8 50 50)"/></svg>';
 const SVG_APONTADOR = '<svg viewBox="0 0 100 100"><rect x="18" y="30" width="52" height="44" rx="8" fill="#29b6d8"/><circle cx="34" cy="52" r="7" fill="#1e293b"/><path d="M70 30 l16 22 -16 22z" fill="#94a3b8"/><path d="M70 38 l8 14 -8 14z" fill="#e2e8f0"/></svg>';
 
+const SVG_ZELADOR = '<svg viewBox="0 0 100 100"><circle cx="42" cy="21" r="11" fill="#f4b48c"/><path d="M31 19 a11 11 0 0 1 22 0z" fill="#475569"/><rect x="28" y="33" width="28" height="30" rx="9" fill="#3b82f6"/><line x1="54" y1="42" x2="71" y2="35" stroke="#f4b48c" stroke-width="7" stroke-linecap="round"/><rect x="30" y="62" width="10" height="26" rx="4" fill="#334155"/><rect x="44" y="62" width="10" height="26" rx="4" fill="#334155"/><line x1="70" y1="24" x2="80" y2="66" stroke="#a16207" stroke-width="5" stroke-linecap="round"/><path d="M72 64 l18 -5 6 24 -28 5z" fill="#facc15"/></svg>';
+const SVG_ELETRICISTA = '<svg viewBox="0 0 100 100"><path d="M31 22 a17 15 0 0 1 34 0z" fill="#facc15"/><rect x="27" y="21" width="42" height="6" rx="3" fill="#eab308"/><circle cx="48" cy="32" r="10" fill="#f4b48c"/><rect x="34" y="44" width="28" height="26" rx="9" fill="#f97316"/><rect x="36" y="70" width="10" height="20" rx="4" fill="#334155"/><rect x="50" y="70" width="10" height="20" rx="4" fill="#334155"/><polygon points="78,28 66,52 74,52 64,76 86,46 76,46 86,28" fill="#facc15" stroke="#eab308" stroke-width="2"/></svg>';
+const SVG_SALA = '<svg viewBox="0 0 100 100"><rect x="12" y="12" width="76" height="42" rx="4" fill="#166534"/><rect x="16" y="16" width="68" height="34" rx="2" fill="#14532d"/><path d="M24 36 q8 -12 17 0 q9 10 18 0" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/><rect x="24" y="66" width="52" height="9" rx="3" fill="#a16207"/><rect x="28" y="75" width="7" height="15" fill="#7a4a22"/><rect x="65" y="75" width="7" height="15" fill="#7a4a22"/><rect x="42" y="58" width="16" height="8" rx="2" fill="#3b82f6"/></svg>';
+
 const GEO_MODULES = [
   {
     id:'g-lugares', name:'Lugares da Escola', icon:'🏫', bg:'linear-gradient(135deg,#29b6d8,#7c5cbf)',
     words:[
       {en:'escola', pt:'lugar especial para aprender, fazer amigos e crescer juntos!', fn:'lugar de aprender e fazer amigos', emoji:'🏫', say:'ES-CO-LA'},
-      {en:'sala de aula', pt:'lugar onde aprendemos com os professores e fazemos atividades', fn:'onde aprendemos com os professores', emoji:'🧑‍🏫', say:'SA-LA DE AU-LA'},
+      {en:'sala de aula', pt:'lugar onde aprendemos com os professores e fazemos atividades', fn:'onde aprendemos com os professores', emoji:'🏫', svg:SVG_SALA, say:'SA-LA DE AU-LA'},
       {en:'biblioteca', pt:'lugar para estudar, ler livros e fazer pesquisas', fn:'onde lemos livros e pesquisamos', emoji:'📚', say:'BI-BLI-O-TE-CA'},
       {en:'refeitório', pt:'lugar para fazer as refeições e ter uma alimentação saudável', fn:'onde fazemos as refeições', emoji:'🍽️', say:'RE-FEI-TÓ-RIO'},
       {en:'parquinho', pt:'lugar para brincar, correr e se divertir', fn:'onde brincamos e corremos', emoji:'🛝', say:'PAR-QUI-NHO'}
@@ -538,11 +542,11 @@ const GEO_MODULES = [
   {
     id:'g-profissionais', name:'Profissionais da Escola', icon:'🧑‍🏫', bg:'linear-gradient(135deg,#7c5cbf,#f472b6)',
     words:[
-      {en:'professora', pt:'ensina, orienta e ajuda no nosso aprendizado todos os dias', fn:'ensina e orienta os alunos', emoji:'🧑‍🏫', say:'PRO-FES-SO-RA'},
-      {en:'auxiliar', pt:'apoia o professor e cuida dos alunos com atenção e carinho', fn:'apoia o professor e cuida dos alunos', emoji:'🤝', say:'AU-XI-LI-AR'},
-      {en:'diretora', pt:'coordena a escola, toma decisões e cuida para que tudo funcione bem', fn:'coordena a escola e toma decisões', emoji:'🧑‍💼', say:'DI-RE-TO-RA'},
-      {en:'secretária', pt:'atende, organiza e ajuda na comunicação entre a escola, alunos e famílias', fn:'atende e organiza a comunicação', emoji:'💻', say:'SE-CRE-TÁ-RIA'},
-      {en:'zelador', pt:'mantém a escola limpa, organizada e cuidada para que todos fiquem bem', fn:'mantém a escola limpa e organizada', emoji:'🧹', say:'ZE-LA-DOR'}
+      {en:'professora', pt:'ensina, orienta e ajuda no nosso aprendizado todos os dias', fn:'ensina e orienta os alunos', emoji:'👩‍🏫', say:'PRO-FES-SO-RA'},
+      {en:'auxiliar', pt:'apoia o professor e cuida dos alunos com atenção e carinho', fn:'apoia o professor e cuida dos alunos', emoji:'👩‍👧', say:'AU-XI-LI-AR'},
+      {en:'diretora', pt:'coordena a escola, toma decisões e cuida para que tudo funcione bem', fn:'coordena a escola e toma decisões', emoji:'👩‍💼', say:'DI-RE-TO-RA'},
+      {en:'secretária', pt:'atende, organiza e ajuda na comunicação entre a escola, alunos e famílias', fn:'atende e organiza a comunicação', emoji:'👩‍💻', say:'SE-CRE-TÁ-RIA'},
+      {en:'zelador', pt:'mantém a escola limpa, organizada e cuidada para que todos fiquem bem', fn:'mantém a escola limpa e organizada', emoji:'🧹', svg:SVG_ZELADOR, say:'ZE-LA-DOR'}
     ],
     sort:{ cats:['PROFESSORA 🧑‍🏫','ZELADOR 🧹'], items:[
       {t:'Ensina os alunos', e:'📖', c:0},
@@ -565,9 +569,9 @@ const GEO_MODULES = [
     id:'g-casa', name:'Construção de uma Casa', icon:'👷', bg:'linear-gradient(135deg,#f59e0b,#ef4444)',
     words:[
       {en:'pedreiro', pt:'o trabalhador que constrói as paredes da casa', fn:'constrói as paredes', emoji:'👷', say:'PE-DREI-RO'},
-      {en:'pintor', pt:'o trabalhador que pinta a casa', fn:'pinta a casa', emoji:'🖌️', say:'PIN-TOR'},
-      {en:'eletricista', pt:'o trabalhador que cuida da luz', fn:'cuida da luz', emoji:'💡', say:'E-LE-TRI-CIS-TA'},
-      {en:'encanador', pt:'o trabalhador que cuida da encanação de água', fn:'cuida da encanação de água', emoji:'🔧', say:'EN-CA-NA-DOR'},
+      {en:'pintor', pt:'o trabalhador que pinta a casa', fn:'pinta a casa', emoji:'👨‍🎨', say:'PIN-TOR'},
+      {en:'eletricista', pt:'o trabalhador que cuida da luz', fn:'cuida da luz', emoji:'💡', svg:SVG_ELETRICISTA, say:'E-LE-TRI-CIS-TA'},
+      {en:'encanador', pt:'o trabalhador que cuida da encanação de água', fn:'cuida da encanação de água', emoji:'👨‍🔧', say:'EN-CA-NA-DOR'},
       {en:'tijolo', pt:'material usado para construir as paredes', fn:'material das paredes', emoji:'🧱', say:'TI-JO-LO'},
       {en:'cimento', pt:'material que gruda os tijolos', fn:'material que gruda os tijolos', emoji:'🏗️', say:'CI-MEN-TO'},
       {en:'areia', pt:'material misturado ao cimento na construção', fn:'material misturado ao cimento', emoji:'🪣', say:'A-REI-A'},
