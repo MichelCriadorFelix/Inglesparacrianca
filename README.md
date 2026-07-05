@@ -1,10 +1,12 @@
-# 🦄 Inglês Divertido
+# 🦄 Escola Divertida
 
-Mini aplicativo para ensinar inglês a crianças de 6 anos em fase de alfabetização — feito para revisão de prova de inglês, de um jeito alegre e visual.
+Mini aplicativo para crianças de 6 anos em fase de alfabetização revisarem as provas da escola brincando. Matérias: 🇬🇧 Inglês e 🔬 Ciências (e crescendo!). No painel inicial escolhe-se a matéria; dentro dela, os módulos com o conteúdo de cada prova.
 
 ## O que tem
 
-**7 módulos:** 🍎 Frutas · 🌈 Cores · 🔢 Números · 👗 Roupas · ✏️ Escola · ⚽ Futebol · 🐶 Animais
+**Inglês (7 módulos):** 🍎 Frutas · 🌈 Cores · 🔢 Números · 👗 Roupas · ✏️ Escola · ⚽ Futebol · 🐶 Animais
+
+**Ciências (6 módulos):** 🌍 Terra e Céu · 🌸 Estações do Ano · 🌱 Seres Vivos · 💧 Recursos Naturais · 🐝 Úteis e Nocivos · 🦁 Domésticos e Selvagens
 
 **4 atividades em cada módulo:**
 

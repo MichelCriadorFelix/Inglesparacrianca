@@ -1,5 +1,5 @@
 /* Robô de bastidores: guarda o app no aparelho para abrir rápido e funcionar sem internet. */
-const CACHE = 'ingles-divertido-v1';
+const CACHE = 'escola-divertida-v2';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-180.png'];
 
 self.addEventListener('install', e => {

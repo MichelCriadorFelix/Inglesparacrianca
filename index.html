@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Inglês Divertido 🌟</title>
+<title>Escola Divertida 🌟</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#ffb627">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Inglês">
+<meta name="apple-mobile-web-app-title" content="Escola">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -201,7 +201,7 @@
 'use strict';
 
 /* ====================== CONTEÚDO ====================== */
-const MODULES = [
+const ENGLISH_MODULES = [
   {
     id:'fruits', name:'Frutas', icon:'🍎', bg:'linear-gradient(135deg,#ff5d73,#ff9346)',
     words:[
@@ -312,6 +312,96 @@ const MODULES = [
   }
 ];
 
+/* Ciências (1º ano): en = a palavra para montar/falar; pt = a explicação; say = leitura em pedacinhos */
+const SCIENCE_MODULES = [
+  {
+    id:'c-terra', name:'Terra e Céu', icon:'🌍', bg:'linear-gradient(135deg,#3b82f6,#8b5cf6)',
+    words:[
+      {en:'rotação', pt:'a Terra gira em torno de si mesma, como um pião! Dura 24 horas (1 dia)', emoji:'🔄', say:'RO-TA-ÇÃO', aliases:['rotacao']},
+      {en:'translação', pt:'a Terra dá a volta ao redor do Sol. Dura 1 ano (365 dias)', emoji:'🌍', say:'TRANS-LA-ÇÃO', aliases:['translacao']},
+      {en:'dia', pt:'acontece quando o nosso lado da Terra está virado para o Sol', emoji:'🌞', say:'DI-A'},
+      {en:'noite', pt:'acontece quando o nosso lado da Terra fica longe do Sol', emoji:'🌙', say:'NOI-TE'},
+      {en:'sol', pt:'a estrela que ilumina e aquece a Terra', emoji:'☀️', say:'SOL'},
+      {en:'terra', pt:'o planeta onde nós moramos', emoji:'🌎', say:'TER-RA'},
+      {en:'órbita', pt:'o caminho que a Terra faz ao redor do Sol', emoji:'🪐', say:'ÓR-BI-TA', aliases:['orbita']},
+      {en:'pião', pt:'a Terra gira como um pião — isso é a rotação!', emoji:'🪀', say:'PI-ÃO', aliases:['piao']}
+    ]
+  },
+  {
+    id:'c-estacoes', name:'Estações do Ano', icon:'🌸', bg:'linear-gradient(135deg,#f472b6,#fb923c)',
+    words:[
+      {en:'primavera', pt:'a estação das flores', emoji:'🌸', say:'PRI-MA-VE-RA'},
+      {en:'verão', pt:'a estação mais quente do ano — praia e sorvete!', emoji:'🏖️', say:'VE-RÃO', aliases:['verao']},
+      {en:'outono', pt:'as folhas caem das árvores e esfria um pouquinho', emoji:'🍂', say:'OU-TO-NO'},
+      {en:'inverno', pt:'a estação mais fria do ano — em alguns lugares neva!', emoji:'⛄', say:'IN-VER-NO'},
+      {en:'ano', pt:'365 dias — o tempo de uma volta completa ao redor do Sol', emoji:'🗓️', say:'A-NO'},
+      {en:'neve', pt:'floquinhos de gelo que caem em lugares muito frios', emoji:'❄️', say:'NE-VE'},
+      {en:'calor', pt:'o verão é a estação do...', emoji:'🥵', say:'CA-LOR'},
+      {en:'frio', pt:'o inverno é a estação do...', emoji:'🥶', say:'FRI-O'}
+    ]
+  },
+  {
+    id:'c-seres', name:'Seres Vivos', icon:'🌱', bg:'linear-gradient(135deg,#22b573,#84cc16)',
+    words:[
+      {en:'planta', pt:'SER VIVO: nasce, cresce e precisa de água e sol', emoji:'🌱', say:'PLAN-TA'},
+      {en:'animal', pt:'SER VIVO: nasce, cresce e se alimenta (como o panda!)', emoji:'🐼', say:'A-NI-MAL'},
+      {en:'pessoa', pt:'SER VIVO: nós também somos seres vivos!', emoji:'🧒', say:'PES-SO-A'},
+      {en:'flor', pt:'SER VIVO: o girassol é uma flor', emoji:'🌻', say:'FLOR'},
+      {en:'árvore', pt:'SER VIVO: nasce de uma semente e cresce', emoji:'🌳', say:'ÁR-VO-RE', aliases:['arvore']},
+      {en:'pedra', pt:'NÃO VIVO: não nasce, não cresce, não se alimenta', emoji:'🪨', say:'PE-DRA'},
+      {en:'carro', pt:'NÃO VIVO: é uma máquina feita pelas pessoas', emoji:'🚗', say:'CAR-RO'},
+      {en:'vento', pt:'NÃO VIVO: é o ar se movendo', emoji:'🌬️', say:'VEN-TO'},
+      {en:'caderno', pt:'NÃO VIVO: objeto que usamos na escola', emoji:'📓', say:'CA-DER-NO'},
+      {en:'nuvem', pt:'NÃO VIVO: é feita de gotinhas de água no céu', emoji:'☁️', say:'NU-VEM'}
+    ]
+  },
+  {
+    id:'c-recursos', name:'Recursos Naturais', icon:'💧', bg:'linear-gradient(135deg,#29b6d8,#22b573)',
+    words:[
+      {en:'água', pt:'usamos para beber, lavar, cozinhar e regar as plantas', emoji:'💧', say:'Á-GUA', aliases:['agua']},
+      {en:'sol', pt:'fornece luz e calor para a Terra', emoji:'☀️', say:'SOL'},
+      {en:'solo', pt:'a terrinha onde as plantas crescem — usamos para plantar', emoji:'🪴', say:'SO-LO'},
+      {en:'luz', pt:'o sol fornece luz e calor', emoji:'💡', say:'LUZ'},
+      {en:'chuva', pt:'traz água da natureza para as plantas e os rios', emoji:'🌧️', say:'CHU-VA'},
+      {en:'natureza', pt:'devemos cuidar dela para viver com saúde', emoji:'🌳', say:'NA-TU-RE-ZA'},
+      {en:'torneira', pt:'feche bem para não desperdiçar água!', emoji:'🚰', say:'TOR-NEI-RA'},
+      {en:'vida', pt:'os recursos naturais são importantes para a vida no planeta', emoji:'💚', say:'VI-DA'}
+    ]
+  },
+  {
+    id:'c-uteis', name:'Úteis e Nocivos', icon:'🐝', bg:'linear-gradient(135deg,#ffb627,#ef4444)',
+    words:[
+      {en:'vaca', pt:'ÚTIL: nos dá leite e carne', emoji:'🐮', say:'VA-CA'},
+      {en:'galinha', pt:'ÚTIL: nos dá ovos e carne', emoji:'🐔', say:'GA-LI-NHA'},
+      {en:'abelha', pt:'ÚTIL: produz mel e ajuda na polinização das plantas', emoji:'🐝', say:'A-BE-LHA'},
+      {en:'rato', pt:'NOCIVO: estraga alimentos e pode transmitir doenças', emoji:'🐀', say:'RA-TO'},
+      {en:'mosquito', pt:'NOCIVO: transmite dengue, zika e chikungunya', emoji:'🦟', say:'MOS-QUI-TO'},
+      {en:'barata', pt:'NOCIVO: contamina os alimentos', emoji:'🪳', say:'BA-RA-TA'},
+      {en:'útil', pt:'animal que ajuda as pessoas de alguma forma', emoji:'👍', say:'Ú-TIL', aliases:['util']},
+      {en:'nocivo', pt:'animal que causa prejuízo ou transmite doenças', emoji:'👎', say:'NO-CI-VO'}
+    ]
+  },
+  {
+    id:'c-domesticos', name:'Domésticos e Selvagens', icon:'🦁', bg:'linear-gradient(135deg,#fb923c,#16a34a)',
+    words:[
+      {en:'cachorro', pt:'DOMÉSTICO: vive perto das pessoas e é cuidado por elas', emoji:'🐶', say:'CA-CHOR-RO'},
+      {en:'gato', pt:'DOMÉSTICO: vive na casa das pessoas', emoji:'🐱', say:'GA-TO'},
+      {en:'vaca', pt:'DOMÉSTICO: vive na fazenda, cuidada pelas pessoas', emoji:'🐮', say:'VA-CA'},
+      {en:'galinha', pt:'DOMÉSTICO: vive no galinheiro', emoji:'🐔', say:'GA-LI-NHA'},
+      {en:'leão', pt:'SELVAGEM: vive na natureza, sem depender das pessoas', emoji:'🦁', say:'LE-ÃO', aliases:['leao']},
+      {en:'macaco', pt:'SELVAGEM: vive pulando nas árvores', emoji:'🐵', say:'MA-CA-CO'},
+      {en:'elefante', pt:'SELVAGEM: o maior animal da terra firme', emoji:'🐘', say:'E-LE-FAN-TE'},
+      {en:'arara', pt:'SELVAGEM: ave colorida que vive nas florestas do Brasil', emoji:'🦜', say:'A-RA-RA'}
+    ]
+  }
+];
+
+/* ====================== MATÉRIAS ====================== */
+const SUBJECTS = [
+  { id:'ingles', name:'Inglês', icon:'🇬🇧', bg:'linear-gradient(135deg,#7c5cbf,#ff5d73)', lang:'en-US', modules:ENGLISH_MODULES },
+  { id:'ciencias', name:'Ciências', icon:'🔬', bg:'linear-gradient(135deg,#22b573,#29b6d8)', lang:'pt-BR', modules:SCIENCE_MODULES }
+];
+
 /* ====================== PROGRESSO ====================== */
 const STORE_KEY = 'ingles-divertido-v1';
 function loadProgress(){ try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e){ return {}; } }
@@ -321,8 +411,11 @@ function modStars(id){
   const p = progress[id] || {};
   return (p.quizStars||0) + (p.speakStars||0) + (p.spellStars||0);
 }
-function totalStars(){ return MODULES.reduce((s,m)=>s+modStars(m.id),0); }
+function subjStars(subj){ return subj.modules.reduce((s,m)=>s+modStars(m.id),0); }
+function totalStars(){ return SUBJECTS.reduce((s,x)=>s+subjStars(x),0); }
 const MAX_STARS_MOD = 9; /* 3 do quiz + 3 do falar + 3 do montar */
+function curLang(){ return (cur.subj && cur.subj.lang) || 'en-US'; }
+function isEnglish(){ return curLang() === 'en-US'; }
 
 /* ====================== SOM (Web Audio) ====================== */
 let audioCtx = null;
@@ -347,17 +440,19 @@ function sndTry(){ tone(330,.18,0,'triangle'); tone(262,.28,.18,'triangle'); }
 let voices = [];
 function refreshVoices(){ voices = window.speechSynthesis ? speechSynthesis.getVoices() : []; }
 if (window.speechSynthesis){ refreshVoices(); speechSynthesis.onvoiceschanged = refreshVoices; }
-function pickVoice(){
-  const en = voices.filter(v=>/^en(-|_)/i.test(v.lang));
-  return en.find(v=>/en(-|_)US/i.test(v.lang) && /female|Samantha|Google US/i.test(v.name)) ||
-         en.find(v=>/en(-|_)US/i.test(v.lang)) || en[0] || null;
+function pickVoice(lang){
+  const base = lang.split('-')[0].toLowerCase();
+  const same = voices.filter(v => v.lang && v.lang.toLowerCase().replace('_','-').indexOf(base) === 0);
+  const exact = same.filter(v => v.lang.toLowerCase().replace('_','-') === lang.toLowerCase());
+  return exact.find(v=>/female|google|luciana|francisca|samantha/i.test(v.name)) || exact[0] || same[0] || null;
 }
 function speak(text, rate){
   if (!window.speechSynthesis) return;
   speechSynthesis.cancel();
+  const lang = curLang();
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-US'; u.rate = rate||0.8; u.pitch = 1.1;
-  const v = pickVoice(); if (v) u.voice = v;
+  u.lang = lang; u.rate = rate || 0.8; u.pitch = 1.1;
+  const v = pickVoice(lang); if (v) u.voice = v;
   speechSynthesis.speak(u);
 }
 
@@ -384,7 +479,7 @@ function listen(onResult, onFail){
   if (!SR) { onFail('unsupported'); return; }
   if (recognizing) return;
   const r = new SR();
-  r.lang = 'en-US'; r.interimResults = false; r.maxAlternatives = 6; r.continuous = false;
+  r.lang = curLang(); r.interimResults = false; r.maxAlternatives = 6; r.continuous = false;
   recognizing = true;
   let got = false, failed = false;
   const guard = setTimeout(() => { try { r.abort(); } catch(e){} }, 9000);
@@ -493,7 +588,7 @@ function topbar(title, backFn){
 }
 
 /* ====================== TELAS ====================== */
-let cur = { mod:null, idx:0, attempts:0, speakOk:0, quiz:null };
+let cur = { subj:null, mod:null, idx:0, attempts:0, speakOk:0, quiz:null };
 
 /* ===== Botão voltar do celular: navega DENTRO do app, como app nativo ===== */
 let navLevel = 0, navigating = false;
@@ -509,8 +604,12 @@ window.addEventListener('popstate', e => {
   navigating = true;
   const s = e.state || { screen: 'home' };
   if (s.screen === 'module' || s.screen === 'activity'){
-    navLevel = 1;
+    cur.subj = SUBJECTS.find(x=>x.id===s.subj) || SUBJECTS[0];
+    navLevel = s.screen === 'module' ? 2 : 3;
     openModule(s.mod);
+  } else if (s.screen === 'subject'){
+    navLevel = 1;
+    openSubject(s.subj);
   } else {
     navLevel = 0;
     goHome();
@@ -519,20 +618,32 @@ window.addEventListener('popstate', e => {
 });
 function goBack(){ sndTap(); try { history.back(); } catch(e){ goHome(); } }
 
-/* ===== Botão de instalar (Android/Windows: instala direto; iPhone: mostra o passo a passo) ===== */
-let deferredPrompt = null;
+/* ===== Botão de instalar (Android/Windows: janela nativa de instalar; iPhone: passo a passo) ===== */
+let deferredPrompt = null, wantInstall = false;
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   deferredPrompt = e;
   updateInstallBtn();
+  if (wantInstall){
+    wantInstall = false;
+    const help = document.getElementById('installHelp');
+    if (help) help.innerHTML = '<div class="fb-ok" style="margin-top:10px;">✅ Instalador pronto! Toca no botão de novo! 📲</div>';
+    sndOk();
+  }
 });
 window.addEventListener('appinstalled', () => {
   deferredPrompt = null;
   confetti(30);
   updateInstallBtn();
+  const help = document.getElementById('installHelp');
+  if (help) help.innerHTML = '<div class="fb-ok" style="margin-top:10px;">🎉 Instalado! Procura o ícone da maçã 🍎 na tela do celular!</div>';
 });
 function isStandalone(){
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+function isIOS(){
+  return /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 }
 function updateInstallBtn(){
   const b = document.getElementById('installBtn');
@@ -541,35 +652,41 @@ function updateInstallBtn(){
 }
 function doInstall(){
   sndTap();
+  const help = document.getElementById('installHelp');
   if (deferredPrompt){
+    /* janela nativa "Instalar aplicativo?" do Android / Windows / Mac */
     const p = deferredPrompt;
     deferredPrompt = null;
+    if (help) help.innerHTML = '';
     p.prompt();
     p.userChoice.then(() => updateInstallBtn());
     return;
   }
-  const help = document.getElementById('installHelp');
   if (!help) return;
-  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  help.innerHTML = ios
-    ? '<div class="fb-info" style="margin-top:10px; text-align:left;">🍏 No iPhone/iPad (Safari):<br>1. Toque no botão <b>Compartilhar</b> (quadrado com seta para cima ⬆️)<br>2. Escolha <b>“Adicionar à Tela de Início”</b><br>3. Toque em <b>Adicionar</b> — pronto, vira um app! 🎉</div>'
-    : '<div class="fb-info" style="margin-top:10px; text-align:left;">📲 Toque no menu <b>⋮</b> do navegador e escolha <b>“Instalar aplicativo”</b> (ou <b>“Adicionar à tela inicial”</b>).</div>';
+  if (isIOS()){
+    /* A Apple não libera instalação com um toque — só pelo Safari, nesses 3 passos */
+    help.innerHTML = '<div class="fb-info" style="margin-top:10px; text-align:left;">🍏 No iPhone/iPad é a Apple que manda, e ela só deixa instalar assim (Safari):<br>1. Toque no botão <b>Compartilhar</b> (quadrado com seta ⬆️)<br>2. Escolha <b>“Adicionar à Tela de Início”</b><br>3. Toque em <b>Adicionar</b> — vira um app de verdade! 🎉</div>';
+    return;
+  }
+  /* Chrome ainda não liberou o instalador nesta visita: pede para aguardar e avisa quando ficar pronto */
+  wantInstall = true;
+  help.innerHTML = '<div class="fb-info" style="margin-top:10px; text-align:left;">⏳ Preparando o instalador... aguarde uns segundinhos que eu aviso aqui quando estiver pronto!<br><br>Se demorar: feche o navegador, abra o app de novo e toque neste botão.</div>';
 }
 
 function goHome(){
   sndTap();
   pushNav(0, { screen: 'home' });
-  const cards = MODULES.map(m =>
-    '<button class="module-card" style="background:'+m.bg+'" onclick="openModule(\''+m.id+'\')">' +
-      '<span class="m-icon">'+m.icon+'</span>' +
-      '<span class="m-name">'+m.name+'</span>' +
-      '<span class="m-stars">⭐ '+modStars(m.id)+' de '+MAX_STARS_MOD+'</span>' +
+  const cards = SUBJECTS.map(s =>
+    '<button class="module-card" style="background:'+s.bg+'" onclick="openSubject(\''+s.id+'\')">' +
+      '<span class="m-icon">'+s.icon+'</span>' +
+      '<span class="m-name">'+s.name+'</span>' +
+      '<span class="m-stars">⭐ '+subjStars(s)+' de '+(s.modules.length*MAX_STARS_MOD)+'</span>' +
     '</button>').join('');
   app.innerHTML =
     '<div class="hero">' +
       '<span class="big-emoji">🦄</span>' +
-      '<h1>Inglês Divertido!</h1>' +
-      '<p>Escolhe o que você quer aprender hoje 💖</p>' +
+      '<h1>Escola Divertida!</h1>' +
+      '<p>Escolhe a matéria que você quer estudar hoje 💖</p>' +
       '<p style="margin-top:8px;"><span class="star-count">⭐ Suas estrelas: '+totalStars()+'</span></p>' +
       '<p class="mt"><button class="nav-btn go" id="installBtn" style="display:none;" onclick="doInstall()">📲 Instalar o aplicativo</button></p>' +
       '<div id="installHelp"></div>' +
@@ -579,10 +696,26 @@ function goHome(){
   updateInstallBtn();
 }
 
+function openSubject(id){
+  sndTap();
+  cur.subj = SUBJECTS.find(s=>s.id===id);
+  pushNav(1, { screen: 'subject', subj: id });
+  const cards = cur.subj.modules.map(m =>
+    '<button class="module-card" style="background:'+m.bg+'" onclick="openModule(\''+m.id+'\')">' +
+      '<span class="m-icon">'+m.icon+'</span>' +
+      '<span class="m-name">'+m.name+'</span>' +
+      '<span class="m-stars">⭐ '+modStars(m.id)+' de '+MAX_STARS_MOD+'</span>' +
+    '</button>').join('');
+  app.innerHTML =
+    topbar(cur.subj.icon+' '+esc(cur.subj.name)) +
+    '<div class="modules">'+cards+'</div>';
+  window.scrollTo(0,0);
+}
+
 function openModule(id){
   sndTap();
-  pushNav(1, { screen: 'module', mod: id });
-  cur.mod = MODULES.find(m=>m.id===id);
+  pushNav(2, { screen: 'module', subj: cur.subj.id, mod: id });
+  cur.mod = cur.subj.modules.find(m=>m.id===id);
   app.innerHTML =
     topbar(cur.mod.icon+' '+esc(cur.mod.name), 'goHome()') +
     '<div class="mode-list">' +
@@ -603,7 +736,7 @@ function openModule(id){
 }
 
 /* ---------- MODO APRENDER ---------- */
-function startLearn(){ sndTap(); pushNav(2, { screen:'activity', mod:cur.mod.id }); cur.idx = 0; renderLearn(); }
+function startLearn(){ sndTap(); pushNav(3, { screen:'activity', subj:cur.subj.id, mod:cur.mod.id }); cur.idx = 0; renderLearn(); }
 function renderLearn(){
   const w = cur.mod.words[cur.idx];
   const n = cur.mod.words.length;
@@ -612,8 +745,8 @@ function renderLearn(){
     '<div class="card">' +
       visual(w) +
       '<div class="word-en" onclick="speakCur(0.8)">'+esc(w.en)+'</div>' +
-      '<div class="word-say">🗣️ Fala assim: “'+sayHtml(w.say)+'”<small>dica de como falar</small></div>' +
-      '<div class="word-pt">em português: <b>'+esc(w.pt)+'</b></div>' +
+      '<div class="word-say">🗣️ '+(isEnglish()?'Fala assim':'Leia junto')+': “'+sayHtml(w.say)+'”<small>'+(isEnglish()?'dica de como falar':'a palavra em pedacinhos')+'</small></div>' +
+      '<div class="word-pt">'+(isEnglish()?'em português: ':'💡 ')+'<b>'+esc(w.pt)+'</b></div>' +
       (w.tip ? '<div class="word-tip">💡 '+esc(w.tip)+'</div>' : '') +
       '<div class="round-btns">' +
         '<button class="rbtn listen" onclick="speakCur(0.8)">🔊<small>OUVIR</small></button>' +
@@ -653,7 +786,7 @@ function learnDone(){
 /* ---------- MODO FALAR ---------- */
 function startSpeak(){
   sndTap();
-  pushNav(2, { screen:'activity', mod:cur.mod.id });
+  pushNav(3, { screen:'activity', subj:cur.subj.id, mod:cur.mod.id });
   cur.idx = 0; cur.attempts = 0; cur.speakOk = 0;
   renderSpeak();
 }
@@ -667,7 +800,7 @@ function renderSpeak(){
     '<div class="card">' +
       visual(w, 90) +
       '<div class="word-en" style="font-size:40px;" onclick="speakCur(0.8)">'+esc(w.en)+'</div>' +
-      '<div class="word-say">🗣️ Fala assim: “'+sayHtml(w.say)+'”</div>' +
+      '<div class="word-say">🗣️ '+(isEnglish()?'Fala assim':'Leia junto')+': “'+sayHtml(w.say)+'”</div>' +
       (w.tip ? '<div class="word-tip">💡 '+esc(w.tip)+'</div>' : '') +
       '<div class="round-btns">' +
         '<button class="rbtn listen" onclick="speakCur(0.8)">🔊<small>OUVIR</small></button>' +
@@ -788,14 +921,14 @@ function speakDone(){
 /* ---------- MODO MONTAR (escrever letra por letra, como na prova) ---------- */
 function startSpell(){
   sndTap();
-  pushNav(2, { screen:'activity', mod:cur.mod.id });
+  pushNav(3, { screen:'activity', subj:cur.subj.id, mod:cur.mod.id });
   cur.idx = 0; cur.spellGood = 0;
   spellSetup();
   renderSpell();
   setTimeout(()=>speak(cur.mod.words[cur.idx].en, 0.8), 350);
 }
 function spellSetup(){
-  cur.spellWord = cur.mod.words[cur.idx].en.toUpperCase();
+  cur.spellWord = cur.mod.words[cur.idx].en.toLocaleUpperCase('pt-BR');
   cur.spellPos = 0; cur.spellErr = 0;
   cur.spellTiles = shuffle(cur.spellWord.split('')).map(ch => ({ ch: ch, used: false }));
 }
@@ -818,7 +951,7 @@ function renderSpell(wrongIdx){
     '<div class="progressbar"><div style="width:'+(cur.idx/n*100)+'%"></div></div>' +
     '<div class="card">' +
       visual(w, 80) +
-      '<div class="word-pt" style="margin-top:6px;">Monte <b>'+esc(w.pt)+'</b> em inglês:</div>' +
+      '<div class="word-pt" style="margin-top:6px;">'+(isEnglish()?'Monte <b>'+esc(w.pt)+'</b> em inglês:':'Monte: <b>'+esc(w.pt)+'</b>')+'</div>' +
       '<div class="slots">'+slots+'</div>' +
       '<div class="tiles">'+tiles+'</div>' +
       '<div class="round-btns">' +
@@ -892,9 +1025,9 @@ function spellDone(){
 const QUIZ_LEN = 8;
 function startQuiz(){
   sndTap();
-  pushNav(2, { screen:'activity', mod:cur.mod.id });
+  pushNav(3, { screen:'activity', subj:cur.subj.id, mod:cur.mod.id });
   const words = shuffle(cur.mod.words).slice(0, QUIZ_LEN);
-  cur.quiz = { qs: words.map(w => ({ w, type: pickType() })), i: 0, score: 0 };
+  cur.quiz = { qs: words.map(w => ({ w, type: pickType() })), i: 0, score: 0, len: words.length };
   renderQuiz();
 }
 function pickType(){
@@ -927,9 +1060,9 @@ function renderQuiz(){
   }
   app.innerHTML =
     topbar('🎮 Jogar', 'openModule(\''+cur.mod.id+'\')') +
-    '<div class="progressbar"><div style="width:'+(cur.quiz.i/QUIZ_LEN*100)+'%"></div></div>' +
+    '<div class="progressbar"><div style="width:'+(cur.quiz.i/cur.quiz.len*100)+'%"></div></div>' +
     '<div class="card">' + head + '<div class="quiz-opts">'+optHtml+'</div><div class="feedback" id="fb" style="min-height:60px;"></div></div>' +
-    '<div class="nav-row"><span class="counter">Pergunta '+(cur.quiz.i+1)+' de '+QUIZ_LEN+'</span><span class="counter">Pontos: '+cur.quiz.score+' 🌟</span></div>';
+    '<div class="nav-row"><span class="counter">Pergunta '+(cur.quiz.i+1)+' de '+cur.quiz.len+'</span><span class="counter">Pontos: '+cur.quiz.score+' 🌟</span></div>';
   window.scrollTo(0,0);
   if (q.type === 'audio2pic') setTimeout(speakQuizWord, 400);
 }
@@ -958,11 +1091,12 @@ function answer(btn, right){
 }
 function nextQuiz(){
   cur.quiz.i++;
-  if (cur.quiz.i < QUIZ_LEN) renderQuiz(); else quizDone();
+  if (cur.quiz.i < cur.quiz.len) renderQuiz(); else quizDone();
 }
 function quizDone(){
   const score = cur.quiz.score;
-  const stars = score >= 7 ? 3 : score >= 5 ? 2 : score >= 3 ? 1 : 0;
+  const ratio = score / cur.quiz.len;
+  const stars = ratio >= 0.85 ? 3 : ratio >= 0.6 ? 2 : ratio >= 0.35 ? 1 : 0;
   progress[cur.mod.id] = progress[cur.mod.id] || {};
   if ((progress[cur.mod.id].quizStars||0) < stars){ progress[cur.mod.id].quizStars = stars; }
   saveProgress(progress);
@@ -972,7 +1106,7 @@ function quizDone(){
     '<div class="card center">' +
       '<div style="font-size:80px;">'+(stars>=3?'🏆':stars===2?'🥳':stars===1?'😊':'💪')+'</div>' +
       '<div class="result-stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div>' +
-      '<div class="result-msg">Você fez '+score+' de '+QUIZ_LEN+' pontos!</div>' +
+      '<div class="result-msg">Você fez '+score+' de '+cur.quiz.len+' pontos!</div>' +
       '<div class="result-sub">'+(
         stars>=3 ? 'INCRÍVEL! Você é uma campeã de inglês! 🌟' :
         stars===2 ? 'Muito bom! Falta pouquinho para 3 estrelas!' :
@@ -986,7 +1120,7 @@ function quizDone(){
 }
 
 /* expõe funções usadas nos onclick */
-window.goHome = goHome; window.openModule = openModule;
+window.goHome = goHome; window.openSubject = openSubject; window.openModule = openModule;
 window.startLearn = startLearn; window.speakCur = speakCur;
 window.learnMove = learnMove; window.learnDone = learnDone;
 window.startSpeak = startSpeak; window.doListen = doListen; window.speakNext = speakNext; window.speakSelfOk = speakSelfOk;
