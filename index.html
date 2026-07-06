@@ -224,6 +224,21 @@
 'use strict';
 
 /* ====================== CONTEÚDO ====================== */
+const SVG_PLAYER = '<svg viewBox="0 0 100 100"><circle cx="44" cy="16" r="10" fill="#f4b48c"/><rect x="32" y="27" width="24" height="24" rx="8" fill="#facc15"/><line x1="30" y1="36" x2="20" y2="48" stroke="#f4b48c" stroke-width="7" stroke-linecap="round"/><line x1="58" y1="36" x2="66" y2="26" stroke="#f4b48c" stroke-width="7" stroke-linecap="round"/><line x1="38" y1="51" x2="30" y2="76" stroke="#1d4ed8" stroke-width="9" stroke-linecap="round"/><line x1="50" y1="51" x2="68" y2="64" stroke="#1d4ed8" stroke-width="9" stroke-linecap="round"/><circle cx="81" cy="72" r="11" fill="#fff" stroke="#1e293b" stroke-width="3"/><polygon points="81,66 86,70 84,76 78,76 76,70" fill="#1e293b"/></svg>';
+const SVG_TEAM = '<svg viewBox="0 0 100 100"><circle cx="24" cy="30" r="9" fill="#f4b48c"/><rect x="13" y="40" width="22" height="26" rx="8" fill="#22b573"/><circle cx="76" cy="30" r="9" fill="#8d5524"/><rect x="65" y="40" width="22" height="26" rx="8" fill="#22b573"/><circle cx="50" cy="36" r="10" fill="#c68642"/><rect x="36" y="47" width="28" height="30" rx="9" fill="#22b573"/><circle cx="50" cy="88" r="7" fill="#fff" stroke="#1e293b" stroke-width="2.5"/></svg>';
+const SVG_SOLO = '<svg viewBox="0 0 100 100"><path d="M8 80 q42 -30 84 0z" fill="#8b5a2b"/><path d="M22 80 q28 -16 56 0z" fill="#6b4423"/><line x1="50" y1="54" x2="50" y2="34" stroke="#22b573" stroke-width="4" stroke-linecap="round"/><path d="M50 42 q-13 -13 -17 -2 q11 8 17 2z" fill="#22b573"/><path d="M50 37 q13 -13 17 -2 q-11 8 -17 2z" fill="#22b573"/></svg>';
+const SVG_CIMENTO = '<svg viewBox="0 0 100 100"><path d="M20 90 q30 -12 60 0z" fill="#cbd5e1"/><path d="M30 24 h40 l4 12 -3 42 a6 6 0 0 1 -6 6 h-30 a6 6 0 0 1 -6 -6 l-3 -42z" fill="#94a3b8"/><rect x="30" y="14" width="40" height="12" rx="5" fill="#64748b"/><rect x="36" y="46" width="28" height="16" rx="4" fill="#e2e8f0"/><text x="50" y="58" font-size="9" font-weight="bold" fill="#475569" text-anchor="middle" font-family="Arial, sans-serif">CIMENTO</text></svg>';
+const SVG_AREIA = '<svg viewBox="0 0 100 100"><path d="M8 82 q42 -36 84 0z" fill="#fbbf24"/><path d="M24 82 q26 -20 52 0z" fill="#f59e0b"/><circle cx="36" cy="72" r="2" fill="#d97706"/><circle cx="52" cy="64" r="2" fill="#d97706"/><circle cx="64" cy="74" r="2" fill="#d97706"/><rect x="66" y="26" width="6" height="26" rx="3" fill="#a16207" transform="rotate(16 69 39)"/><path d="M72 50 l16 6 -8 16 -14 -8z" fill="#ef4444"/></svg>';
+const SVG_COLA = '<svg viewBox="0 0 100 100"><rect x="43" y="8" width="14" height="10" rx="3" fill="#f59e0b"/><path d="M38 18 h24 l3 12 h-30z" fill="#fbbf24"/><rect x="30" y="30" width="40" height="60" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2.5"/><rect x="36" y="46" width="28" height="22" rx="5" fill="#ef4444"/><text x="50" y="61" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">COLA</text></svg>';
+const SVG_LAPISCOR = '<svg viewBox="0 0 100 100">' +
+  ['#ef4444','#3b82f6','#22b573','#facc15','#8b5cf6'].map(function(c,i){
+    var x = 16 + i*14;
+    return '<polygon points="'+(x)+',30 '+(x+5)+',14 '+(x+10)+',30" fill="#e7c08a"/>' +
+           '<polygon points="'+(x+3)+',20 '+(x+5)+',14 '+(x+7)+',20" fill="#4a2b5f"/>' +
+           '<rect x="'+x+'" y="30" width="10" height="56" rx="2" fill="'+c+'"/>';
+  }).join('') + '</svg>';
+const SVG_BANDEIRA = '<svg viewBox="0 0 100 100"><rect x="10" y="12" width="5" height="80" rx="2.5" fill="#7a4a22"/><rect x="17" y="20" width="72" height="50" rx="4" fill="#16a34a"/><polygon points="53,25 84,45 53,65 22,45" fill="#facc15"/><circle cx="53" cy="45" r="11" fill="#1e40af"/><path d="M43 43 q10 -4 20 2" stroke="#fff" stroke-width="3" fill="none"/><circle cx="50" cy="50" r="1.3" fill="#fff"/><circle cx="57" cy="51" r="1.3" fill="#fff"/></svg>';
+
 const ENGLISH_MODULES = [
   {
     id:'fruits', name:'Frutas', icon:'🍎', bg:'linear-gradient(135deg,#ff5d73,#ff9346)',
@@ -308,8 +323,8 @@ const ENGLISH_MODULES = [
     words:[
       {en:'ball', pt:'bola', emoji:'⚽', say:'BÓL', aliases:['bald','bowl','balls','bol']},
       {en:'goal', pt:'gol', emoji:'🥅', say:'GÔUL', aliases:['gold','goals','ghoul','go']},
-      {en:'player', pt:'jogador', emoji:'🏃', say:'PLÊI-er', aliases:['players','prayer','play']},
-      {en:'team', pt:'time', emoji:'👥', say:'TÍM', aliases:['teen','tim','theme','teams']},
+      {en:'player', pt:'jogador', emoji:'🏃', svg:SVG_PLAYER, say:'PLÊI-er', aliases:['players','prayer','play']},
+      {en:'team', pt:'time', emoji:'👥', svg:SVG_TEAM, say:'TÍM', aliases:['teen','tim','theme','teams']},
       {en:'jersey', pt:'camisa do time', emoji:'🎽', say:'DJÂR-zi', aliases:['jerseys','jessie','jazzy']},
       {en:'stadium', pt:'estádio', emoji:'🏟️', say:'STÊI-di-um', aliases:['stadion','stadiums']},
       {en:'trophy', pt:'troféu', emoji:'🏆', say:'TRÔU-fi', aliases:['trophies','trofi']},
@@ -433,7 +448,7 @@ const SCIENCE_MODULES = [
     words:[
       {en:'água', pt:'usamos para beber, lavar, cozinhar e regar as plantas', fn:'usamos para beber, lavar e cozinhar', emoji:'💧', say:'Á-GUA'},
       {en:'sol', pt:'fornece luz e calor para a Terra', fn:'fornece luz e calor para a Terra', emoji:'☀️', say:'SOL'},
-      {en:'solo', pt:'a terrinha onde as plantas crescem — usamos para plantar', fn:'onde as plantas crescem', emoji:'🪴', say:'SO-LO'},
+      {en:'solo', pt:'a terrinha onde as plantas crescem — usamos para plantar', fn:'onde as plantas crescem', emoji:'🪴', svg:SVG_SOLO, say:'SO-LO'},
       {en:'luz', pt:'o sol fornece luz e calor', fn:'o sol fornece, junto com o calor', emoji:'💡', say:'LUZ'},
       {en:'chuva', pt:'traz água da natureza para as plantas e os rios', fn:'traz água para as plantas e os rios', emoji:'🌧️', say:'CHU-VA'},
       {en:'natureza', pt:'devemos cuidar dela para viver com saúde', fn:'devemos cuidar dela', emoji:'🌳', say:'NA-TU-RE-ZA'},
@@ -573,14 +588,14 @@ const GEO_MODULES = [
       {en:'eletricista', pt:'o trabalhador que cuida da luz', fn:'cuida da luz', emoji:'💡', svg:SVG_ELETRICISTA, say:'E-LE-TRI-CIS-TA'},
       {en:'encanador', pt:'o trabalhador que cuida da encanação de água', fn:'cuida da encanação de água', emoji:'👨‍🔧', say:'EN-CA-NA-DOR'},
       {en:'tijolo', pt:'material usado para construir as paredes', fn:'material das paredes', emoji:'🧱', say:'TI-JO-LO'},
-      {en:'cimento', pt:'material que gruda os tijolos', fn:'material que gruda os tijolos', emoji:'🏗️', say:'CI-MEN-TO'},
-      {en:'areia', pt:'material misturado ao cimento na construção', fn:'material misturado ao cimento', emoji:'🪣', say:'A-REI-A'},
+      {en:'cimento', pt:'material que gruda os tijolos', fn:'material que gruda os tijolos', emoji:'🧱', svg:SVG_CIMENTO, say:'CI-MEN-TO'},
+      {en:'areia', pt:'material misturado ao cimento na construção', fn:'material misturado ao cimento', emoji:'🏖️', svg:SVG_AREIA, say:'A-REI-A'},
       {en:'madeira', pt:'material de construção que vem das árvores', fn:'material que vem das árvores', emoji:'🪵', say:'MA-DEI-RA'}
     ],
     sort:{ cats:['É MATERIAL de construção 🧱','NÃO é! 🙅'], items:[
       {t:'Tijolo', e:'🧱', c:0},
-      {t:'Cimento', e:'🏗️', c:0},
-      {t:'Areia', e:'🪣', c:0},
+      {t:'Cimento', e:'🧱', c:0},
+      {t:'Areia', e:'🏖️', c:0},
       {t:'Madeira', e:'🪵', c:0},
       {t:'Pedra', e:'🪨', c:0},
       {t:'Leite', e:'🥛', c:1},
@@ -629,12 +644,12 @@ const GEO_MODULES = [
       {en:'lápis', pt:'usamos para escrever', fn:'usamos para escrever', emoji:'✏️', say:'LÁ-PIS'},
       {en:'borracha', pt:'apaga o que escrevemos errado', fn:'apaga o que escrevemos', emoji:'▫️', svg:SVG_BORRACHA, say:'BOR-RA-CHA'},
       {en:'apontador', pt:'faz a ponta do lápis', fn:'faz a ponta do lápis', emoji:'🔷', svg:SVG_APONTADOR, say:'A-PON-TA-DOR'},
-      {en:'cola', pt:'gruda os trabalhinhos de papel', fn:'gruda os papéis', emoji:'🧴', say:'CO-LA'},
+      {en:'cola', pt:'gruda os trabalhinhos de papel', fn:'gruda os papéis', emoji:'🧴', svg:SVG_COLA, say:'CO-LA'},
       {en:'tesoura', pt:'recorta papéis — sempre com cuidado!', fn:'recorta papéis', emoji:'✂️', say:'TE-SOU-RA'},
       {en:'caderno', pt:'onde fazemos os deveres', fn:'onde fazemos os deveres', emoji:'📓', say:'CA-DER-NO'},
       {en:'estojo', pt:'guarda os lápis e canetas', fn:'guarda lápis e canetas', emoji:'👝', say:'ES-TO-JO'},
       {en:'régua', pt:'mede e faz linhas retas', fn:'mede e faz linhas retas', emoji:'📏', say:'RÉ-GUA'},
-      {en:'lápis de cor', pt:'usamos para pintar os desenhos', fn:'usamos para pintar', emoji:'🖍️', say:'LÁ-PIS DE COR'},
+      {en:'lápis de cor', pt:'usamos para pintar os desenhos', fn:'usamos para pintar', emoji:'🖍️', svg:SVG_LAPISCOR, say:'LÁ-PIS DE COR'},
       {en:'mochila', pt:'carrega todo o material escolar', fn:'carrega todo o material', emoji:'🎒', say:'MO-CHI-LA'}
     ],
     sort:{ cats:['CUIDA do material ✅','ESTRAGA! ❌'], items:[
@@ -658,7 +673,7 @@ const GEO_MODULES = [
     id:'g-brasil', name:'Brasil e a Bandeira', icon:'🇧🇷', bg:'linear-gradient(135deg,#16a34a,#facc15)',
     words:[
       {en:'brasil', pt:'o nosso país! Fica no continente América', fn:'o nosso país', emoji:'🇧🇷', say:'BRA-SIL'},
-      {en:'bandeira', pt:'o símbolo do Brasil: verde, amarela, azul e branca', fn:'o símbolo do nosso país', emoji:'🚩', say:'BAN-DEI-RA'},
+      {en:'bandeira', pt:'o símbolo do Brasil: verde, amarela, azul e branca', fn:'o símbolo do nosso país', emoji:'🇧🇷', svg:SVG_BANDEIRA, say:'BAN-DEI-RA'},
       {en:'américa', pt:'o continente onde o Brasil está localizado', fn:'o continente do Brasil', emoji:'🌎', say:'A-MÉ-RI-CA'},
       {en:'verde', pt:'a cor do fundo da bandeira (um retângulo)', fn:'a cor do fundo da bandeira', color:'#16a34a', say:'VER-DE'},
       {en:'amarelo', pt:'a cor do losango da bandeira', fn:'a cor do losango', color:'#facc15', say:'A-MA-RE-LO'},
